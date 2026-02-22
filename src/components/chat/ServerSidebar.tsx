@@ -11,7 +11,7 @@ export function ServerSidebar() {
   const isHome = mainView === "dms";
 
   return (
-    <div className="flex h-full w-[72px] flex-col items-center gap-2 border-r border-white/[0.04] bg-server-bar pt-12 py-3 overflow-y-auto shadow-[inset_-1px_0_0_rgba(255,255,255,0.03)]">
+    <div className="flex h-full w-[72px] flex-col items-center gap-2 bg-server-bar pt-12 py-3 overflow-y-auto">
       {/* Home / DMs */}
       <Tooltip>
         <TooltipTrigger asChild>

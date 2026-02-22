@@ -162,9 +162,8 @@ export function ChatView() {
                 <Plus className="h-5 w-5" />
               </button>
             </DrawerTrigger>
-            <DrawerContent className="bg-popover border-t border-white/[0.1] px-4 pb-8 pt-4">
-              <div className="mx-auto mb-4 h-1 w-10 rounded-full bg-white/[0.2]" />
-              <div className="grid grid-cols-4 gap-4">
+            <DrawerContent className="px-4 pb-8 pt-2">
+              <div className="grid grid-cols-4 gap-4 mt-2">
                 {[
                   { icon: Camera, label: "Camera" },
                   { icon: Image, label: "Photos" },

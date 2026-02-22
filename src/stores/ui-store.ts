@@ -12,6 +12,7 @@ interface UIState {
   settingsView: SettingsView;
   createServerOpen: boolean;
   createChannelOpen: boolean;
+  showNewMessage: boolean;
 
   setMainView: (view: MainView) => void;
   toggleMemberList: () => void;
@@ -22,6 +23,7 @@ interface UIState {
   closeSettings: () => void;
   setCreateServerOpen: (open: boolean) => void;
   setCreateChannelOpen: (open: boolean) => void;
+  setShowNewMessage: (show: boolean) => void;
 }
 
 export const useUIStore = create<UIState>((set) => ({
@@ -33,6 +35,7 @@ export const useUIStore = create<UIState>((set) => ({
   settingsView: null,
   createServerOpen: false,
   createChannelOpen: false,
+  showNewMessage: false,
 
   setMainView: (view) => set({ mainView: view }),
   toggleMemberList: () => set((s) => ({ showMemberList: !s.showMemberList })),
@@ -43,4 +46,5 @@ export const useUIStore = create<UIState>((set) => ({
   closeSettings: () => set({ settingsView: null }),
   setCreateServerOpen: (open) => set({ createServerOpen: open }),
   setCreateChannelOpen: (open) => set({ createChannelOpen: open }),
+  setShowNewMessage: (show) => set({ showNewMessage: show }),
 }));

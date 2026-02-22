@@ -3,6 +3,17 @@ import { useUIStore } from "@/stores/ui-store";
 import { Plus, MessageCircle } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
+import serverIcon1 from "@/assets/server-icon-1.jpg";
+import serverIcon2 from "@/assets/server-icon-2.jpg";
+import serverIcon3 from "@/assets/server-icon-3.jpg";
+import serverIcon4 from "@/assets/server-icon-4.jpg";
+
+const SERVER_ICONS: Record<string, string> = {
+  s1: serverIcon1,
+  s2: serverIcon2,
+  s3: serverIcon3,
+  s4: serverIcon4,
+};
 
 const BTN_SM = 40;
 const BTN_LG = 48;
@@ -65,7 +76,11 @@ export function ServerSidebar() {
                       )}
                       style={{ width: BTN_SIZE, height: BTN_SIZE }}
                     >
-                      <span className={`font-semibold ${sidebarCollapsed ? "text-sm" : "text-base"}`}>{server.name.charAt(0).toUpperCase()}</span>
+                      {SERVER_ICONS[server.id] ? (
+                        <img src={SERVER_ICONS[server.id]} alt={server.name} className="h-full w-full rounded-[12px] object-cover" />
+                      ) : (
+                        <span className={`font-semibold ${sidebarCollapsed ? "text-sm" : "text-base"}`}>{server.name.charAt(0).toUpperCase()}</span>
+                      )}
                     </button>
                     {notifCount > 0 && (
                       <span className={cn(

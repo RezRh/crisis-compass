@@ -230,7 +230,7 @@ function DockBar({
         onPointerMove={handlePointerMove}
         onPointerUp={handlePointerUp}
         onPointerLeave={() => { isDragging.current = false; didDrag.current = false; startPos.current = null; bubbleXRef.current = null; setBubbleX(null); }}
-        className="relative flex items-center gap-3 rounded-full border border-white/[0.06] bg-white/[0.04] backdrop-blur-md px-3 py-2 shadow-[0_2px_16px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.04),inset_0_-1px_4px_rgba(0,0,0,0.3)] touch-none"
+        className={`relative flex items-center gap-3 rounded-full border ${sidebarVisible ? "border-primary/30 shadow-[0_2px_16px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.04),inset_0_-1px_4px_rgba(0,0,0,0.3),0_0_12px_rgba(255,0,60,0.1)]" : "border-white/[0.06] shadow-[0_2px_16px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.04),inset_0_-1px_4px_rgba(0,0,0,0.3)]"} bg-white/[0.04] backdrop-blur-md px-3 py-2 touch-none`}
       >
         {/* Glass bubble — follows finger, snaps on release */}
         <div
@@ -282,7 +282,7 @@ function DockBar({
       </div>
       <button
         onClick={() => { closeSettings(); setShowNotifications(false); setShowNewMessage(false); setShowSearch(true); }}
-        className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-white/[0.06] bg-white/[0.04] text-muted-foreground shadow-[0_2px_16px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.04)] backdrop-blur-md transition-colors hover:bg-white/[0.08] hover:text-foreground"
+        className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-full border ${sidebarVisible ? "border-primary/30 shadow-[0_2px_16px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.04),0_0_12px_rgba(255,0,60,0.1)]" : "border-white/[0.06] shadow-[0_2px_16px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.04)]"} bg-white/[0.04] text-muted-foreground backdrop-blur-md transition-colors hover:bg-white/[0.08] hover:text-foreground`}
       >
         <Search className="h-5 w-5" />
       </button>

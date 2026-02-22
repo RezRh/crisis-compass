@@ -99,7 +99,8 @@ export function ChatView() {
   const hasText = message.trim().length > 0;
 
   return (
-    <div ref={containerRef} className="relative flex h-full w-full flex-col bg-server-bar overflow-y-auto">
+    <div ref={containerRef} className="relative flex h-full w-full flex-col bg-server-bar">
+      <div className="flex flex-1 flex-col overflow-y-auto">
       {/* Header — sticky glass */}
       <div className="sticky top-0 z-10 px-3 py-3 pt-12">
         <div className="flex items-center gap-3">
@@ -135,7 +136,7 @@ export function ChatView() {
       </div>
 
       {/* Messages */}
-      <div className="flex-1 px-3 py-3">
+      <div className="flex-1 px-3 py-3 pb-20">
         {messages.map((msg, i) => {
           const senderName = msg.sender === "me" ? "You" : activeDM;
           const senderColor = getAvatarColor(senderName);
@@ -182,9 +183,10 @@ export function ChatView() {
         })}
         <div ref={bottomRef} />
       </div>
+      </div>
 
-      {/* Input — sticky bottom, transparent bg, per-tile glass */}
-      <div className="sticky bottom-0 z-10 px-3 py-3 pb-6">
+      {/* Input — fixed bottom inside container, per-tile glass */}
+      <div className="absolute bottom-0 left-0 right-0 z-10 px-3 py-3 pb-6">
         <div className="flex items-center gap-2">
           <Drawer container={containerRef.current}>
             <DrawerTrigger asChild>

@@ -83,12 +83,7 @@ const ChatApp = () => {
   );
 };
 
-/* ── Apple Dock-style bottom bar with magnification ── */
-const DOCK_ITEMS = ["home", "bell", "add", "profile"] as const;
-const BASE_SIZE = 40;
-const MAX_SIZE = 56;
-const INFLUENCE_RANGE = 80; // px distance that still causes scaling
-
+/* ── Bottom bar with draggable glass bubble ── */
 function DockBar({
   sidebarCollapsed,
   showNotifications,
@@ -103,97 +98,120 @@ function DockBar({
   user: any;
 }) {
   const barRef = useRef<HTMLDivElement>(null);
-  const [scales, setScales] = useState<number[]>(DOCK_ITEMS.map(() => 1));
-  const animRef = useRef<number | null>(null);
+  const [bubbleX, setBubbleX] = useState<number | null>(null); // null = snap to active
+  const isDragging = useRef(false);
 
-  const updateScales = useCallback((clientX: number) => {
-    if (!barRef.current) return;
+  // Get active button center relative to bar
+  const getActiveLeft = useCallback(() => {
+    if (!barRef.current) return 12;
     const buttons = barRef.current.querySelectorAll<HTMLElement>("[data-dock]");
-    const newScales = Array.from(buttons).map((btn) => {
-      const rect = btn.getBoundingClientRect();
-      const center = rect.left + rect.width / 2;
-      const dist = Math.abs(clientX - center);
-      if (dist > INFLUENCE_RANGE) return 1;
-      const ratio = 1 - dist / INFLUENCE_RANGE;
-      return 1 + ratio * ((MAX_SIZE / BASE_SIZE) - 1);
-    });
-    setScales(newScales);
-  }, []);
+    const activeIdx = !showNotifications ? 0 : 1;
+    const btn = buttons[activeIdx];
+    if (!btn) return 12;
+    const barRect = barRef.current.getBoundingClientRect();
+    const btnRect = btn.getBoundingClientRect();
+    return btnRect.left - barRect.left + (btnRect.width - 40) / 2;
+  }, [showNotifications]);
 
-  const resetScales = useCallback(() => {
-    setScales(DOCK_ITEMS.map(() => 1));
+  const handlePointerDown = useCallback((e: React.PointerEvent) => {
+    isDragging.current = true;
+    (e.target as HTMLElement).setPointerCapture?.(e.pointerId);
   }, []);
 
   const handlePointerMove = useCallback((e: React.PointerEvent) => {
-    if (animRef.current) cancelAnimationFrame(animRef.current);
-    animRef.current = requestAnimationFrame(() => updateScales(e.clientX));
-  }, [updateScales]);
+    if (!isDragging.current || !barRef.current) return;
+    const barRect = barRef.current.getBoundingClientRect();
+    const x = e.clientX - barRect.left - 20; // center the 40px bubble
+    const clamped = Math.max(4, Math.min(x, barRect.width - 44));
+    setBubbleX(clamped);
+  }, []);
 
-  const activeIdx = !showNotifications ? 0 : 1;
+  const handlePointerUp = useCallback(() => {
+    if (!isDragging.current || !barRef.current) return;
+    isDragging.current = false;
+
+    // Find closest button and snap
+    const buttons = barRef.current.querySelectorAll<HTMLElement>("[data-dock]");
+    const barRect = barRef.current.getBoundingClientRect();
+    let closestIdx = 0;
+    let closestDist = Infinity;
+    buttons.forEach((btn, i) => {
+      const btnRect = btn.getBoundingClientRect();
+      const center = btnRect.left - barRect.left + btnRect.width / 2;
+      const bubbleCenter = (bubbleX ?? 0) + 20;
+      const dist = Math.abs(center - bubbleCenter);
+      if (dist < closestDist) {
+        closestDist = dist;
+        closestIdx = i;
+      }
+    });
+
+    // Trigger action based on closest
+    if (closestIdx === 0) setShowNotifications(false);
+    else if (closestIdx === 1) setShowNotifications(true);
+    else if (closestIdx === 3) openSettings("user");
+
+    setBubbleX(null); // snap back
+  }, [bubbleX, setShowNotifications, openSettings]);
+
+  const displayLeft = bubbleX ?? getActiveLeft();
 
   return (
-    <div className={`absolute bottom-0 right-0 z-30 flex items-end justify-center gap-3 pb-3 pt-1 md:hidden px-4 ${!sidebarCollapsed ? "left-[72px]" : "left-0"}`}>
+    <div className={`absolute bottom-0 right-0 z-30 flex items-center justify-center gap-3 pb-3 pt-1 md:hidden px-4 ${!sidebarCollapsed ? "left-[72px]" : "left-0"}`}>
       <div
         ref={barRef}
+        onPointerDown={handlePointerDown}
         onPointerMove={handlePointerMove}
-        onPointerLeave={resetScales}
-        className="relative flex items-end gap-1 rounded-full border border-white/[0.06] bg-white/[0.04] backdrop-blur-md px-2 py-1.5 shadow-[0_2px_16px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.04),inset_0_-1px_4px_rgba(0,0,0,0.3)]"
+        onPointerUp={handlePointerUp}
+        onPointerLeave={() => { isDragging.current = false; setBubbleX(null); }}
+        className="relative flex items-center gap-3 rounded-full border border-white/[0.06] bg-white/[0.04] backdrop-blur-md px-3 py-2 shadow-[0_2px_16px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.04),inset_0_-1px_4px_rgba(0,0,0,0.3)] touch-none"
       >
-        {DOCK_ITEMS.map((item, i) => {
-          const scale = scales[i];
-          const isActive = i === activeIdx;
-          const size = BASE_SIZE * scale;
+        {/* Glass bubble — follows finger, snaps on release */}
+        <div
+          className={`pointer-events-none absolute z-0 h-10 w-10 ${bubbleX === null ? "transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)]" : "transition-none"}`}
+          style={{ left: displayLeft }}
+        >
+          <div className="h-full w-full rounded-full bg-white/[0.10] shadow-[0_0_20px_rgba(255,255,255,0.06),inset_0_1px_0_rgba(255,255,255,0.15),inset_0_-1px_0_rgba(255,255,255,0.05)] backdrop-blur-xl border border-white/[0.12]" />
+          <div className="absolute inset-0 rounded-full bg-gradient-to-br from-blue-500/[0.08] via-transparent to-purple-500/[0.06]" />
+        </div>
 
-          return (
-            <button
-              key={item}
-              data-dock
-              onClick={() => {
-                if (item === "home") setShowNotifications(false);
-                else if (item === "bell") setShowNotifications(true);
-                else if (item === "profile") openSettings("user");
-              }}
-              className="relative flex items-center justify-center rounded-full transition-[width,height] duration-150 ease-out origin-bottom"
-              style={{ width: size, height: size }}
-            >
-              {/* Active bubble behind */}
-              {isActive && (
-                <div className="absolute inset-0 rounded-full bg-white/[0.10] shadow-[0_0_20px_rgba(255,255,255,0.06),inset_0_1px_0_rgba(255,255,255,0.15),inset_0_-1px_0_rgba(255,255,255,0.05)] border border-white/[0.12]" />
-              )}
-              <div className="relative z-10">
-                {item === "home" && (
-                  <>
-                    <Home className={`h-5 w-5 transition-colors duration-300 ${!showNotifications ? "text-foreground" : "text-muted-foreground"}`} />
-                    {!showNotifications && (
-                      <span className="absolute -top-1 -right-2 flex h-[16px] min-w-[16px] items-center justify-center rounded-full bg-discord-red px-1 text-[10px] font-bold text-white">223</span>
-                    )}
-                  </>
-                )}
-                {item === "bell" && (
-                  <>
-                    <Bell className={`h-5 w-5 transition-colors duration-300 ${showNotifications ? "text-foreground" : "text-muted-foreground"}`} />
-                    {showNotifications && (
-                      <span className="absolute -top-1 -right-2 flex h-[16px] min-w-[16px] items-center justify-center rounded-full bg-discord-red px-1 text-[10px] font-bold text-white">10</span>
-                    )}
-                  </>
-                )}
-                {item === "add" && <UserRoundPlus className="h-5 w-5 text-muted-foreground" />}
-                {item === "profile" && (
-                  <>
-                    <Avatar className="h-6 w-6">
-                      <AvatarFallback className="bg-primary text-primary-foreground text-[10px] font-bold">
-                        {user?.username?.charAt(0).toUpperCase() || "?"}
-                      </AvatarFallback>
-                    </Avatar>
-                    <span className="absolute bottom-0 right-0 h-[9px] w-[9px] rounded-full border-[1.5px] border-white/10 bg-discord-green" />
-                  </>
-                )}
-              </div>
-            </button>
-          );
-        })}
+        <button
+          data-dock
+          onClick={() => setShowNotifications(false)}
+          className="relative z-10 flex h-10 w-10 items-center justify-center rounded-full transition-all"
+        >
+          <Home className={`h-5 w-5 transition-colors duration-300 ${!showNotifications ? "text-foreground" : "text-muted-foreground"}`} />
+          {!showNotifications && (
+            <span className="absolute -top-1 -right-1 flex h-[16px] min-w-[16px] items-center justify-center rounded-full bg-discord-red px-1 text-[10px] font-bold text-white">223</span>
+          )}
+        </button>
+        <button
+          data-dock
+          onClick={() => setShowNotifications(true)}
+          className="relative z-10 flex h-10 w-10 items-center justify-center rounded-full transition-all"
+        >
+          <Bell className={`h-5 w-5 transition-colors duration-300 ${showNotifications ? "text-foreground" : "text-muted-foreground"}`} />
+          {showNotifications && (
+            <span className="absolute -top-1 -right-1 flex h-[16px] min-w-[16px] items-center justify-center rounded-full bg-discord-red px-1 text-[10px] font-bold text-white">10</span>
+          )}
+        </button>
+        <button data-dock className="relative z-10 flex h-10 w-10 items-center justify-center rounded-full transition-all hover:bg-white/[0.04]">
+          <UserRoundPlus className="h-5 w-5 text-muted-foreground" />
+        </button>
+        <button
+          data-dock
+          onClick={() => openSettings("user")}
+          className="relative z-10 flex h-10 w-10 items-center justify-center rounded-full transition-all hover:bg-white/[0.04]"
+        >
+          <Avatar className="h-6 w-6">
+            <AvatarFallback className="bg-primary text-primary-foreground text-[10px] font-bold">
+              {user?.username?.charAt(0).toUpperCase() || "?"}
+            </AvatarFallback>
+          </Avatar>
+          <span className="absolute bottom-0.5 right-0.5 h-[9px] w-[9px] rounded-full border-[1.5px] border-white/10 bg-discord-green" />
+        </button>
       </div>
-      <button className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-white/[0.06] bg-white/[0.04] text-muted-foreground shadow-[0_2px_16px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.04)] backdrop-blur-md transition-colors hover:bg-white/[0.08] hover:text-foreground mb-0.5">
+      <button className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-white/[0.06] bg-white/[0.04] text-muted-foreground shadow-[0_2px_16px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.04)] backdrop-blur-md transition-colors hover:bg-white/[0.08] hover:text-foreground">
         <Search className="h-5 w-5" />
       </button>
     </div>

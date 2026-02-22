@@ -34,7 +34,7 @@ export const useUIStore = create<UIState>((set) => ({
   setMainView: (view) => set({ mainView: view }),
   toggleMemberList: () => set((s) => ({ showMemberList: !s.showMemberList })),
   toggleSidebar: () => set((s) => ({ sidebarCollapsed: !s.sidebarCollapsed })),
-  setActiveDM: (name) => set({ activeDM: name, sidebarCollapsed: !!name }),
+  setActiveDM: (name) => set((s) => ({ activeDM: name, sidebarCollapsed: name ? true : s.sidebarCollapsed })),
   openSettings: (view) => set({ settingsView: view }),
   closeSettings: () => set({ settingsView: null }),
   setCreateServerOpen: (open) => set({ createServerOpen: open }),

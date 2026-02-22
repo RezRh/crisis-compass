@@ -56,7 +56,7 @@ export function DMSidebar() {
   return (
     <div className="relative flex h-full min-w-0 flex-1 flex-col bg-server-bar overflow-y-auto" onScroll={handleScroll}>
       <div className="sticky top-0 z-10">
-        <div className={`transition-all duration-75 ${scrolled ? "backdrop-blur-md bg-white/[0.02]" : ""}`}>
+        <div className={`transition-all duration-75 backdrop-blur-sm ${scrolled ? "backdrop-blur-md bg-white/[0.02]" : "bg-white/[0.01]"}`}>
         <div className="flex items-center justify-between px-4 pt-12 pb-2">
           <div className="flex items-center gap-2">
             {sidebarCollapsed && (

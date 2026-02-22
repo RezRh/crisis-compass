@@ -11,35 +11,38 @@ export function ServerSidebar() {
   const isHome = mainView === "dms";
 
   return (
-    <div className="flex h-full w-[72px] flex-col items-center gap-2 bg-server-bar pt-12 py-3 overflow-y-auto">
-      {/* Home / DMs */}
-      <Tooltip>
-        <TooltipTrigger asChild>
-          <div className="group relative flex items-center">
-            <span
-              className={cn(
-                "absolute -left-[4px] w-[4px] rounded-r-full bg-foreground transition-all duration-200",
-                isHome ? "h-10" : "h-0 group-hover:h-5"
-              )}
-            />
-            <button
-              onClick={() => setMainView("dms")}
-              className={cn(
-                "flex h-12 w-12 items-center justify-center transition-all duration-200 active:translate-y-px border border-white/[0.06] shadow-[0_2px_10px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.04)]",
-                isHome
-                  ? "rounded-[16px] bg-white/[0.12] text-foreground backdrop-blur-md shadow-[0_4px_16px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.1)]"
-                  : "rounded-[24px] bg-white/[0.04] text-foreground hover:rounded-[16px] hover:bg-white/[0.10] hover:backdrop-blur-md hover:shadow-[0_4px_16px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.1)]"
-              )}
-            >
-              <MessageCircle className="h-6 w-6" />
-            </button>
-          </div>
-        </TooltipTrigger>
-        <TooltipContent side="right" className="font-semibold">Direct Messages</TooltipContent>
-      </Tooltip>
+    <div className="flex h-full w-[72px] flex-col items-center bg-server-bar pt-12">
+      {/* Fixed DM button at top */}
+      <div className="flex flex-col items-center gap-2 pb-2 shrink-0">
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <div className="group relative flex items-center">
+              <span
+                className={cn(
+                  "absolute -left-[4px] w-[4px] rounded-r-full bg-foreground transition-all duration-200",
+                  isHome ? "h-10" : "h-0 group-hover:h-5"
+                )}
+              />
+              <button
+                onClick={() => setMainView("dms")}
+                className={cn(
+                  "flex h-12 w-12 items-center justify-center transition-all duration-200 active:translate-y-px border border-white/[0.06] shadow-[0_2px_10px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.04)]",
+                  isHome
+                    ? "rounded-[16px] bg-white/[0.12] text-foreground backdrop-blur-md shadow-[0_4px_16px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.1)]"
+                    : "rounded-[24px] bg-white/[0.04] text-foreground hover:rounded-[16px] hover:bg-white/[0.10] hover:backdrop-blur-md hover:shadow-[0_4px_16px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.1)]"
+                )}
+              >
+                <MessageCircle className="h-6 w-6" />
+              </button>
+            </div>
+          </TooltipTrigger>
+          <TooltipContent side="right" className="font-semibold">Direct Messages</TooltipContent>
+        </Tooltip>
+        <div className="mx-auto h-[2px] w-8 rounded-full bg-border" />
+      </div>
 
-      <div className="mx-auto h-[2px] w-8 rounded-full bg-border" />
-
+      {/* Scrollable server list */}
+      <div className="flex flex-1 flex-col items-center gap-2 overflow-y-auto py-1 pb-3 scrollbar-none">
       {servers.map((server) => {
         const isActive = mainView === "servers" && activeServerId === server.id;
         const notifCount = server.id === "s2" ? 21 : server.id === "s3" ? 3 : 0;
@@ -97,6 +100,7 @@ export function ServerSidebar() {
         </TooltipTrigger>
         <TooltipContent side="right" className="font-semibold">Add a Server</TooltipContent>
       </Tooltip>
+      </div>
     </div>
   );
 }

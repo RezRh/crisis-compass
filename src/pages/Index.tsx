@@ -67,16 +67,14 @@ const ChatApp = () => {
         </div>
       </div>
 
-      {/* Mobile bottom tab bar — Apple Dock magnification */}
-      {!activeDM && (
-        <DockBar
-          sidebarCollapsed={sidebarCollapsed}
-          showNotifications={showNotifications}
-          setShowNotifications={setShowNotifications}
-          openSettings={openSettings}
-          user={user}
-        />
-      )}
+      {/* Mobile bottom tab bar — always visible */}
+      <DockBar
+        sidebarCollapsed={sidebarCollapsed}
+        showNotifications={showNotifications}
+        setShowNotifications={setShowNotifications}
+        openSettings={openSettings}
+        user={user}
+      />
 
       <SettingsOverlay />
     </div>
@@ -181,7 +179,7 @@ function DockBar({
   const displayLeft = bubbleX ?? getActiveLeft();
 
   return (
-    <div className={`absolute bottom-0 right-0 z-30 flex items-center justify-center gap-3 pb-3 pt-1 md:hidden px-4 ${!sidebarCollapsed ? "left-[72px]" : "left-0"}`}>
+    <div className={`fixed bottom-0 right-0 z-[60] flex items-center justify-center gap-3 pb-3 pt-1 md:hidden px-4 ${!sidebarCollapsed ? "left-[72px]" : "left-0"}`}>
       <div
         ref={barRef}
         onPointerDown={handlePointerDown}

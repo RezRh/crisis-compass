@@ -102,7 +102,7 @@ export function ChatView() {
     <div ref={containerRef} className="relative flex h-full w-full flex-col bg-server-bar">
       <div className="flex flex-1 flex-col overflow-y-auto">
       {/* Header — sticky glass */}
-      <div className="sticky top-0 z-10 px-3 py-3 pt-12">
+      <div className="sticky top-0 z-10 px-3 py-3 pt-12 backdrop-blur-sm bg-white/[0.01]">
         <div className="flex items-center gap-3">
           <button
             onClick={() => setActiveDM(null)}

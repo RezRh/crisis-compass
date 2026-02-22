@@ -4,6 +4,7 @@ import { useUIStore } from "@/stores/ui-store";
 import { DMSidebar } from "@/components/chat/DMSidebar";
 import { ServerSidebar } from "@/components/chat/ServerSidebar";
 import { ChatView } from "@/components/chat/ChatView";
+import { NotificationsView } from "@/components/chat/NotificationsView";
 import { SettingsOverlay } from "@/components/settings/SettingsOverlay";
 import { LoginPage } from "@/pages/LoginPage";
 import { Home, Bell, UserRoundPlus, Search, MessageSquare } from "lucide-react";
@@ -13,7 +14,7 @@ import { useServerStore } from "@/stores/server-store";
 const ChatApp = () => {
   const { isAuthenticated, user } = useAuthStore();
   const { loadMockData } = useServerStore();
-  const { openSettings, sidebarCollapsed, activeDM } = useUIStore();
+  const { openSettings, sidebarCollapsed, activeDM, showNotifications, setShowNotifications } = useUIStore();
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -28,8 +29,12 @@ const ChatApp = () => {
   return (
     <div className="dark relative flex h-screen w-full flex-col overflow-hidden bg-server-bar text-foreground">
       <div className="flex flex-1 min-h-0 min-w-0 overflow-hidden">
-        {/* Mobile: full-screen chat when DM is active */}
-        {activeDM ? (
+        {/* Mobile: full-screen views */}
+        {showNotifications ? (
+          <div className="flex w-full md:hidden">
+            <NotificationsView onBack={() => setShowNotifications(false)} />
+          </div>
+        ) : activeDM ? (
           <div className="flex w-full md:hidden">
             <ChatView />
           </div>
@@ -70,7 +75,10 @@ const ChatApp = () => {
               <Home className="h-5 w-5 text-foreground" />
               <span className="absolute -top-1 -right-1 flex h-[16px] min-w-[16px] items-center justify-center rounded-full bg-discord-red px-1 text-[10px] font-bold text-white">223</span>
             </button>
-            <button className="flex h-10 w-10 items-center justify-center rounded-full transition-all hover:bg-white/[0.04]">
+            <button
+              onClick={() => setShowNotifications(true)}
+              className="flex h-10 w-10 items-center justify-center rounded-full transition-all hover:bg-white/[0.04]"
+            >
               <Bell className="h-5 w-5 text-muted-foreground" />
             </button>
             <button className="flex h-10 w-10 items-center justify-center rounded-full transition-all hover:bg-white/[0.04]">

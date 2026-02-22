@@ -66,14 +66,12 @@ function UserProfileView({ onClose }: { onClose: () => void }) {
       <div className="mx-auto max-w-md px-4 pb-8">
         {/* Avatar section */}
         <div className="relative mb-3">
-          <Avatar className="h-24 w-24 border-[5px] border-background">
+          <Avatar className="h-24 w-24 ring-[3px] ring-discord-green ring-offset-[3px] ring-offset-background">
             <AvatarImage src={serverIcon1} alt={user?.username} className="object-cover" />
             <AvatarFallback className="bg-primary text-primary-foreground text-3xl font-bold">
               {user?.username?.charAt(0).toUpperCase()}
             </AvatarFallback>
           </Avatar>
-          {/* Online indicator */}
-          <div className="absolute bottom-1 left-[68px] h-5 w-5 rounded-full border-[3px] border-background bg-discord-green" />
           {/* Status bubble */}
           <div className="absolute left-28 top-4 flex items-center gap-1.5 rounded-full bg-accent/80 px-3 py-1.5 text-xs text-muted-foreground">
             <span className="text-sm">➕</span>

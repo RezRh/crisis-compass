@@ -11,7 +11,7 @@ export function ServerSidebar() {
   const isHome = mainView === "dms";
 
   return (
-    <div className="flex h-full w-[72px] flex-col items-center gap-2 bg-server-bar pt-12 py-3 overflow-y-auto">
+    <div className="flex h-full w-[72px] flex-col items-center gap-2 border-r border-white/[0.04] bg-server-bar pt-12 py-3 overflow-y-auto shadow-[inset_-1px_0_0_rgba(255,255,255,0.03)]">
       {/* Home / DMs */}
       <Tooltip>
         <TooltipTrigger asChild>
@@ -25,10 +25,10 @@ export function ServerSidebar() {
             <button
               onClick={() => setMainView("dms")}
               className={cn(
-                "flex h-12 w-12 items-center justify-center transition-all duration-200 active:translate-y-px",
+                "flex h-12 w-12 items-center justify-center transition-all duration-200 active:translate-y-px border border-white/[0.06] shadow-[0_2px_10px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.04)]",
                 isHome
                   ? "rounded-[16px] bg-primary text-primary-foreground"
-                  : "rounded-[24px] bg-chat-bg text-foreground hover:rounded-[16px] hover:bg-primary hover:text-primary-foreground"
+                  : "rounded-[24px] bg-white/[0.04] text-foreground hover:rounded-[16px] hover:bg-primary hover:text-primary-foreground"
               )}
             >
               <MessageCircle className="h-6 w-6" />
@@ -61,10 +61,10 @@ export function ServerSidebar() {
                     setActiveServer(server.id);
                   }}
                   className={cn(
-                    "relative flex h-12 w-12 items-center justify-center transition-all duration-200 active:translate-y-px",
+                    "relative flex h-12 w-12 items-center justify-center transition-all duration-200 active:translate-y-px border border-white/[0.06] shadow-[0_2px_10px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.04)]",
                     isActive
                       ? "rounded-[16px] bg-primary text-primary-foreground"
-                      : "rounded-[24px] bg-chat-bg text-muted-foreground hover:rounded-[16px] hover:bg-primary hover:text-primary-foreground"
+                      : "rounded-[24px] bg-white/[0.04] text-muted-foreground hover:rounded-[16px] hover:bg-primary hover:text-primary-foreground"
                   )}
                 >
                   <span className="text-lg font-semibold">{server.name.charAt(0).toUpperCase()}</span>
@@ -90,7 +90,7 @@ export function ServerSidebar() {
         <TooltipTrigger asChild>
           <button
             onClick={() => setCreateServerOpen(true)}
-            className="flex h-12 w-12 items-center justify-center rounded-[24px] bg-chat-bg text-discord-green transition-all duration-200 hover:rounded-[16px] hover:bg-discord-green hover:text-white active:translate-y-px"
+            className="flex h-12 w-12 items-center justify-center rounded-[24px] border border-white/[0.06] bg-white/[0.04] text-discord-green shadow-[0_2px_10px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.04)] transition-all duration-200 hover:rounded-[16px] hover:bg-discord-green hover:text-white active:translate-y-px"
           >
             <Plus className="h-5 w-5" />
           </button>

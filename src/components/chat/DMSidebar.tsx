@@ -112,55 +112,6 @@ export function DMSidebar() {
         ))}
       </div>
 
-      {/* User panel */}
-      <div className="flex items-center gap-2 bg-server-bar px-2 py-[6px]">
-        <div className="relative flex-shrink-0 h-8 w-8">
-          <Avatar className="h-8 w-8">
-            <AvatarFallback className="bg-primary text-primary-foreground text-xs font-bold">
-              {user?.username?.charAt(0).toUpperCase() || "?"}
-            </AvatarFallback>
-          </Avatar>
-          <span className="absolute -bottom-[2px] -right-[2px] h-[14px] w-[14px] rounded-full border-[3px] border-server-bar bg-discord-green" />
-        </div>
-        <div className="flex-1 min-w-0">
-          <p className="truncate text-[13px] font-semibold text-foreground leading-tight">{user?.username}</p>
-          <p className="truncate text-[11px] text-muted-foreground leading-tight">Online</p>
-        </div>
-        <div className="flex items-center">
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <button className="rounded p-[6px] text-muted-foreground transition-colors hover:bg-accent/50 hover:text-foreground">
-                <Search className="h-[18px] w-[18px]" />
-              </button>
-            </TooltipTrigger>
-            <TooltipContent>Search</TooltipContent>
-          </Tooltip>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <button className="rounded p-[6px] text-muted-foreground transition-colors hover:bg-accent/50 hover:text-foreground">
-                <Mic className="h-[18px] w-[18px]" />
-              </button>
-            </TooltipTrigger>
-            <TooltipContent>Mute</TooltipContent>
-          </Tooltip>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <button className="rounded p-[6px] text-muted-foreground transition-colors hover:bg-accent/50 hover:text-foreground">
-                <Headphones className="h-[18px] w-[18px]" />
-              </button>
-            </TooltipTrigger>
-            <TooltipContent>Deafen</TooltipContent>
-          </Tooltip>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <button onClick={() => openSettings("user")} className="rounded p-[6px] text-muted-foreground transition-colors hover:bg-accent/50 hover:text-foreground">
-                <Settings className="h-[18px] w-[18px]" />
-              </button>
-            </TooltipTrigger>
-            <TooltipContent>User Settings</TooltipContent>
-          </Tooltip>
-        </div>
-      </div>
     </div>
   );
 }

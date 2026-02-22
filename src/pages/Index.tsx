@@ -61,35 +61,40 @@ const ChatApp = () => {
               <UserRoundPlus className="h-6 w-6" />
             </button>
           </div>
-          {/* Tab bar */}
-          <div className="flex items-center justify-around border-t border-border bg-server-bar py-2 md:hidden">
-            <button className="flex flex-col items-center gap-0.5">
-              <div className="relative">
-                <Home className="h-6 w-6 text-foreground" />
-                <span className="absolute -top-2 -right-3 flex h-[18px] min-w-[18px] items-center justify-center rounded-full bg-discord-red px-1 text-[11px] font-bold text-white">
-                  223
-                </span>
-              </div>
-              <span className="text-[10px] font-medium text-foreground mt-1">Home</span>
-            </button>
-            <button className="flex flex-col items-center gap-0.5">
-              <Bell className="h-6 w-6 text-muted-foreground" />
-              <span className="text-[10px] font-medium text-muted-foreground">Notifications</span>
-            </button>
-            <button
-              onClick={() => openSettings("user")}
-              className="flex flex-col items-center gap-0.5"
-            >
-              <div className="relative">
-                <Avatar className="h-6 w-6">
-                  <AvatarFallback className="bg-primary text-primary-foreground text-[10px] font-bold">
-                    {user?.username?.charAt(0).toUpperCase() || "?"}
-                  </AvatarFallback>
-                </Avatar>
-                <span className="absolute -bottom-[1px] -right-[1px] h-[10px] w-[10px] rounded-full border-2 border-server-bar bg-discord-green" />
-              </div>
-              <span className="text-[10px] font-medium text-muted-foreground">You</span>
-            </button>
+          {/* Liquid Glass Tab Bar */}
+          <div className="flex justify-center pb-2 pt-1 md:hidden">
+            <div className="flex items-center gap-1 rounded-full border border-white/[0.08] bg-white/[0.06] px-2 py-1.5 backdrop-blur-2xl shadow-[0_4px_24px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.06),inset_0_-2px_8px_rgba(0,0,0,0.2)]">
+              {/* Home - active */}
+              <button className="relative flex items-center gap-2 rounded-full bg-white/[0.1] px-5 py-2.5 shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_2px_8px_rgba(0,0,0,0.3)] transition-all">
+                <div className="relative">
+                  <Home className="h-5 w-5 text-foreground" />
+                  <span className="absolute -top-2 -right-3 flex h-[16px] min-w-[16px] items-center justify-center rounded-full bg-discord-red px-1 text-[10px] font-bold text-white">
+                    223
+                  </span>
+                </div>
+                <span className="text-[13px] font-semibold text-foreground">Home</span>
+              </button>
+              {/* Notifications */}
+              <button className="flex flex-col items-center rounded-full px-5 py-2.5 transition-all hover:bg-white/[0.06]">
+                <Bell className="h-5 w-5 text-muted-foreground" />
+                <span className="text-[10px] font-medium text-muted-foreground mt-0.5">Notifications</span>
+              </button>
+              {/* You */}
+              <button
+                onClick={() => openSettings("user")}
+                className="flex flex-col items-center rounded-full px-5 py-2.5 transition-all hover:bg-white/[0.06]"
+              >
+                <div className="relative">
+                  <Avatar className="h-5 w-5">
+                    <AvatarFallback className="bg-primary text-primary-foreground text-[9px] font-bold">
+                      {user?.username?.charAt(0).toUpperCase() || "?"}
+                    </AvatarFallback>
+                  </Avatar>
+                  <span className="absolute -bottom-[1px] -right-[1px] h-[9px] w-[9px] rounded-full border-[1.5px] border-white/10 bg-discord-green" />
+                </div>
+                <span className="text-[10px] font-medium text-muted-foreground mt-0.5">You</span>
+              </button>
+            </div>
           </div>
         </>
       )}

@@ -46,6 +46,7 @@ export function ChatView() {
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState<{ id: string; text: string; sender: "me" | "them"; time: string; date?: string }[]>([]);
   const bottomRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (activeDM) {
@@ -71,7 +72,7 @@ export function ChatView() {
   const hasText = message.trim().length > 0;
 
   return (
-    <div className="flex h-full w-full flex-col bg-server-bar">
+    <div ref={containerRef} className="relative flex h-full w-full flex-col bg-server-bar">
       {/* Header */}
       <div className="flex items-center gap-3 px-3 py-3 pt-12">
         <button
@@ -156,7 +157,7 @@ export function ChatView() {
       {/* Input */}
       <div className="px-3 py-3 pb-6">
         <div className="flex items-center gap-2">
-          <Drawer>
+          <Drawer container={containerRef.current}>
             <DrawerTrigger asChild>
               <button className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/[0.08] bg-white/[0.06] text-muted-foreground transition-colors hover:bg-white/[0.12] hover:text-foreground">
                 <Plus className="h-5 w-5" />

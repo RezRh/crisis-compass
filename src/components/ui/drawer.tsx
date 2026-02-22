@@ -3,8 +3,12 @@ import { Drawer as DrawerPrimitive } from "vaul";
 
 import { cn } from "@/lib/utils";
 
-const Drawer = ({ shouldScaleBackground = true, ...props }: React.ComponentProps<typeof DrawerPrimitive.Root>) => (
-  <DrawerPrimitive.Root shouldScaleBackground={shouldScaleBackground} {...props} />
+const DrawerContext = React.createContext<{ container?: HTMLElement | null }>({});
+
+const Drawer = ({ shouldScaleBackground = true, container, ...props }: React.ComponentProps<typeof DrawerPrimitive.Root> & { container?: HTMLElement | null }) => (
+  <DrawerContext.Provider value={{ container }}>
+    <DrawerPrimitive.Root shouldScaleBackground={shouldScaleBackground} {...props} />
+  </DrawerContext.Provider>
 );
 Drawer.displayName = "Drawer";
 
@@ -17,30 +21,45 @@ const DrawerClose = DrawerPrimitive.Close;
 const DrawerOverlay = React.forwardRef<
   React.ElementRef<typeof DrawerPrimitive.Overlay>,
   React.ComponentPropsWithoutRef<typeof DrawerPrimitive.Overlay>
->(({ className, ...props }, ref) => (
-  <DrawerPrimitive.Overlay ref={ref} className={cn("fixed inset-0 z-50 bg-black/80", className)} {...props} />
-));
+>(({ className, ...props }, ref) => {
+  const { container } = React.useContext(DrawerContext);
+  return (
+    <DrawerPrimitive.Overlay
+      ref={ref}
+      className={cn(
+        container ? "absolute inset-0 z-50 bg-black/60" : "fixed inset-0 z-50 bg-black/80",
+        className
+      )}
+      {...props}
+    />
+  );
+});
 DrawerOverlay.displayName = DrawerPrimitive.Overlay.displayName;
 
 const DrawerContent = React.forwardRef<
   React.ElementRef<typeof DrawerPrimitive.Content>,
   React.ComponentPropsWithoutRef<typeof DrawerPrimitive.Content>
->(({ className, children, ...props }, ref) => (
-  <DrawerPortal>
-    <DrawerOverlay />
-    <DrawerPrimitive.Content
-      ref={ref}
-      className={cn(
-        "fixed inset-x-0 bottom-0 z-50 mt-24 flex h-auto flex-col rounded-t-[20px] border border-white/[0.1] bg-white/[0.06] backdrop-blur-2xl",
-        className,
-      )}
-      {...props}
-    >
-      <div className="mx-auto mt-3 h-1 w-10 rounded-full bg-white/[0.2]" />
-      {children}
-    </DrawerPrimitive.Content>
-  </DrawerPortal>
-));
+>(({ className, children, ...props }, ref) => {
+  const { container } = React.useContext(DrawerContext);
+  return (
+    <DrawerPortal container={container}>
+      <DrawerOverlay />
+      <DrawerPrimitive.Content
+        ref={ref}
+        className={cn(
+          container
+            ? "absolute inset-x-0 bottom-0 z-50 mt-24 flex h-auto flex-col rounded-t-[20px] border border-white/[0.1] bg-white/[0.06] backdrop-blur-2xl"
+            : "fixed inset-x-0 bottom-0 z-50 mt-24 flex h-auto flex-col rounded-t-[20px] border border-white/[0.1] bg-white/[0.06] backdrop-blur-2xl",
+          className,
+        )}
+        {...props}
+      >
+        <div className="mx-auto mt-3 h-1 w-10 rounded-full bg-white/[0.2]" />
+        {children}
+      </DrawerPrimitive.Content>
+    </DrawerPortal>
+  );
+});
 DrawerContent.displayName = "DrawerContent";
 
 const DrawerHeader = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (

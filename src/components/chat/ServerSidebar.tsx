@@ -30,7 +30,7 @@ export function ServerSidebar() {
     <div className={`flex h-full flex-col items-center bg-server-bar pt-12 pb-3 transition-all duration-200 ${sidebarCollapsed ? "w-[72px]" : "w-[80px]"}`}>
       {/* Glass tile — scales with sidebar state */}
       <div
-        className="relative flex flex-col items-center rounded-[18px] border border-white/[0.06] bg-white/[0.04] backdrop-blur-md shadow-[0_2px_16px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.04),inset_0_-1px_4px_rgba(0,0,0,0.3)] max-h-full min-h-0 overflow-hidden transition-all duration-200"
+        className="relative flex flex-col items-center rounded-[18px] border border-primary/30 bg-white/[0.04] backdrop-blur-md shadow-[0_2px_16px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.04),inset_0_-1px_4px_rgba(0,0,0,0.3),0_0_12px_rgba(255,0,60,0.15)] max-h-full min-h-0 overflow-hidden transition-all duration-200"
         style={{ width: sidebarCollapsed ? 55 : 64 }}
       >
         {/* Fixed DM button at top */}

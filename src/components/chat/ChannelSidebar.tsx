@@ -1,7 +1,7 @@
 import { useServerStore } from "@/stores/server-store";
 import { useAuthStore } from "@/stores/auth-store";
 import { useUIStore } from "@/stores/ui-store";
-import { Hash, ChevronDown, Plus, Settings, LogOut } from "lucide-react";
+import { Hash, ChevronDown, Plus, Settings, LogOut, Mic, Headphones } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
@@ -16,7 +16,6 @@ export function ChannelSidebar() {
   const activeServer = servers.find((s) => s.id === activeServerId);
   const serverChannels = activeServerId ? channels[activeServerId] || [] : [];
 
-  // Group by category
   const categories = serverChannels.reduce<Record<string, typeof serverChannels>>((acc, ch) => {
     const cat = ch.category || "Uncategorized";
     if (!acc[cat]) acc[cat] = [];
@@ -39,13 +38,13 @@ export function ChannelSidebar() {
       {/* Server header */}
       <button
         onClick={() => openSettings("server")}
-        className="flex h-12 items-center justify-between border-b border-border px-4 font-semibold text-foreground shadow-sm transition-colors hover:bg-accent"
+        className="flex h-12 items-center justify-between border-b border-border px-4 font-semibold text-foreground shadow-sm transition-colors hover:bg-accent/50"
       >
         <span className="truncate">{activeServer.name}</span>
         <ChevronDown className="h-4 w-4 shrink-0 text-muted-foreground" />
       </button>
 
-      {/* Channel list */}
+      {/* Channels */}
       <div className="flex-1 overflow-y-auto px-2 pt-4 space-y-4">
         {Object.entries(categories).map(([category, chans]) => (
           <ChannelCategory
@@ -60,32 +59,45 @@ export function ChannelSidebar() {
       </div>
 
       {/* User panel */}
-      <div className="flex items-center gap-2 border-t border-border bg-server-bar p-2">
-        <Avatar className="h-8 w-8">
-          <AvatarFallback className="bg-primary text-primary-foreground text-xs">
-            {user?.username?.charAt(0).toUpperCase() || "?"}
-          </AvatarFallback>
-        </Avatar>
+      <div className="flex items-center gap-2 border-t border-border bg-server-bar/50 p-2">
+        <div className="relative">
+          <Avatar className="h-8 w-8">
+            <AvatarFallback className="bg-primary text-primary-foreground text-xs font-bold">
+              {user?.username?.charAt(0).toUpperCase() || "?"}
+            </AvatarFallback>
+          </Avatar>
+          <span className="absolute -bottom-0.5 -right-0.5 h-3 w-3 rounded-full border-2 border-channel-bar bg-discord-green" />
+        </div>
         <div className="flex-1 min-w-0">
           <p className="truncate text-sm font-medium text-foreground">{user?.username}</p>
           <p className="truncate text-[10px] text-muted-foreground">Online</p>
         </div>
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <button onClick={() => openSettings("user")} className="p-1 text-muted-foreground hover:text-foreground">
-              <Settings className="h-4 w-4" />
-            </button>
-          </TooltipTrigger>
-          <TooltipContent>User Settings</TooltipContent>
-        </Tooltip>
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <button onClick={logout} className="p-1 text-muted-foreground hover:text-destructive">
-              <LogOut className="h-4 w-4" />
-            </button>
-          </TooltipTrigger>
-          <TooltipContent>Log Out</TooltipContent>
-        </Tooltip>
+        <div className="flex items-center gap-0.5">
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <button className="rounded p-1.5 text-muted-foreground transition-colors hover:bg-accent hover:text-foreground">
+                <Mic className="h-4 w-4" />
+              </button>
+            </TooltipTrigger>
+            <TooltipContent>Mute</TooltipContent>
+          </Tooltip>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <button className="rounded p-1.5 text-muted-foreground transition-colors hover:bg-accent hover:text-foreground">
+                <Headphones className="h-4 w-4" />
+              </button>
+            </TooltipTrigger>
+            <TooltipContent>Deafen</TooltipContent>
+          </Tooltip>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <button onClick={() => openSettings("user")} className="rounded p-1.5 text-muted-foreground transition-colors hover:bg-accent hover:text-foreground">
+                <Settings className="h-4 w-4" />
+              </button>
+            </TooltipTrigger>
+            <TooltipContent>User Settings</TooltipContent>
+          </Tooltip>
+        </div>
       </div>
     </div>
   );
@@ -109,25 +121,27 @@ function ChannelCategory({
   return (
     <Collapsible open={open} onOpenChange={setOpen}>
       <div className="flex items-center justify-between pr-1">
-        <CollapsibleTrigger className="flex items-center gap-0.5 text-[11px] font-semibold uppercase tracking-wide text-muted-foreground hover:text-foreground">
-          <ChevronDown className={cn("h-3 w-3 transition-transform", !open && "-rotate-90")} />
+        <CollapsibleTrigger className="flex items-center gap-0.5 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground hover:text-foreground transition-colors">
+          <ChevronDown className={cn("h-3 w-3 transition-transform duration-200", !open && "-rotate-90")} />
           {name}
         </CollapsibleTrigger>
-        <button onClick={onAddChannel} className="text-muted-foreground hover:text-foreground">
+        <button onClick={onAddChannel} className="rounded p-0.5 text-muted-foreground opacity-0 transition-all hover:text-foreground group-hover:opacity-100 [div:hover>&]:opacity-100">
           <Plus className="h-4 w-4" />
         </button>
       </div>
-      <CollapsibleContent className="mt-0.5 space-y-[2px]">
+      <CollapsibleContent className="mt-0.5 space-y-[1px]">
         {channels.map((ch) => (
           <button
             key={ch.id}
             onClick={() => onSelect(ch.id)}
             className={cn(
-              "flex w-full items-center gap-1.5 rounded-md px-2 py-1.5 text-sm text-muted-foreground transition-colors hover:bg-accent hover:text-foreground",
-              activeChannelId === ch.id && "bg-accent text-foreground"
+              "flex w-full items-center gap-1.5 rounded-md px-2 py-[6px] text-sm transition-all duration-100",
+              activeChannelId === ch.id
+                ? "bg-accent text-foreground font-medium"
+                : "text-muted-foreground hover:bg-accent/50 hover:text-foreground"
             )}
           >
-            <Hash className="h-4 w-4 shrink-0 text-muted-foreground" />
+            <Hash className="h-4 w-4 shrink-0 opacity-60" />
             <span className="truncate">{ch.name}</span>
           </button>
         ))}

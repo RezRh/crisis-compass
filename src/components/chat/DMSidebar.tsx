@@ -45,12 +45,12 @@ export function DMSidebar() {
         <h2 className="text-[20px] font-bold text-foreground">Messages</h2>
       </div>
 
-      {/* Search + Add Friends row */}
+      {/* Search + Add Friends row — liquid glass */}
       <div className="flex items-center gap-2 px-3 pb-3">
-        <button className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-accent/60 text-muted-foreground transition-colors hover:bg-accent hover:text-foreground">
+        <button className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-white/[0.06] bg-white/[0.04] text-muted-foreground shadow-[0_2px_10px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.04)] transition-colors hover:bg-white/[0.08] hover:text-foreground">
           <Search className="h-[18px] w-[18px]" />
         </button>
-        <button className="flex h-9 flex-1 items-center justify-center gap-2 rounded-full bg-accent/60 text-[13px] font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-foreground">
+        <button className="flex h-9 flex-1 items-center justify-center gap-2 rounded-full border border-white/[0.06] bg-white/[0.04] text-[13px] font-medium text-muted-foreground shadow-[0_2px_10px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.04)] transition-colors hover:bg-white/[0.08] hover:text-foreground">
           <UserPlus className="h-[16px] w-[16px]" />
           <span>Add Friends</span>
         </button>

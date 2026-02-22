@@ -47,7 +47,7 @@ const mockDMs = [
 
 export function DMSidebar() {
   const { user } = useAuthStore();
-  const { openSettings, sidebarCollapsed, toggleSidebar, setActiveDM, activeDM } = useUIStore();
+  const { openSettings, sidebarCollapsed, toggleSidebar, setActiveDM, activeDM, setShowAddFriends } = useUIStore();
   const [scrolled, setScrolled] = useState(false);
   const handleScroll = useCallback((e: React.UIEvent<HTMLDivElement>) => {
     setScrolled(e.currentTarget.scrollTop > 10);
@@ -85,7 +85,7 @@ export function DMSidebar() {
 
         {/* Add Friends — glass refraction */}
         <div className="relative flex items-center gap-2 px-3 pt-1 pb-4">
-          <button className="flex h-9 min-w-0 flex-1 items-center justify-center gap-2 rounded-full border border-white/[0.06] bg-white/[0.04] backdrop-blur-2xl text-[13px] font-medium text-muted-foreground shadow-[0_2px_10px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.04)] transition-colors hover:bg-white/[0.08] hover:text-foreground">
+          <button onClick={() => setShowAddFriends(true)} className="flex h-9 min-w-0 flex-1 items-center justify-center gap-2 rounded-full border border-white/[0.06] bg-white/[0.04] backdrop-blur-2xl text-[13px] font-medium text-muted-foreground shadow-[0_2px_10px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.04)] transition-colors hover:bg-white/[0.08] hover:text-foreground">
             <UserPlus className="h-[16px] w-[16px] shrink-0" />
             <span className="truncate">Add Friends</span>
           </button>

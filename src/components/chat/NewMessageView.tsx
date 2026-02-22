@@ -124,7 +124,7 @@ export function NewMessageView({ onBack }: { onBack: () => void }) {
             <span className="flex-1 text-left text-[15px] font-semibold text-foreground">New Group</span>
             <ChevronRight className="h-5 w-5 text-muted-foreground" />
           </button>
-          <div className="mx-4 border-b border-white/[0.06]" />
+          <div className="mx-4 border-b border-primary/20" />
           <button
             onClick={() => { setShowNewMessage(false); setShowAddFriends(true); }}
             className="flex w-full items-center gap-3 px-4 py-3.5 transition-colors hover:bg-white/[0.04]"
@@ -145,7 +145,7 @@ export function NewMessageView({ onBack }: { onBack: () => void }) {
               {suggested.map((friend, i) => (
                 <div key={friend.id}>
                   <FriendRow friend={friend} onSelect={handleSelectFriend} />
-                  {i < suggested.length - 1 && <div className="mx-4 border-b border-white/[0.06]" />}
+                  {i < suggested.length - 1 && <div className="mx-4 border-b border-primary/20" />}
                 </div>
               ))}
             </div>
@@ -160,7 +160,7 @@ export function NewMessageView({ onBack }: { onBack: () => void }) {
               {grouped[letter].map((friend, i) => (
                 <div key={friend.id}>
                   <FriendRow friend={friend} onSelect={handleSelectFriend} />
-                  {i < grouped[letter].length - 1 && <div className="mx-4 border-b border-white/[0.06]" />}
+                  {i < grouped[letter].length - 1 && <div className="mx-4 border-b border-primary/20" />}
                 </div>
               ))}
             </div>

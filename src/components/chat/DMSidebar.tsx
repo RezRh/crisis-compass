@@ -46,9 +46,9 @@ export function DMSidebar() {
           {sidebarCollapsed && (
             <button 
               onClick={(e) => { e.stopPropagation(); toggleSidebar(); }} 
-              className="p-1 text-muted-foreground transition-colors hover:text-foreground"
+              className="flex h-8 w-8 items-center justify-center rounded-full border border-white/[0.06] bg-white/[0.04] text-muted-foreground shadow-[0_2px_10px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.04)] transition-colors hover:bg-white/[0.08] hover:text-foreground"
             >
-              <PanelLeftOpen className="h-5 w-5" />
+              <PanelLeftOpen className="h-[18px] w-[18px]" />
             </button>
           )}
           <h2 className="text-[20px] font-bold text-foreground">Messages</h2>
@@ -56,9 +56,9 @@ export function DMSidebar() {
         {!sidebarCollapsed && (
           <button 
             onClick={(e) => { e.stopPropagation(); toggleSidebar(); }} 
-            className="p-1 text-muted-foreground transition-colors hover:text-foreground"
+            className="flex h-8 w-8 items-center justify-center rounded-full border border-white/[0.06] bg-white/[0.04] text-muted-foreground shadow-[0_2px_10px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.04)] transition-colors hover:bg-white/[0.08] hover:text-foreground"
           >
-            <PanelLeftClose className="h-5 w-5" />
+            <PanelLeftClose className="h-[18px] w-[18px]" />
           </button>
         )}
       </div>

@@ -13,6 +13,7 @@ import { LoginPage } from "@/pages/LoginPage";
 import { Home, Bell, UserRoundPlus, Search, MessageSquare, MessageSquarePlus } from "lucide-react";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { useServerStore } from "@/stores/server-store";
+import serverIcon1 from "@/assets/server-icon-1.jpg";
 
 const ChatApp = () => {
   const { isAuthenticated, user } = useAuthStore();
@@ -31,6 +32,8 @@ const ChatApp = () => {
 
   return (
     <div className="dark relative flex h-screen w-full flex-col overflow-hidden bg-server-bar text-foreground">
+      {/* Preload profile images so they appear instantly */}
+      <img src={serverIcon1} alt="" className="hidden" />
       <div className="flex flex-1 min-h-0 min-w-0 overflow-hidden">
         {/* Mobile: ServerSidebar always mounted, visibility toggled */}
         <div className={`md:hidden ${!sidebarCollapsed && !showNewMessage && !showNotifications && !showSearch && !showAddFriends && !activeDM ? "" : "hidden"}`}>

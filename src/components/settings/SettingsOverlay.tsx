@@ -7,6 +7,8 @@ import { Label } from "@/components/ui/label";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Settings, X, Trash2, Pencil, ChevronDown, ChevronRight, ExternalLink, BadgeCheck, MessageSquare, Zap, ShoppingCart, Star, Plus, Trophy, Smile, Gem, Gamepad2, Target, Github, Dice5 } from "lucide-react";
 import { useState } from "react";
+import Lottie from "lottie-react";
+import shopIconData from "@/assets/shop-icon.json";
 import serverIcon1 from "@/assets/server-icon-1.jpg";
 import serverIcon2 from "@/assets/server-icon-2.jpg";
 import serverIcon3 from "@/assets/server-icon-3.jpg";
@@ -49,7 +51,7 @@ function UserProfileView({ onClose }: { onClose: () => void }) {
           <Zap className="h-5 w-5" />
         </button>
         <button className="flex h-9 w-9 items-center justify-center rounded-full text-muted-foreground hover:text-foreground transition-colors">
-          <ShoppingCart className="h-5 w-5 animate-bounce" />
+          <Lottie animationData={shopIconData} loop className="h-6 w-6 invert" />
         </button>
         <button className="flex items-center gap-1.5 rounded-full bg-accent px-3 py-1.5 text-sm font-medium text-foreground hover:bg-accent/80 transition-colors">
           <Star className="h-4 w-4" />

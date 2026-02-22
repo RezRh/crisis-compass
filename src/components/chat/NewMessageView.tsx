@@ -99,7 +99,7 @@ export function NewMessageView({ onBack }: { onBack: () => void }) {
 
         {/* Search bar — liquid glass */}
         <div className="relative px-4 pb-3">
-          <div className="flex items-center gap-2 rounded-full border border-white/[0.06] bg-white/[0.04] backdrop-blur-2xl px-4 py-2.5 shadow-[0_2px_10px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.04)]">
+          <div className="flex items-center gap-2 rounded-full border border-primary/30 bg-white/[0.04] backdrop-blur-2xl px-4 py-2.5 shadow-[0_2px_10px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.04),0_0_12px_rgba(255,0,60,0.1)]">
             <span className="text-[14px] text-muted-foreground shrink-0">To:</span>
             <input
               type="text"
@@ -116,7 +116,7 @@ export function NewMessageView({ onBack }: { onBack: () => void }) {
       {/* Scrollable content */}
       <div className="pb-24">
         {/* New Group & Add a Friend */}
-        <div className="mx-4 mb-4 rounded-2xl border border-white/[0.06] bg-white/[0.03] overflow-hidden">
+        <div className="mx-4 mb-4 rounded-2xl border border-primary/20 bg-white/[0.03] overflow-hidden">
           <button className="flex w-full items-center gap-3 px-4 py-3.5 transition-colors hover:bg-white/[0.04]">
             <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary">
               <Users className="h-5 w-5 text-primary-foreground" />
@@ -141,7 +141,7 @@ export function NewMessageView({ onBack }: { onBack: () => void }) {
         {!search && (
           <>
             <p className="px-4 pb-2 text-[13px] font-semibold text-muted-foreground uppercase tracking-wide">Suggested</p>
-            <div className="mx-4 mb-4 rounded-2xl border border-white/[0.06] bg-white/[0.03] overflow-hidden">
+            <div className="mx-4 mb-4 rounded-2xl border border-primary/20 bg-white/[0.03] overflow-hidden">
               {suggested.map((friend, i) => (
                 <div key={friend.id}>
                   <FriendRow friend={friend} onSelect={handleSelectFriend} />
@@ -156,7 +156,7 @@ export function NewMessageView({ onBack }: { onBack: () => void }) {
         {sortedLetters.map((letter) => (
           <div key={letter}>
             <p className="px-4 pb-2 pt-1 text-[13px] font-semibold text-muted-foreground uppercase tracking-wide">{letter}</p>
-            <div className="mx-4 mb-4 rounded-2xl border border-white/[0.06] bg-white/[0.03] overflow-hidden">
+            <div className="mx-4 mb-4 rounded-2xl border border-primary/20 bg-white/[0.03] overflow-hidden">
               {grouped[letter].map((friend, i) => (
                 <div key={friend.id}>
                   <FriendRow friend={friend} onSelect={handleSelectFriend} />

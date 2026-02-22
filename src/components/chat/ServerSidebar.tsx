@@ -5,13 +5,12 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip
 import { cn } from "@/lib/utils";
 import { useMemo, useRef, useEffect, useState, useCallback } from "react";
 
-const BTN_SIZE = 40; // px
-const BUBBLE_SIZE = 40;
+const BTN_SIZE = 40;
 
 export function ServerSidebar() {
   const { servers, activeServerId, setActiveServer } = useServerStore();
   const { setCreateServerOpen, mainView, setMainView } = useUIStore();
-  const containerRef = useRef<HTMLDivElement>(null);
+  const tileRef = useRef<HTMLDivElement>(null);
   const [bubbleOffset, setBubbleOffset] = useState<number>(0);
 
   const isHome = mainView === "dms";
@@ -23,64 +22,61 @@ export function ServerSidebar() {
   }, [isHome, servers, activeServerId]);
 
   const recalcBubble = useCallback(() => {
-    if (activeIndex < 0 || !containerRef.current) return;
-    const buttons = containerRef.current.querySelectorAll<HTMLElement>("[data-srv]");
+    if (activeIndex < 0 || !tileRef.current) return;
+    const buttons = tileRef.current.querySelectorAll<HTMLElement>("[data-srv]");
     const btn = buttons[activeIndex];
     if (!btn) return;
-    const cRect = containerRef.current.getBoundingClientRect();
-    const bRect = btn.getBoundingClientRect();
-    setBubbleOffset(bRect.top - cRect.top);
+    const tileRect = tileRef.current.getBoundingClientRect();
+    const btnRect = btn.getBoundingClientRect();
+    setBubbleOffset(btnRect.top - tileRect.top);
   }, [activeIndex]);
 
-  useEffect(() => {
-    recalcBubble();
-  }, [recalcBubble, servers]);
+  useEffect(() => { recalcBubble(); }, [recalcBubble, servers]);
 
-  // Recalc on scroll inside the scrollable area
   const onScroll = useCallback(() => recalcBubble(), [recalcBubble]);
 
   return (
-    <div className="flex h-full w-[72px] flex-col items-center bg-server-bar py-3">
+    <div className="flex h-full w-[72px] flex-col items-center bg-server-bar">
+      {/* Fixed chat button — aligned with "Messages" heading (pt-12 = 48px) */}
+      <div className="shrink-0 flex flex-col items-center pt-12 pb-1">
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <button
+              onClick={() => setMainView("dms")}
+              className={cn(
+                "flex items-center justify-center rounded-[12px] transition-all duration-200 active:translate-y-px border border-white/[0.06] backdrop-blur-md shadow-[0_2px_10px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.04)]",
+                isHome
+                  ? "bg-white/[0.12] text-foreground shadow-[0_4px_16px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.1)]"
+                  : "bg-white/[0.04] text-foreground hover:bg-white/[0.10]"
+              )}
+              style={{ width: BTN_SIZE, height: BTN_SIZE }}
+            >
+              <MessageCircle className="h-[18px] w-[18px]" />
+            </button>
+          </TooltipTrigger>
+          <TooltipContent side="right" className="font-semibold">Direct Messages</TooltipContent>
+        </Tooltip>
+      </div>
+
+      {/* Glass tile for servers — scrollable */}
       <div
-        ref={containerRef}
-        className="relative flex flex-col items-center rounded-[20px] border border-white/[0.06] bg-white/[0.04] backdrop-blur-md shadow-[0_2px_16px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.04),inset_0_-1px_4px_rgba(0,0,0,0.3)] mx-auto w-[52px] max-h-[calc(100%-8px)] overflow-hidden"
+        ref={tileRef}
+        className="relative flex flex-col items-center rounded-[18px] border border-white/[0.06] bg-white/[0.04] backdrop-blur-md shadow-[0_2px_16px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.04),inset_0_-1px_4px_rgba(0,0,0,0.3)] w-[52px] flex-1 min-h-0 overflow-hidden mt-1"
       >
-        {/* Sliding liquid glass bubble */}
-        {activeIndex >= 0 && (
+        {/* Sliding liquid glass bubble — index 0 is first server now */}
+        {activeIndex > 0 && (
           <div
             className="pointer-events-none absolute left-1/2 z-0 -translate-x-1/2 transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)]"
-            style={{ top: bubbleOffset, width: BUBBLE_SIZE, height: BUBBLE_SIZE }}
+            style={{ top: bubbleOffset, width: BTN_SIZE, height: BTN_SIZE }}
           >
             <div className="h-full w-full rounded-[12px] bg-white/[0.10] shadow-[0_0_20px_rgba(255,255,255,0.06),inset_0_1px_0_rgba(255,255,255,0.15),inset_0_-1px_0_rgba(255,255,255,0.05)] backdrop-blur-xl border border-white/[0.12]" />
             <div className="absolute inset-0 rounded-[12px] bg-gradient-to-br from-blue-500/[0.08] via-transparent to-purple-500/[0.06]" />
           </div>
         )}
 
-        {/* Fixed DM button at top */}
-        <div className="relative z-10 flex flex-col items-center shrink-0 pt-[6px] px-[6px]">
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <button
-                data-srv
-                onClick={() => setMainView("dms")}
-                className={cn(
-                  "flex items-center justify-center rounded-[12px] transition-all duration-200 active:translate-y-px",
-                  isHome ? "text-foreground" : "text-foreground hover:bg-white/[0.06]"
-                )}
-                style={{ width: BTN_SIZE, height: BTN_SIZE }}
-              >
-                <MessageCircle className="h-[18px] w-[18px]" />
-              </button>
-            </TooltipTrigger>
-            <TooltipContent side="right" className="font-semibold">Direct Messages</TooltipContent>
-          </Tooltip>
-          <div className="h-[2px] w-7 rounded-full bg-white/[0.06] my-1" />
-        </div>
-
-        {/* Scrollable server list */}
         <div
           onScroll={onScroll}
-          className="relative z-10 flex flex-1 flex-col items-center gap-[4px] overflow-y-auto py-0.5 px-[6px] pb-[6px] scrollbar-none min-h-0"
+          className="relative z-10 flex flex-1 flex-col items-center gap-[2px] overflow-y-auto p-[6px] scrollbar-none min-h-0"
         >
           {servers.map((server) => {
             const isActive = mainView === "servers" && activeServerId === server.id;
@@ -90,7 +86,7 @@ export function ServerSidebar() {
             return (
               <Tooltip key={server.id}>
                 <TooltipTrigger asChild>
-                  <div className="relative flex items-center">
+                  <div className="relative flex items-center justify-center">
                     <button
                       data-srv
                       onClick={() => {
@@ -138,6 +134,9 @@ export function ServerSidebar() {
           </Tooltip>
         </div>
       </div>
+
+      {/* Bottom spacer */}
+      <div className="h-3 shrink-0" />
     </div>
   );
 }

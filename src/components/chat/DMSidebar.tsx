@@ -1,3 +1,4 @@
+import { useState, useCallback } from "react";
 import { useAuthStore } from "@/stores/auth-store";
 import { useUIStore } from "@/stores/ui-store";
 import { Search, UserPlus, Mic, Headphones, Settings, Home, Bell, User, UserRoundPlus, PanelLeftClose, PanelLeftOpen } from "lucide-react";
@@ -47,11 +48,14 @@ const mockDMs = [
 export function DMSidebar() {
   const { user } = useAuthStore();
   const { openSettings, sidebarCollapsed, toggleSidebar, setActiveDM, activeDM } = useUIStore();
+  const [scrolled, setScrolled] = useState(false);
+  const handleScroll = useCallback((e: React.UIEvent<HTMLDivElement>) => {
+    setScrolled(e.currentTarget.scrollTop > 10);
+  }, []);
 
   return (
-    <div className="relative flex h-full min-w-0 flex-1 flex-col bg-server-bar overflow-y-auto">
-      {/* Title with toggle — solid bg */}
-      <div className="sticky top-0 z-10">
+    <div className="relative flex h-full min-w-0 flex-1 flex-col bg-server-bar overflow-y-auto" onScroll={handleScroll}>
+      <div className={`sticky top-0 z-10 transition-all duration-200 ${scrolled ? "backdrop-blur-md bg-white/[0.02]" : ""}`}>
         <div className="flex items-center justify-between px-4 pt-12 pb-2">
           <div className="flex items-center gap-2">
             {sidebarCollapsed && (

@@ -16,11 +16,26 @@ const otherUsers: User[] = [
   { id: "u5", username: "Diana", email: "diana@example.com", avatar_url: null, status: "offline", created_at: new Date().toISOString() },
 ];
 
-export const mockServers: Server[] = [
-  { id: "s1", name: "Rust Dev", icon_url: null, owner_id: "u1", created_at: new Date().toISOString() },
-  { id: "s2", name: "Gaming Hub", icon_url: null, owner_id: "u2", created_at: new Date().toISOString() },
-  { id: "s3", name: "Design Studio", icon_url: null, owner_id: "u1", created_at: new Date().toISOString() },
+const serverNames = [
+  "Rust Dev", "Gaming Hub", "Design Studio", "Python Crew", "Web Devs",
+  "Music Lounge", "Art Corner", "Anime Zone", "Crypto Talk", "Fitness Lab",
+  "Book Club", "Movie Buffs", "Tech News", "Startup Hub", "Cloud Ops",
+  "Data Science", "Mobile Dev", "Linux Gang", "Security HQ", "AI Research",
+  "Open Source", "DevOps Pro", "Frontend FM", "Backend API", "Full Stack",
+  "Code Golf", "Hack Night", "Study Group", "Meme Central", "Photography",
+  "Travel Crew", "Food & Cook", "Pet Lovers", "Car Culture", "Space Fans",
+  "History Buff", "Chess Club", "Retro Games", "VR World", "3D Printing",
+  "Robotics", "Electronics", "Math Nerds", "Writers Den", "Language Learn",
+  "Vinyl Heads", "Board Games", "Sneaker Talk", "Plant Life", "DIY Makers",
 ];
+
+export const mockServers: Server[] = serverNames.map((name, i) => ({
+  id: `s${i + 1}`,
+  name,
+  icon_url: null,
+  owner_id: i % 2 === 0 ? "u1" : "u2",
+  created_at: new Date().toISOString(),
+}));
 
 export const mockChannels: Record<string, Channel[]> = {
   s1: [

@@ -37,7 +37,7 @@ export function DMSidebar() {
   const { user } = useAuthStore();
 
   return (
-    <div className="flex h-full w-60 flex-col bg-channel-bar">
+    <div className="flex h-full w-60 flex-1 md:flex-none flex-col bg-channel-bar">
       {/* Title */}
       <div className="px-4 pt-4 pb-3">
         <h2 className="text-[20px] font-bold text-foreground">Messages</h2>

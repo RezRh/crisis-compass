@@ -38,7 +38,8 @@ const ChatApp = () => {
     <div className="dark flex h-screen w-full overflow-hidden bg-chat-bg text-foreground">
       <ServerSidebar />
       {isDMs ? <DMSidebar /> : <ChannelSidebar />}
-      <div className="flex flex-1 flex-col min-w-0 bg-chat-bg">
+      {/* Main content: hidden on mobile when in DM view (sidebar IS the view on mobile) */}
+      <div className={`flex flex-1 flex-col min-w-0 bg-chat-bg ${isDMs ? "hidden md:flex" : ""}`}>
         {isDMs ? <DMHeader /> : <ChatHeader />}
         <div className="flex-1 overflow-hidden">
           {isDMs ? <DMContent /> : <MessageList />}

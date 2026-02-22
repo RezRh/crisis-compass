@@ -101,7 +101,7 @@
   }
   body {
     @apply bg-background text-foreground antialiased;
-    font-family: 'gg sans', 'Noto Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-family: 'JetBrains Mono', 'Fira Code', 'SF Mono', 'Cascadia Code', 'Consolas', monospace;
   }
 }
 

@@ -100,12 +100,12 @@ function UserProfileView({ onClose }: { onClose: () => void }) {
         <div className="flex items-center justify-between px-5 py-4">
           {/* Circular PFP with Prism artifact halo */}
           <div className="relative">
-            {/* Prism glow halo */}
-            <div className="absolute -inset-3 rounded-full bg-primary/20 blur-xl animate-pulse" />
-            <div className="absolute -inset-1.5 rounded-full bg-gradient-to-br from-primary/40 via-transparent to-[#ADFF2F]/30 animate-[spin_6s_linear_infinite]" />
-            <Avatar className="relative h-14 w-14 ring-[2px] ring-primary ring-offset-2 ring-offset-background">
+            {/* Liquid glass halo */}
+            <div className="absolute -inset-2 rounded-full bg-white/[0.06] backdrop-blur-xl border border-white/[0.15] shadow-[0_0_20px_rgba(255,255,255,0.05),inset_0_0_20px_rgba(255,255,255,0.05)]" />
+            <div className="absolute -inset-1 rounded-full bg-gradient-to-br from-white/[0.12] via-transparent to-white/[0.06]" />
+            <Avatar className="relative h-14 w-14 ring-[1.5px] ring-white/[0.2] ring-offset-1 ring-offset-transparent">
               <AvatarImage src={serverIcon1} alt={user?.username} className="object-cover" />
-              <AvatarFallback className="bg-primary text-primary-foreground text-xl font-bold">
+              <AvatarFallback className="bg-muted text-foreground text-xl font-bold">
                 {user?.username?.charAt(0).toUpperCase()}
               </AvatarFallback>
             </Avatar>

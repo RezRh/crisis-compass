@@ -173,10 +173,10 @@ export function ChatView() {
                 ].map(({ icon: Icon, label }) => (
                   <button
                     key={label}
-                    className="flex flex-col items-center gap-2 rounded-2xl border border-white/[0.08] bg-white/[0.04] px-3 py-4 text-foreground transition-colors hover:bg-white/[0.08]"
+                    className="flex flex-col items-center gap-2 rounded-2xl border border-white/[0.08] bg-white/[0.04] px-3 py-4 transition-colors hover:bg-white/[0.08]"
                   >
-                    <Icon className="h-7 w-7 text-muted-foreground" />
-                    <span className="text-xs">{label}</span>
+                    <Icon className="h-7 w-7 text-white" />
+                    <span className="text-xs text-white">{label}</span>
                   </button>
                 ))}
               </div>

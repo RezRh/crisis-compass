@@ -50,9 +50,8 @@ export function DMSidebar() {
 
   return (
     <div className="relative flex h-full min-w-0 flex-1 flex-col bg-server-bar overflow-y-auto">
-      {/* Sticky header with glass effect */}
-      <div className="sticky top-0 z-10 backdrop-blur-2xl bg-white/[0.03]">
-        {/* Title with toggle */}
+      {/* Title with toggle — solid bg */}
+      <div className="sticky top-0 z-10 bg-server-bar">
         <div className="flex items-center justify-between px-4 pt-12 pb-2">
           <div className="flex items-center gap-2">
             {sidebarCollapsed && (
@@ -75,9 +74,9 @@ export function DMSidebar() {
           )}
         </div>
 
-        {/* Top action row */}
+        {/* Add Friends — glass refraction */}
         <div className="flex items-center gap-2 px-3 pt-1 pb-4">
-          <button className="flex h-9 min-w-0 flex-1 items-center justify-center gap-2 rounded-full border border-white/[0.06] bg-white/[0.04] backdrop-blur-md text-[13px] font-medium text-muted-foreground shadow-[0_2px_10px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.04)] transition-colors hover:bg-white/[0.08] hover:text-foreground">
+          <button className="flex h-9 min-w-0 flex-1 items-center justify-center gap-2 rounded-full border border-white/[0.06] bg-white/[0.04] backdrop-blur-2xl text-[13px] font-medium text-muted-foreground shadow-[0_2px_10px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.04)] transition-colors hover:bg-white/[0.08] hover:text-foreground">
             <UserPlus className="h-[16px] w-[16px] shrink-0" />
             <span className="truncate">Add Friends</span>
           </button>

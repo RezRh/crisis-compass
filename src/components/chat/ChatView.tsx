@@ -70,9 +70,9 @@ export function ChatView() {
   const avatarColor = getAvatarColor(activeDM);
 
   return (
-    <div className="flex h-full w-full flex-col bg-chat-bg">
+    <div className="flex h-full w-full flex-col bg-server-bar">
       {/* Header */}
-      <div className="flex items-center gap-3 border-b border-white/[0.06] bg-header-bar px-4 py-3 pt-12">
+      <div className="flex items-center gap-3 border-b border-white/[0.06] bg-server-bar px-4 py-3 pt-12">
         <button
           onClick={() => setActiveDM(null)}
           className="flex h-9 w-9 items-center justify-center rounded-full border border-white/[0.06] bg-white/[0.04] text-muted-foreground shadow-[0_2px_10px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.04)] transition-colors hover:bg-white/[0.08] hover:text-foreground"
@@ -134,7 +134,7 @@ export function ChatView() {
       </div>
 
       {/* Input */}
-      <div className="border-t border-white/[0.06] bg-header-bar px-3 py-3 pb-6">
+      <div className="border-t border-white/[0.06] bg-server-bar px-3 py-3 pb-6">
         <div className="flex items-center gap-2 rounded-full border border-white/[0.06] bg-white/[0.04] px-3 py-2 shadow-[0_2px_10px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.04)]">
           <button className="text-muted-foreground hover:text-foreground transition-colors">
             <Smile className="h-5 w-5" />

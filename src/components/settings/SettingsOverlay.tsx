@@ -59,7 +59,7 @@ function UserProfileView({ onClose }: { onClose: () => void }) {
   return (
     <div className="flex-1 flex flex-col md:flex-row h-full bg-background overflow-hidden">
       {/* LEFT — Banner panel (40%) — uploadable */}
-      <div className="relative md:w-[40%] w-full h-[280px] md:h-full shrink-0 flex items-end md:items-center justify-center overflow-hidden group">
+      <div className="relative md:w-[40%] w-full h-[280px] md:h-full shrink-0 flex items-end md:items-center justify-center overflow-hidden">
         {/* Full-bleed banner image */}
         <img
           src={bannerUrl || serverIcon1}
@@ -71,21 +71,8 @@ function UserProfileView({ onClose }: { onClose: () => void }) {
         <div className="absolute inset-0 shadow-[inset_0_0_120px_rgba(173,255,47,0.15)]" />
         <div className="absolute bottom-0 left-0 right-0 md:bottom-auto md:left-auto md:right-0 md:top-0 md:w-32 h-32 md:h-full bg-gradient-to-t md:bg-gradient-to-r from-background to-transparent" />
 
-        {/* Upload banner button */}
-        <input
-          ref={bannerInputRef}
-          type="file"
-          accept="image/*,.gif"
-          onChange={handleBannerUpload}
-          className="hidden"
-        />
-        <button
-          onClick={() => bannerInputRef.current?.click()}
-          className="absolute top-4 left-4 z-20 flex items-center gap-2 rounded-full bg-black/60 border border-white/[0.1] px-3 py-2 text-xs font-medium text-foreground opacity-0 group-hover:opacity-100 transition-opacity backdrop-blur-sm"
-        >
-          <ImagePlus className="h-4 w-4" />
-          Change Banner
-        </button>
+
+
 
         {/* Username overlay on mobile */}
         <div className="relative z-10 p-6 md:hidden w-full">

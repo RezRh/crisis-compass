@@ -1,6 +1,6 @@
 import { useAuthStore } from "@/stores/auth-store";
 import { useUIStore } from "@/stores/ui-store";
-import { Search, UserPlus, Mic, Headphones, Settings, Home, Bell, User, UserRoundPlus, PanelLeftClose, PanelLeftOpen } from "lucide-react";
+import { Search, UserPlus, Mic, Headphones, Settings, Home, Bell, User, UserRoundPlus, PanelLeftClose, PanelLeftOpen, Phone, MessageCircle } from "lucide-react";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 
@@ -63,11 +63,8 @@ export function DMSidebar() {
         )}
       </div>
 
-      {/* Search + Add Friends row — liquid glass */}
+      {/* Top action row — just Add Friends now */}
       <div className="flex items-center gap-2 px-3 pt-1 pb-4">
-        <button className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-white/[0.06] bg-white/[0.04] text-muted-foreground shadow-[0_2px_10px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.04)] transition-colors hover:bg-white/[0.08] hover:text-foreground">
-          <Search className="h-[18px] w-[18px]" />
-        </button>
         <button className="flex h-9 min-w-0 flex-1 items-center justify-center gap-2 rounded-full border border-white/[0.06] bg-white/[0.04] text-[13px] font-medium text-muted-foreground shadow-[0_2px_10px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.04)] transition-colors hover:bg-white/[0.08] hover:text-foreground">
           <UserPlus className="h-[16px] w-[16px] shrink-0" />
           <span className="truncate">Add Friends</span>
@@ -115,46 +112,31 @@ export function DMSidebar() {
         ))}
       </div>
 
-      {/* Desktop user panel */}
-      <div className="hidden md:flex items-center gap-2 bg-server-bar px-2 py-[6px]">
-        <div className="relative flex-shrink-0 h-8 w-8">
-          <Avatar className="h-8 w-8">
-            <AvatarFallback className="bg-primary text-primary-foreground text-xs font-bold">
-              {user?.username?.charAt(0).toUpperCase() || "?"}
-            </AvatarFallback>
-          </Avatar>
-          <span className="absolute -bottom-[2px] -right-[2px] h-[14px] w-[14px] rounded-full border-[3px] border-server-bar bg-discord-green" />
+      {/* Bottom nav bar — mobile style */}
+      <div className="flex items-center gap-3 px-3 py-3">
+        {/* Pill-shaped tab bar */}
+        <div className="flex flex-1 items-center justify-around rounded-full border border-white/[0.06] bg-white/[0.04] shadow-[0_2px_16px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.04)] backdrop-blur-md py-2 px-2">
+          <button className="flex flex-col items-center gap-0.5 px-3 py-1 text-muted-foreground transition-colors hover:text-foreground">
+            <User className="h-5 w-5" />
+            <span className="text-[10px] font-medium">Contacts</span>
+          </button>
+          <button className="flex flex-col items-center gap-0.5 px-3 py-1 text-muted-foreground transition-colors hover:text-foreground">
+            <Phone className="h-5 w-5" />
+            <span className="text-[10px] font-medium">Calls</span>
+          </button>
+          <button className="flex flex-col items-center gap-0.5 rounded-2xl bg-white/[0.10] px-4 py-1 text-primary transition-colors">
+            <MessageCircle className="h-5 w-5" />
+            <span className="text-[10px] font-semibold">Chats</span>
+          </button>
+          <button onClick={() => openSettings("user")} className="flex flex-col items-center gap-0.5 px-3 py-1 text-muted-foreground transition-colors hover:text-foreground">
+            <Settings className="h-5 w-5" />
+            <span className="text-[10px] font-medium">Settings</span>
+          </button>
         </div>
-        <div className="flex-1 min-w-0">
-          <p className="truncate text-[13px] font-semibold text-foreground leading-tight">{user?.username}</p>
-          <p className="truncate text-[11px] text-muted-foreground leading-tight">Online</p>
-        </div>
-        <div className="flex items-center">
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <button className="rounded p-[6px] text-muted-foreground transition-colors hover:bg-accent/50 hover:text-foreground">
-                <Mic className="h-[18px] w-[18px]" />
-              </button>
-            </TooltipTrigger>
-            <TooltipContent>Mute</TooltipContent>
-          </Tooltip>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <button className="rounded p-[6px] text-muted-foreground transition-colors hover:bg-accent/50 hover:text-foreground">
-                <Headphones className="h-[18px] w-[18px]" />
-              </button>
-            </TooltipTrigger>
-            <TooltipContent>Deafen</TooltipContent>
-          </Tooltip>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <button onClick={() => openSettings("user")} className="rounded p-[6px] text-muted-foreground transition-colors hover:bg-accent/50 hover:text-foreground">
-                <Settings className="h-[18px] w-[18px]" />
-              </button>
-            </TooltipTrigger>
-            <TooltipContent>User Settings</TooltipContent>
-          </Tooltip>
-        </div>
+        {/* Search circle */}
+        <button className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-white/[0.06] bg-white/[0.04] text-muted-foreground shadow-[0_2px_16px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.04)] backdrop-blur-md transition-colors hover:bg-white/[0.08] hover:text-foreground">
+          <Search className="h-5 w-5" />
+        </button>
       </div>
     </div>
   );

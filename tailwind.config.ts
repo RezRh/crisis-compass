@@ -57,6 +57,19 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
+        discord: {
+          brand: "hsl(var(--discord-brand))",
+          green: "hsl(var(--discord-green))",
+          yellow: "hsl(var(--discord-yellow))",
+          red: "hsl(var(--discord-red))",
+          grey: "hsl(var(--discord-grey))",
+        },
+        "server-bar": "hsl(var(--server-bar))",
+        "channel-bar": "hsl(var(--channel-bar))",
+        "chat-bg": "hsl(var(--chat-bg))",
+        "chat-input": "hsl(var(--chat-input))",
+        "member-bar": "hsl(var(--member-bar))",
+        "header-bar": "hsl(var(--header-bar))",
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -65,20 +78,12 @@ export default {
       },
       keyframes: {
         "accordion-down": {
-          from: {
-            height: "0",
-          },
-          to: {
-            height: "var(--radix-accordion-content-height)",
-          },
+          from: { height: "0" },
+          to: { height: "var(--radix-accordion-content-height)" },
         },
         "accordion-up": {
-          from: {
-            height: "var(--radix-accordion-content-height)",
-          },
-          to: {
-            height: "0",
-          },
+          from: { height: "var(--radix-accordion-content-height)" },
+          to: { height: "0" },
         },
       },
       animation: {

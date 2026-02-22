@@ -51,13 +51,13 @@ export function DMSidebar() {
   return (
     <div className="relative flex h-full min-w-0 flex-1 flex-col bg-server-bar overflow-y-auto">
       {/* Title with toggle — solid bg */}
-      <div className="sticky top-0 z-10 bg-server-bar">
+      <div className="sticky top-0 z-10">
         <div className="flex items-center justify-between px-4 pt-12 pb-2">
           <div className="flex items-center gap-2">
             {sidebarCollapsed && (
               <button 
                 onClick={(e) => { e.stopPropagation(); toggleSidebar(); }} 
-                className="flex h-8 w-8 items-center justify-center rounded-full border border-white/[0.06] bg-white/[0.04] text-muted-foreground shadow-[0_2px_10px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.04)] transition-colors hover:bg-white/[0.08] hover:text-foreground"
+                className="flex h-8 w-8 items-center justify-center rounded-full border border-white/[0.06] bg-white/[0.04] backdrop-blur-2xl text-muted-foreground shadow-[0_2px_10px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.04)] transition-colors hover:bg-white/[0.08] hover:text-foreground"
               >
                 <PanelLeftOpen className="h-[18px] w-[18px]" />
               </button>
@@ -67,7 +67,7 @@ export function DMSidebar() {
           {!sidebarCollapsed && (
             <button 
               onClick={(e) => { e.stopPropagation(); toggleSidebar(); }} 
-              className="flex h-8 w-8 items-center justify-center rounded-full border border-white/[0.06] bg-white/[0.04] text-muted-foreground shadow-[0_2px_10px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.04)] transition-colors hover:bg-white/[0.08] hover:text-foreground"
+              className="flex h-8 w-8 items-center justify-center rounded-full border border-white/[0.06] bg-white/[0.04] backdrop-blur-2xl text-muted-foreground shadow-[0_2px_10px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.04)] transition-colors hover:bg-white/[0.08] hover:text-foreground"
             >
               <PanelLeftClose className="h-[18px] w-[18px]" />
             </button>

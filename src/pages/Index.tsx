@@ -14,7 +14,7 @@ import { useServerStore } from "@/stores/server-store";
 const ChatApp = () => {
   const { isAuthenticated, user } = useAuthStore();
   const { loadMockData } = useServerStore();
-  const { openSettings, sidebarCollapsed, activeDM, showNotifications, setShowNotifications } = useUIStore();
+  const { openSettings, closeSettings, settingsView, sidebarCollapsed, activeDM, showNotifications, setShowNotifications } = useUIStore();
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -73,6 +73,8 @@ const ChatApp = () => {
         showNotifications={showNotifications}
         setShowNotifications={setShowNotifications}
         openSettings={openSettings}
+        closeSettings={closeSettings}
+        settingsView={settingsView}
         user={user}
       />
 
@@ -87,12 +89,16 @@ function DockBar({
   showNotifications,
   setShowNotifications,
   openSettings,
+  closeSettings,
+  settingsView,
   user,
 }: {
   sidebarCollapsed: boolean;
   showNotifications: boolean;
   setShowNotifications: (v: boolean) => void;
   openSettings: (v: "user" | "server" | null) => void;
+  closeSettings: () => void;
+  settingsView: "user" | "server" | null;
   user: any;
 }) {
   const barRef = useRef<HTMLDivElement>(null);
@@ -101,16 +107,18 @@ function DockBar({
   const isDragging = useRef(false);
   const didDrag = useRef(false);
 
+  // Determine which button is "active"
+  const activeIdx = settingsView === "user" ? 3 : showNotifications ? 1 : 0;
+
   const getActiveLeft = useCallback(() => {
     if (!barRef.current) return 12;
     const buttons = barRef.current.querySelectorAll<HTMLElement>("[data-dock]");
-    const activeIdx = !showNotifications ? 0 : 1;
     const btn = buttons[activeIdx];
     if (!btn) return 12;
     const barRect = barRef.current.getBoundingClientRect();
     const btnRect = btn.getBoundingClientRect();
     return btnRect.left - barRect.left + (btnRect.width - 40) / 2;
-  }, [showNotifications]);
+  }, [activeIdx]);
 
   const startPos = useRef<{ x: number; y: number } | null>(null);
 
@@ -154,13 +162,14 @@ function DockBar({
       }
     });
 
-    if (closestIdx === 0) setShowNotifications(false);
-    else if (closestIdx === 1) setShowNotifications(true);
+    if (closestIdx === 0) { closeSettings(); setShowNotifications(false); }
+    else if (closestIdx === 1) { closeSettings(); setShowNotifications(true); }
+    else if (closestIdx === 2) { closeSettings(); }
     else if (closestIdx === 3) openSettings("user");
 
     bubbleXRef.current = null;
     setBubbleX(null);
-  }, [setShowNotifications, openSettings]);
+  }, [setShowNotifications, openSettings, closeSettings]);
 
   const handlePointerUp = useCallback((e: React.PointerEvent) => {
     startPos.current = null;
@@ -178,8 +187,11 @@ function DockBar({
 
   const displayLeft = bubbleX ?? getActiveLeft();
 
+  // Sidebar is only visible on home view (no settings, no notifications, no activeDM on mobile)
+  const sidebarVisible = !sidebarCollapsed && !settingsView && !showNotifications;
+
   return (
-    <div className={`fixed bottom-0 right-0 z-[60] flex items-center justify-center gap-3 pb-3 pt-1 md:hidden px-4 ${!sidebarCollapsed ? "left-[72px]" : "left-0"}`}>
+    <div className={`fixed bottom-0 right-0 z-[60] flex items-center justify-center gap-3 pb-3 pt-1 md:hidden px-4 transition-[left] duration-300 ${sidebarVisible ? "left-[72px]" : "left-0"}`}>
       <div
         ref={barRef}
         onPointerDown={handlePointerDown}
@@ -199,20 +211,20 @@ function DockBar({
 
         <button
           data-dock
-          onClick={() => { if (!didDrag.current) setShowNotifications(false); }}
+          onClick={() => { if (!didDrag.current) { closeSettings(); setShowNotifications(false); } }}
           className="relative z-10 flex h-10 w-10 items-center justify-center rounded-full transition-all"
         >
-          <Home className={`h-5 w-5 transition-colors duration-300 ${!showNotifications ? "text-foreground" : "text-muted-foreground"}`} />
+          <Home className={`h-5 w-5 transition-colors duration-300 ${activeIdx === 0 ? "text-foreground" : "text-muted-foreground"}`} />
           {!showNotifications && (
             <span className="absolute -top-1 -right-1 flex h-[16px] min-w-[16px] items-center justify-center rounded-full bg-discord-red px-1 text-[10px] font-bold text-white">223</span>
           )}
         </button>
         <button
           data-dock
-          onClick={() => { if (!didDrag.current) setShowNotifications(true); }}
+          onClick={() => { if (!didDrag.current) { closeSettings(); setShowNotifications(true); } }}
           className="relative z-10 flex h-10 w-10 items-center justify-center rounded-full transition-all"
         >
-          <Bell className={`h-5 w-5 transition-colors duration-300 ${showNotifications ? "text-foreground" : "text-muted-foreground"}`} />
+          <Bell className={`h-5 w-5 transition-colors duration-300 ${activeIdx === 1 ? "text-foreground" : "text-muted-foreground"}`} />
           {showNotifications && (
             <span className="absolute -top-1 -right-1 flex h-[16px] min-w-[16px] items-center justify-center rounded-full bg-discord-red px-1 text-[10px] font-bold text-white">10</span>
           )}

@@ -57,9 +57,9 @@ function UserProfileView({ onClose }: { onClose: () => void }) {
         </button>
         <button
           onClick={onClose}
-          className="group flex h-9 w-9 items-center justify-center rounded-full text-muted-foreground hover:text-foreground transition-colors"
+          className="flex h-9 w-9 items-center justify-center rounded-full text-muted-foreground hover:text-foreground transition-colors"
         >
-          <Settings className="h-5 w-5 transition-transform duration-500 ease-out group-hover:rotate-180" />
+          <Settings className="h-5 w-5 animate-[spin_3s_linear_infinite]" />
         </button>
       </div>
 
@@ -103,7 +103,7 @@ function UserProfileView({ onClose }: { onClose: () => void }) {
 
         {/* Orbs Balance */}
         <div className="mb-3 flex items-center justify-between rounded-xl bg-accent/60 p-4">
-          <span className="text-sm font-medium text-muted-foreground">Orbs Balance</span>
+          <span className="text-sm font-medium text-muted-foreground">Fluxs Balance</span>
           <span className="flex items-center gap-1.5 rounded-lg bg-accent px-3 py-1.5 text-sm font-semibold text-foreground">
             💎 2530
           </span>

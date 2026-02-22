@@ -39,13 +39,13 @@ const ChatApp = () => {
   return (
     <div className="dark relative flex h-screen w-full flex-col overflow-hidden bg-server-bar text-foreground">
       {/* Main row */}
-      <div className="flex flex-1 min-h-0">
-        <div className={sidebarCollapsed ? "hidden" : "flex"}>
-          <ServerSidebar />
-        </div>
-        <div className={sidebarCollapsed ? "hidden" : "flex"}>
-          {isDMs ? <DMSidebar /> : <ChannelSidebar />}
-        </div>
+      <div className="flex flex-1 min-h-0 min-w-0 overflow-hidden">
+        {!sidebarCollapsed && <ServerSidebar />}
+        {!sidebarCollapsed && (
+          <div className="flex min-w-0 flex-1 md:flex-none">
+            {isDMs ? <DMSidebar /> : <ChannelSidebar />}
+          </div>
+        )}
         <div className={`flex flex-1 flex-col min-w-0 bg-chat-bg ${isDMs ? "hidden md:flex" : ""}`}>
           {isDMs ? <DMHeader /> : <ChatHeader />}
           <div className="flex-1 overflow-hidden">

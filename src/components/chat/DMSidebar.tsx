@@ -32,6 +32,16 @@ const mockDMs = [
   { id: "dm6", username: "JohnnyTheRock", status: "offline" as const, lastMessage: "You: Tai new link", time: "1mo", bold: false },
   { id: "dm7", username: "Jamal The IV", status: "offline" as const, lastMessage: "You: See all pages top to down", time: "1mo", bold: false },
   { id: "dm8", username: "sheyow", status: "offline" as const, lastMessage: "sheyow: throw yo mf pc", time: "3mo", bold: false },
+  { id: "dm9", username: "Marcus", status: "online" as const, lastMessage: "Marcus: Let's ship it 🚀", time: "3mo", bold: false },
+  { id: "dm10", username: "Lena", status: "idle" as const, lastMessage: "You: I'll send the designs later", time: "4mo", bold: false },
+  { id: "dm11", username: "Kai", status: "offline" as const, lastMessage: "Kai: That bug is fixed now", time: "4mo", bold: false },
+  { id: "dm12", username: "Priya", status: "dnd" as const, lastMessage: "You: Can you review this PR?", time: "5mo", bold: false },
+  { id: "dm13", username: "Zane", status: "offline" as const, lastMessage: "Zane: gg wp", time: "5mo", bold: false },
+  { id: "dm14", username: "Mira", status: "online" as const, lastMessage: "You: The API is working now", time: "6mo", bold: false },
+  { id: "dm15", username: "Oscar", status: "offline" as const, lastMessage: "Oscar: Thanks for the invite!", time: "6mo", bold: false },
+  { id: "dm16", username: "Freya", status: "idle" as const, lastMessage: "You: Check the new dashboard", time: "7mo", bold: false },
+  { id: "dm17", username: "Dante", status: "offline" as const, lastMessage: "Dante: I'll be online later", time: "8mo", bold: false },
+  { id: "dm18", username: "Nova", status: "offline" as const, lastMessage: "You: That was hilarious 😂", time: "9mo", bold: false },
 ];
 
 export function DMSidebar() {

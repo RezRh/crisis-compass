@@ -69,7 +69,7 @@ export function MessageList() {
           new Date(msg.created_at).getTime() - new Date(prev.created_at).getTime() < 5 * 60000;
 
         return (
-          <div className={`group flex gap-4 px-4 py-[2px] transition-colors hover:bg-[hsl(223_7%_19%)] ${!isGrouped ? "mt-[17px]" : ""}`}>
+          <div className={`group flex gap-4 px-4 py-[2px] transition-colors hover:bg-accent/20 ${!isGrouped ? "mt-[17px]" : ""}`}>
             {!isGrouped ? (
               <div className="mt-[2px] h-10 w-10 shrink-0 rounded-full flex items-center justify-center" style={{ backgroundColor: getAvatarColor(msg.author.username) }}>
                 <span className="text-white text-sm font-semibold">{msg.author.username.charAt(0).toUpperCase()}</span>

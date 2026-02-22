@@ -51,48 +51,47 @@
   }
 
   .dark {
-    /* Discord's actual dark theme palette */
-    --background: 223 7% 21%;
+    --background: 0 0% 0%;
     --foreground: 210 9% 87%;
-    --card: 220 7% 18%;
+    --card: 0 0% 5%;
     --card-foreground: 210 9% 87%;
-    --popover: 225 6% 15%;
+    --popover: 0 0% 5%;
     --popover-foreground: 210 9% 87%;
     --primary: 235 86% 65%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 225 6% 27%;
+    --secondary: 0 0% 10%;
     --secondary-foreground: 210 9% 87%;
-    --muted: 220 7% 18%;
+    --muted: 0 0% 8%;
     --muted-foreground: 215 9% 55%;
-    --accent: 225 6% 27%;
+    --accent: 0 0% 10%;
     --accent-foreground: 210 9% 87%;
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
-    --border: 228 6% 25%;
-    --input: 225 7% 24%;
+    --border: 0 0% 12%;
+    --input: 0 0% 10%;
     --ring: 235 86% 65%;
 
-    --sidebar-background: 225 6% 13%;
+    --sidebar-background: 0 0% 0%;
     --sidebar-foreground: 210 9% 87%;
     --sidebar-primary: 235 86% 65%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 225 6% 27%;
+    --sidebar-accent: 0 0% 10%;
     --sidebar-accent-foreground: 210 9% 87%;
-    --sidebar-border: 228 6% 25%;
+    --sidebar-border: 0 0% 12%;
     --sidebar-ring: 235 86% 65%;
 
     --discord-brand: 235 86% 65%;
     --discord-green: 139 47% 44%;
     --discord-yellow: 38 96% 54%;
     --discord-red: 0 84% 60%;
-    --discord-grey: 214 8% 47%;
+    --discord-grey: 0 0% 40%;
     --discord-mention: 38 96% 54%;
-    --server-bar: 225 6% 13%;
-    --channel-bar: 220 7% 18%;
-    --chat-bg: 223 7% 21%;
-    --chat-input: 225 7% 24%;
-    --member-bar: 220 7% 18%;
-    --header-bar: 223 7% 21%;
+    --server-bar: 0 0% 0%;
+    --channel-bar: 0 0% 4%;
+    --chat-bg: 0 0% 6%;
+    --chat-input: 0 0% 9%;
+    --member-bar: 0 0% 4%;
+    --header-bar: 0 0% 6%;
   }
 }
 
@@ -106,22 +105,20 @@
   }
 }
 
-/* Discord-style thin scrollbar */
+/* Thin scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: hsl(220 7% 18%);
-  border-radius: 4px;
+  background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: hsl(225 6% 13%);
-  border-radius: 4px;
-  min-height: 40px;
+  background: hsl(0 0% 15%);
+  border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: hsl(225 6% 10%);
+  background: hsl(0 0% 22%);
 }
 
 ::selection {

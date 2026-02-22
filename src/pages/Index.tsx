@@ -37,7 +37,7 @@ const ChatApp = () => {
       </div>
 
       {/* Mobile bottom tab bar */}
-      <div className="flex justify-center bg-server-bar pb-3 pt-1 md:hidden">
+      <div className="flex items-center justify-center gap-3 bg-server-bar pb-3 pt-1 md:hidden px-4">
         <div className="flex items-center gap-3 rounded-full border border-white/[0.06] bg-white/[0.04] px-3 py-2 shadow-[0_2px_16px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.04),inset_0_-1px_4px_rgba(0,0,0,0.3)]">
           <button className="relative flex h-10 w-10 items-center justify-center rounded-full bg-white/[0.08] shadow-[inset_0_1px_0_rgba(255,255,255,0.06)] transition-all">
             <Home className="h-5 w-5 text-foreground" />

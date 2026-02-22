@@ -69,7 +69,7 @@ const ChatApp = () => {
 
       {/* Mobile bottom tab bar — hidden when in chat */}
       {!activeDM && (
-        <div className="absolute bottom-0 left-0 right-0 z-30 flex items-center justify-center gap-3 pb-3 pt-1 md:hidden px-4">
+        <div className={`absolute bottom-0 right-0 z-30 flex items-center justify-center gap-3 pb-3 pt-1 md:hidden px-4 ${!sidebarCollapsed ? "left-[72px]" : "left-0"}`}>
          <div className="relative flex items-center gap-3 rounded-full border border-white/[0.06] bg-white/[0.04] backdrop-blur-md px-3 py-2 shadow-[0_2px_16px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.04),inset_0_-1px_4px_rgba(0,0,0,0.3)]">
             {/* Sliding liquid glass bubble */}
             <div

@@ -3,67 +3,31 @@ import { useUIStore } from "@/stores/ui-store";
 import { Plus, MessageCircle } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
-import { useMemo, useRef, useEffect, useState, useCallback } from "react";
 
 const BTN_SIZE = 40;
 
 export function ServerSidebar() {
   const { servers, activeServerId, setActiveServer } = useServerStore();
   const { setCreateServerOpen, mainView, setMainView } = useUIStore();
-  const tileRef = useRef<HTMLDivElement>(null);
-  const [bubbleOffset, setBubbleOffset] = useState<number>(0);
 
   const isHome = mainView === "dms";
-
-  const activeIndex = useMemo(() => {
-    if (isHome) return 0;
-    const idx = servers.findIndex((s) => s.id === activeServerId);
-    return idx >= 0 ? idx + 1 : -1;
-  }, [isHome, servers, activeServerId]);
-
-  const recalcBubble = useCallback(() => {
-    if (activeIndex < 0 || !tileRef.current) return;
-    const buttons = tileRef.current.querySelectorAll<HTMLElement>("[data-srv]");
-    const btn = buttons[activeIndex];
-    if (!btn) return;
-    const tileRect = tileRef.current.getBoundingClientRect();
-    const btnRect = btn.getBoundingClientRect();
-    setBubbleOffset(btnRect.top - tileRect.top);
-  }, [activeIndex]);
-
-  useEffect(() => { recalcBubble(); }, [recalcBubble, servers]);
-
-  const onScroll = useCallback(() => recalcBubble(), [recalcBubble]);
 
   return (
     <div className="flex h-full w-[72px] flex-col items-center bg-server-bar pt-12 pb-3">
       {/* Glass tile — 55px wide, chat icon fixed inside + scrollable servers */}
       <div
-        ref={tileRef}
         className="relative flex flex-col items-center rounded-[18px] border border-white/[0.06] bg-white/[0.04] backdrop-blur-md shadow-[0_2px_16px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.04),inset_0_-1px_4px_rgba(0,0,0,0.3)] max-h-full min-h-0 overflow-hidden"
         style={{ width: 55 }}
       >
-        {/* Sliding liquid glass bubble */}
-        {activeIndex >= 0 && (
-          <div
-            className="pointer-events-none absolute left-1/2 z-0 -translate-x-1/2 transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)]"
-            style={{ top: bubbleOffset, width: BTN_SIZE, height: BTN_SIZE }}
-          >
-            <div className="h-full w-full rounded-[12px] bg-white/[0.10] shadow-[0_0_20px_rgba(255,255,255,0.06),inset_0_1px_0_rgba(255,255,255,0.15),inset_0_-1px_0_rgba(255,255,255,0.05)] backdrop-blur-xl border border-white/[0.12]" />
-            <div className="absolute inset-0 rounded-[12px] bg-gradient-to-br from-blue-500/[0.08] via-transparent to-purple-500/[0.06]" />
-          </div>
-        )}
-
         {/* Fixed DM button at top */}
-        <div className="relative z-10 flex flex-col items-center shrink-0 pt-[7px] px-[7px]">
+        <div className="flex flex-col items-center shrink-0 pt-[7px] px-[7px]">
           <Tooltip>
             <TooltipTrigger asChild>
               <button
-                data-srv
                 onClick={() => setMainView("dms")}
                 className={cn(
                   "flex items-center justify-center rounded-[12px] transition-all duration-200 active:translate-y-px",
-                  isHome ? "text-foreground" : "text-foreground hover:bg-white/[0.06]"
+                  isHome ? "text-foreground bg-white/[0.08]" : "text-foreground hover:bg-white/[0.06]"
                 )}
                 style={{ width: BTN_SIZE, height: BTN_SIZE }}
               >
@@ -76,10 +40,7 @@ export function ServerSidebar() {
         </div>
 
         {/* Scrollable server list */}
-        <div
-          onScroll={onScroll}
-          className="relative z-10 flex flex-1 flex-col items-center gap-[2px] overflow-y-auto py-0.5 pl-[8px] pr-[6px] pb-[7px] scrollbar-none min-h-0"
-        >
+        <div className="flex flex-1 flex-col items-center gap-[2px] overflow-y-auto py-0.5 pl-[8px] pr-[6px] pb-[7px] scrollbar-none min-h-0">
           {servers.map((server) => {
             const isActive = mainView === "servers" && activeServerId === server.id;
             const notifCount = server.id === "s2" ? 21 : server.id === "s3" ? 3 : 0;
@@ -90,7 +51,6 @@ export function ServerSidebar() {
                 <TooltipTrigger asChild>
                   <div className="relative flex items-center justify-center">
                     <button
-                      data-srv
                       onClick={() => {
                         setMainView("servers");
                         setActiveServer(server.id);
@@ -98,7 +58,7 @@ export function ServerSidebar() {
                       className={cn(
                         "relative flex items-center justify-center rounded-[12px] transition-all duration-200 active:translate-y-px",
                         isActive
-                          ? "text-foreground"
+                          ? "text-foreground bg-white/[0.08]"
                           : "text-muted-foreground hover:bg-white/[0.06] hover:text-foreground"
                       )}
                       style={{ width: BTN_SIZE, height: BTN_SIZE }}

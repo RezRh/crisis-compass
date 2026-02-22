@@ -49,9 +49,9 @@ export function DMSidebar() {
   const { openSettings, sidebarCollapsed, toggleSidebar, setActiveDM, activeDM } = useUIStore();
 
   return (
-    <div className="relative flex h-full min-w-0 flex-1 flex-col bg-server-bar overflow-hidden">
+    <div className="relative flex h-full min-w-0 flex-1 flex-col bg-server-bar overflow-y-auto">
       {/* Sticky header with glass effect */}
-      <div className="sticky top-0 z-10 backdrop-blur-md bg-server-bar/60">
+      <div className="sticky top-0 z-10 backdrop-blur-2xl bg-white/[0.03]">
         {/* Title with toggle */}
         <div className="flex items-center justify-between px-4 pt-12 pb-2">
           <div className="flex items-center gap-2">
@@ -85,7 +85,7 @@ export function DMSidebar() {
       </div>
 
       {/* DM conversation list */}
-      <div className="flex-1 overflow-y-auto pb-20">
+      <div className="pb-20">
         {mockDMs.map((dm, i) => (
           <div key={dm.id}>
             <button

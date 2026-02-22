@@ -8,12 +8,13 @@ import serverIcon2 from "@/assets/server-icon-2.jpg";
 import serverIcon3 from "@/assets/server-icon-3.jpg";
 import serverIcon4 from "@/assets/server-icon-4.jpg";
 
-const SERVER_ICONS: Record<string, string> = {
-  s1: serverIcon1,
-  s2: serverIcon2,
-  s3: serverIcon3,
-  s4: serverIcon4,
-};
+const ALL_ICONS = [serverIcon1, serverIcon2, serverIcon3, serverIcon4];
+
+function getServerIcon(id: string) {
+  // Deterministic random pick based on server id number
+  const num = parseInt(id.replace("s", ""), 10) || 0;
+  return ALL_ICONS[num % ALL_ICONS.length];
+}
 
 const BTN_SM = 40;
 const BTN_LG = 48;
@@ -69,18 +70,18 @@ export function ServerSidebar() {
                         setActiveServer(server.id);
                       }}
                       className={cn(
-                        "relative flex items-center justify-center rounded-[12px] transition-all duration-200 active:translate-y-px",
+                        "relative flex items-center justify-center overflow-hidden transition-all duration-200 active:translate-y-px",
                         isActive
-                          ? "text-foreground bg-white/[0.08]"
-                          : "text-muted-foreground hover:bg-white/[0.06] hover:text-foreground"
+                          ? "text-foreground bg-white/[0.08] rounded-[12px]"
+                          : "text-muted-foreground hover:bg-white/[0.06] hover:text-foreground rounded-full hover:rounded-[12px]"
                       )}
                       style={{ width: BTN_SIZE, height: BTN_SIZE }}
                     >
-                      {SERVER_ICONS[server.id] ? (
-                        <img src={SERVER_ICONS[server.id]} alt={server.name} className="h-full w-full rounded-[12px] object-cover" />
-                      ) : (
-                        <span className={`font-semibold ${sidebarCollapsed ? "text-sm" : "text-base"}`}>{server.name.charAt(0).toUpperCase()}</span>
-                      )}
+                      <img
+                        src={getServerIcon(server.id)}
+                        alt={server.name}
+                        className="h-full w-full object-cover"
+                      />
                     </button>
                     {notifCount > 0 && (
                       <span className={cn(

@@ -238,7 +238,7 @@ function DockBar({
           style={{ left: displayLeft }}
         >
           <div className="h-full w-full rounded-full bg-white/[0.10] shadow-[0_0_20px_rgba(255,255,255,0.06),inset_0_1px_0_rgba(255,255,255,0.15),inset_0_-1px_0_rgba(255,255,255,0.05)] backdrop-blur-xl border border-white/[0.12]" />
-          <div className="absolute inset-0 rounded-full bg-gradient-to-br from-blue-500/[0.08] via-transparent to-purple-500/[0.06]" />
+          <div className="absolute inset-0 rounded-full bg-gradient-to-br from-[#FF003C]/[0.08] via-transparent to-[#FF003C]/[0.04]" />
         </div>
 
         <button

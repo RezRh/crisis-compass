@@ -45,7 +45,7 @@ const mockFriends = [
 ];
 
 export function NewMessageView({ onBack }: { onBack: () => void }) {
-  const { setActiveDM } = useUIStore();
+  const { setActiveDM, setShowAddFriends, setShowNewMessage } = useUIStore();
   const [search, setSearch] = useState("");
   const [scrolled, setScrolled] = useState(false);
 
@@ -125,7 +125,10 @@ export function NewMessageView({ onBack }: { onBack: () => void }) {
             <ChevronRight className="h-5 w-5 text-muted-foreground" />
           </button>
           <div className="mx-4 border-b border-white/[0.06]" />
-          <button className="flex w-full items-center gap-3 px-4 py-3.5 transition-colors hover:bg-white/[0.04]">
+          <button
+            onClick={() => { setShowNewMessage(false); setShowAddFriends(true); }}
+            className="flex w-full items-center gap-3 px-4 py-3.5 transition-colors hover:bg-white/[0.04]"
+          >
             <div className="flex h-10 w-10 items-center justify-center rounded-full bg-discord-green">
               <UserPlus className="h-5 w-5 text-white" />
             </div>

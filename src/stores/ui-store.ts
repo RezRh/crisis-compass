@@ -14,6 +14,7 @@ interface UIState {
   createChannelOpen: boolean;
   showNewMessage: boolean;
   showSearch: boolean;
+  showAddFriends: boolean;
 
   setMainView: (view: MainView) => void;
   toggleMemberList: () => void;
@@ -26,6 +27,7 @@ interface UIState {
   setCreateChannelOpen: (open: boolean) => void;
   setShowNewMessage: (show: boolean) => void;
   setShowSearch: (show: boolean) => void;
+  setShowAddFriends: (show: boolean) => void;
 }
 
 export const useUIStore = create<UIState>((set) => ({
@@ -39,6 +41,7 @@ export const useUIStore = create<UIState>((set) => ({
   createChannelOpen: false,
   showNewMessage: false,
   showSearch: false,
+  showAddFriends: false,
 
   setMainView: (view) => set({ mainView: view }),
   toggleMemberList: () => set((s) => ({ showMemberList: !s.showMemberList })),
@@ -51,4 +54,5 @@ export const useUIStore = create<UIState>((set) => ({
   setCreateChannelOpen: (open) => set({ createChannelOpen: open }),
   setShowNewMessage: (show) => set({ showNewMessage: show }),
   setShowSearch: (show) => set({ showSearch: show }),
+  setShowAddFriends: (show) => set({ showAddFriends: show }),
 }));

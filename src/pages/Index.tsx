@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useAuthStore } from "@/stores/auth-store";
 import { useUIStore } from "@/stores/ui-store";
 import { DMSidebar } from "@/components/chat/DMSidebar";
+import { ServerSidebar } from "@/components/chat/ServerSidebar";
 import { SettingsOverlay } from "@/components/settings/SettingsOverlay";
 import { LoginPage } from "@/pages/LoginPage";
 import { Home, Bell, UserRoundPlus, PanelLeftOpen, MessageCircle } from "lucide-react";
@@ -32,6 +33,9 @@ const ChatApp = () => {
     <div className="dark relative flex h-screen w-full flex-col overflow-hidden bg-server-bar text-foreground">
       {/* Main row */}
       <div className="flex flex-1 min-h-0 min-w-0 overflow-hidden">
+        {/* Server sidebar (icon bar) */}
+        {!sidebarCollapsed && <ServerSidebar />}
+
         {/* DM Sidebar - hidden when collapsed */}
         {!sidebarCollapsed && (
           <div className="flex min-w-0 flex-1 md:flex-none">

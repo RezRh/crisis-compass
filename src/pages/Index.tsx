@@ -37,7 +37,7 @@ const ChatApp = () => {
   const isDMs = mainView === "dms";
 
   return (
-    <div className="dark relative flex h-screen w-full flex-col overflow-hidden bg-chat-bg text-foreground">
+    <div className="dark relative flex h-screen w-full flex-col overflow-hidden bg-server-bar text-foreground">
       {/* Main row */}
       <div className="flex flex-1 min-h-0">
         <div className={sidebarCollapsed ? "hidden" : "flex"}>

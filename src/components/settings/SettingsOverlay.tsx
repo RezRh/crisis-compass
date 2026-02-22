@@ -46,123 +46,135 @@ function UserProfileView({ onClose }: { onClose: () => void }) {
   const friendAvatars = [serverIcon1, serverIcon2, serverIcon3, serverIcon4, serverIcon1];
 
   return (
-    <div className="flex-1 overflow-y-auto bg-background">
-      {/* Top bar icons */}
-      <div className="flex items-center justify-end gap-2 px-4 py-3">
-        <button className="flex h-9 w-9 items-center justify-center rounded-full transition-colors">
-          <Lottie animationData={opsIconData} loop className="h-6 w-6 invert" />
-        </button>
-        <button className="flex h-9 w-9 items-center justify-center rounded-full text-muted-foreground hover:text-foreground transition-colors">
-          <Lottie animationData={shopIconData} loop className="h-6 w-6 invert" />
-        </button>
-        <button className="flex items-center gap-1.5 rounded-full bg-accent px-3 py-1.5 text-sm font-medium text-foreground hover:bg-accent/80 transition-colors">
-          <Lottie animationData={prismIconData} loop className="h-5 w-5 invert" />
-          Prism
-        </button>
-        <button
-          onClick={onClose}
-          className="flex h-9 w-9 items-center justify-center rounded-full transition-colors"
-        >
-          <Settings className="h-5 w-5 text-foreground animate-[spin_3s_linear_infinite]" />
-        </button>
+    <div className="flex-1 flex flex-col md:flex-row h-full bg-background overflow-hidden">
+      {/* LEFT — Avatar hero panel (40%) */}
+      <div className="relative md:w-[40%] w-full h-[280px] md:h-full shrink-0 flex items-end md:items-center justify-center overflow-hidden">
+        {/* Full-bleed avatar image */}
+        <img
+          src={serverIcon1}
+          alt={user?.username}
+          className="absolute inset-0 h-full w-full object-cover"
+        />
+        {/* Neon lime shadow overlay */}
+        <div className="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-background via-background/80 to-transparent" />
+        <div className="absolute inset-0 shadow-[inset_0_0_120px_rgba(173,255,47,0.15)]" />
+        <div className="absolute bottom-0 left-0 right-0 md:bottom-auto md:left-auto md:right-0 md:top-0 md:w-32 h-32 md:h-full bg-gradient-to-t md:bg-gradient-to-r from-background to-transparent" />
+
+        {/* Username overlay on mobile */}
+        <div className="relative z-10 p-6 md:hidden w-full">
+          <h1 className="text-3xl font-black text-foreground drop-shadow-lg">{user?.username || "DemoUser"}</h1>
+          <span className="text-sm text-muted-foreground">{user?.email?.split("@")[0] || "demouser001"}</span>
+        </div>
       </div>
 
-      <div className="mx-auto max-w-md px-4 pb-28">
-        {/* Avatar section */}
-        <div className="relative mb-3">
-          <Avatar className="h-24 w-24 ring-[3px] ring-discord-green ring-offset-[3px] ring-offset-background">
-            <AvatarImage src={serverIcon1} alt={user?.username} className="object-cover" />
-            <AvatarFallback className="bg-primary text-primary-foreground text-3xl font-bold">
-              {user?.username?.charAt(0).toUpperCase()}
-            </AvatarFallback>
-          </Avatar>
-          {/* Status bubble */}
-          <div className="absolute left-28 top-4 flex items-center gap-1.5 rounded-full bg-accent/80 px-3 py-1.5 text-xs text-muted-foreground">
-            <Plus className="h-3.5 w-3.5" />
-            Most satisfying game mechanic?
-          </div>
+      {/* RIGHT — Command center tiles (60%) */}
+      <div className="flex-1 overflow-y-auto md:w-[60%]">
+        {/* Top bar icons */}
+        <div className="flex items-center justify-end gap-2 px-5 py-4">
+          <button className="flex h-9 w-9 items-center justify-center rounded-full transition-colors">
+            <Lottie animationData={opsIconData} loop className="h-6 w-6 invert" />
+          </button>
+          <button className="flex h-9 w-9 items-center justify-center rounded-full text-muted-foreground hover:text-foreground transition-colors">
+            <Lottie animationData={shopIconData} loop className="h-6 w-6 invert" />
+          </button>
+          <button className="flex items-center gap-1.5 rounded-full bg-white/[0.05] border border-primary/20 px-3 py-1.5 text-sm font-medium text-foreground hover:bg-white/[0.08] transition-colors">
+            <Lottie animationData={prismIconData} loop className="h-5 w-5 invert" />
+            Prism
+          </button>
+          <button
+            onClick={onClose}
+            className="flex h-9 w-9 items-center justify-center rounded-full transition-colors"
+          >
+            <Settings className="h-5 w-5 text-foreground animate-[spin_3s_linear_infinite]" />
+          </button>
         </div>
 
-        {/* Username */}
-        <div className="mb-1 flex items-center gap-2">
-          <h1 className="text-2xl font-bold text-foreground">{user?.username || "DemoUser"}</h1>
-          <ChevronDown className="h-4 w-4 text-muted-foreground" />
-        </div>
-        <div className="mb-5 flex items-center gap-2">
-          <span className="text-sm text-muted-foreground">{user?.email?.split("@")[0] || "demouser001"}</span>
-          <span className="flex items-center gap-1 rounded bg-accent px-2 py-0.5 text-xs font-medium text-foreground">
-            <Trophy className="h-3 w-3" /> McL
-          </span>
-          <div className="flex items-center gap-1">
-            <Smile className="h-4 w-4 text-muted-foreground" />
-            <Gem className="h-4 w-4 text-muted-foreground" />
-          </div>
-        </div>
-
-        {/* Edit Profile button */}
-        <Button className="mb-6 w-full rounded-full bg-primary py-5 text-sm font-semibold hover:bg-primary/90">
-          <Pencil className="mr-2 h-4 w-4" />
-          Edit Profile
-        </Button>
-
-        {/* Orbs Balance */}
-        <div className="mb-3 flex items-center justify-between rounded-xl bg-white/[0.05] border border-primary/20 backdrop-blur-sm p-4">
-          <span className="text-sm font-medium text-muted-foreground">Fluxs Balance</span>
-          <span className="flex items-center gap-1.5 rounded-lg bg-white/[0.05] border border-primary/20 px-3 py-1.5 text-sm font-semibold text-foreground">
-            <Gem className="h-4 w-4" /> 2530
-          </span>
-        </div>
-
-        {/* Member Since */}
-        <div className="mb-3 rounded-xl bg-white/[0.05] border border-primary/20 backdrop-blur-sm p-4">
-          <p className="mb-1 text-sm font-medium text-muted-foreground">Member Since</p>
-          <div className="flex items-center gap-2 text-sm text-foreground">
-            <MessageSquare className="h-4 w-4 text-muted-foreground" />
-            Nov 17, 2025
-          </div>
-        </div>
-
-        {/* Connections */}
-        <div className="mb-3 rounded-xl bg-white/[0.05] border border-primary/20 backdrop-blur-sm p-4">
-          <p className="mb-3 text-sm font-medium text-muted-foreground">Connections</p>
-          <div className="space-y-0">
-            {connections.map((conn, i) => (
-              <div key={i}>
-                <div className="flex items-center justify-between py-3">
-                  <div className="flex items-center gap-3">
-                    <conn.icon className="h-5 w-5 text-muted-foreground" />
-                    <span className="text-sm font-semibold text-foreground">{conn.name}</span>
-                    {conn.verified && <BadgeCheck className="h-4 w-4 text-muted-foreground" />}
-                  </div>
-                  {conn.link && <ExternalLink className="h-4 w-4 text-muted-foreground" />}
-                </div>
-                {i < connections.length - 1 && <div className="h-px bg-primary/10" />}
+        <div className="px-5 pb-28 space-y-3">
+          {/* Desktop username — hidden on mobile */}
+          <div className="hidden md:block mb-4">
+            <div className="flex items-center gap-3 mb-1">
+              <h1 className="text-3xl font-black text-foreground">{user?.username || "DemoUser"}</h1>
+              <span className="flex items-center gap-1 rounded bg-white/[0.05] border border-primary/20 px-2 py-0.5 text-xs font-medium text-foreground">
+                <Trophy className="h-3 w-3" /> McL
+              </span>
+            </div>
+            <div className="flex items-center gap-3">
+              <span className="text-sm text-muted-foreground">{user?.email?.split("@")[0] || "demouser001"}</span>
+              <div className="flex items-center gap-1.5">
+                <Smile className="h-4 w-4 text-muted-foreground" />
+                <Gem className="h-4 w-4 text-muted-foreground" />
               </div>
-            ))}
+            </div>
           </div>
-        </div>
 
-        {/* Friends */}
-        <div className="mb-3 flex items-center justify-between rounded-xl bg-white/[0.05] border border-primary/20 backdrop-blur-sm p-4">
-          <span className="text-sm font-medium text-muted-foreground">Friends</span>
-          <div className="flex items-center gap-1">
-            <div className="flex -space-x-2">
-              {friendAvatars.map((src, i) => (
-                <img
-                  key={i}
-                  src={src}
-                  alt="friend"
-                  className="h-7 w-7 rounded-full border-2 border-white/[0.1] object-cover"
-                />
+          {/* Edit Profile */}
+          <Button className="w-full rounded-full bg-primary py-5 text-sm font-semibold hover:bg-primary/90">
+            <Pencil className="mr-2 h-4 w-4" />
+            Edit Profile
+          </Button>
+
+          {/* Tiles grid — two columns on desktop */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 pt-2">
+            {/* Fluxs Balance */}
+            <div className="flex items-center justify-between rounded-xl bg-white/[0.05] border border-primary/20 backdrop-blur-sm p-4">
+              <span className="text-sm font-medium text-muted-foreground">Fluxs Balance</span>
+              <span className="flex items-center gap-1.5 rounded-lg bg-white/[0.05] border border-primary/20 px-3 py-1.5 text-sm font-semibold text-foreground">
+                <Gem className="h-4 w-4" /> 2530
+              </span>
+            </div>
+
+            {/* Member Since */}
+            <div className="rounded-xl bg-white/[0.05] border border-primary/20 backdrop-blur-sm p-4">
+              <p className="mb-1 text-sm font-medium text-muted-foreground">Member Since</p>
+              <div className="flex items-center gap-2 text-sm text-foreground">
+                <MessageSquare className="h-4 w-4 text-muted-foreground" />
+                Nov 17, 2025
+              </div>
+            </div>
+
+            {/* Friends */}
+            <div className="flex items-center justify-between rounded-xl bg-white/[0.05] border border-primary/20 backdrop-blur-sm p-4">
+              <span className="text-sm font-medium text-muted-foreground">Friends</span>
+              <div className="flex items-center gap-1">
+                <div className="flex -space-x-2">
+                  {friendAvatars.map((src, i) => (
+                    <img
+                      key={i}
+                      src={src}
+                      alt="friend"
+                      className="h-7 w-7 rounded-full border-2 border-white/[0.1] object-cover"
+                    />
+                  ))}
+                </div>
+                <ChevronRight className="ml-1 h-4 w-4 text-muted-foreground" />
+              </div>
+            </div>
+
+            {/* Note */}
+            <div className="rounded-xl bg-white/[0.05] border border-primary/20 backdrop-blur-sm p-4">
+              <span className="text-sm text-muted-foreground">Note (only visible to you)</span>
+            </div>
+          </div>
+
+          {/* Connections — full width */}
+          <div className="rounded-xl bg-white/[0.05] border border-primary/20 backdrop-blur-sm p-4">
+            <p className="mb-3 text-sm font-medium text-muted-foreground">Connections</p>
+            <div className="space-y-0">
+              {connections.map((conn, i) => (
+                <div key={i}>
+                  <div className="flex items-center justify-between py-3">
+                    <div className="flex items-center gap-3">
+                      <conn.icon className="h-5 w-5 text-muted-foreground" />
+                      <span className="text-sm font-semibold text-foreground">{conn.name}</span>
+                      {conn.verified && <BadgeCheck className="h-4 w-4 text-muted-foreground" />}
+                    </div>
+                    {conn.link && <ExternalLink className="h-4 w-4 text-muted-foreground" />}
+                  </div>
+                  {i < connections.length - 1 && <div className="h-px bg-primary/10" />}
+                </div>
               ))}
             </div>
-            <ChevronRight className="ml-1 h-4 w-4 text-muted-foreground" />
           </div>
-        </div>
-
-        {/* Note */}
-        <div className="rounded-xl bg-white/[0.05] border border-primary/20 backdrop-blur-sm p-4">
-          <span className="text-sm text-muted-foreground">Note (only visible to you)</span>
         </div>
       </div>
     </div>

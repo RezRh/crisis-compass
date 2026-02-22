@@ -2,8 +2,8 @@ import { useState, useRef, KeyboardEvent } from "react";
 import { useMessageStore } from "@/stores/message-store";
 import { useAuthStore } from "@/stores/auth-store";
 import { useServerStore } from "@/stores/server-store";
-import { Plus, Smile, Send } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { Plus, Smile, Gift, Sticker, Send } from "lucide-react";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 
 export function MessageInput() {
   const [content, setContent] = useState("");
@@ -19,7 +19,6 @@ export function MessageInput() {
 
   const handleSend = () => {
     if (!content.trim() || !activeChannelId || !user) return;
-
     addMessage({
       id: `msg-${Date.now()}`,
       channel_id: activeChannelId,
@@ -29,11 +28,7 @@ export function MessageInput() {
       created_at: new Date().toISOString(),
     });
     setContent("");
-
-    // Reset textarea height
-    if (textareaRef.current) {
-      textareaRef.current.style.height = "auto";
-    }
+    if (textareaRef.current) textareaRef.current.style.height = "auto";
   };
 
   const handleKeyDown = (e: KeyboardEvent) => {
@@ -54,11 +49,16 @@ export function MessageInput() {
   if (!activeChannelId) return null;
 
   return (
-    <div className="px-4 pb-6 pt-1">
-      <div className="flex items-end gap-2 rounded-lg bg-chat-input px-4 py-2">
-        <button className="mb-1 text-muted-foreground hover:text-foreground">
-          <Plus className="h-5 w-5" />
-        </button>
+    <div className="px-4 pb-6 pt-0">
+      <div className="flex items-end gap-0 rounded-lg bg-chat-input ring-1 ring-border/50">
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <button className="flex h-11 w-11 shrink-0 items-center justify-center text-muted-foreground transition-colors hover:text-foreground">
+              <Plus className="h-5 w-5" />
+            </button>
+          </TooltipTrigger>
+          <TooltipContent>Upload a File</TooltipContent>
+        </Tooltip>
         <textarea
           ref={textareaRef}
           value={content}
@@ -67,16 +67,29 @@ export function MessageInput() {
           onInput={handleInput}
           placeholder={`Message #${activeChannel?.name || "channel"}`}
           rows={1}
-          className="max-h-[200px] flex-1 resize-none bg-transparent text-sm text-foreground placeholder:text-muted-foreground focus:outline-none"
+          className="max-h-[200px] flex-1 resize-none bg-transparent py-[10px] text-[15px] text-foreground placeholder:text-muted-foreground focus:outline-none"
         />
-        <button className="mb-1 text-muted-foreground hover:text-foreground">
-          <Smile className="h-5 w-5" />
-        </button>
-        {content.trim() && (
-          <button onClick={handleSend} className="mb-1 text-primary hover:text-primary/80">
-            <Send className="h-5 w-5" />
-          </button>
-        )}
+        <div className="flex shrink-0 items-center gap-0.5 px-2 pb-[6px]">
+          {[
+            { icon: Gift, label: "Send a Gift" },
+            { icon: Sticker, label: "Stickers" },
+            { icon: Smile, label: "Emoji" },
+          ].map(({ icon: Icon, label }) => (
+            <Tooltip key={label}>
+              <TooltipTrigger asChild>
+                <button className="rounded p-1.5 text-muted-foreground transition-colors hover:text-foreground">
+                  <Icon className="h-5 w-5" />
+                </button>
+              </TooltipTrigger>
+              <TooltipContent>{label}</TooltipContent>
+            </Tooltip>
+          ))}
+          {content.trim() && (
+            <button onClick={handleSend} className="ml-1 rounded-md bg-primary p-1.5 text-primary-foreground transition-colors hover:bg-primary/80">
+              <Send className="h-4 w-4" />
+            </button>
+          )}
+        </div>
       </div>
     </div>
   );

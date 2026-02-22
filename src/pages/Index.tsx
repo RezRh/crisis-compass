@@ -31,17 +31,18 @@ const ChatApp = () => {
   }
 
   return (
-    <div className="dark flex h-screen w-full overflow-hidden bg-background text-foreground">
+    <div className="dark flex h-screen w-full overflow-hidden bg-chat-bg text-foreground">
       <ServerSidebar />
       <ChannelSidebar />
-      <div className="flex flex-1 flex-col min-w-0">
+      <div className="flex flex-1 flex-col min-w-0 bg-chat-bg">
         <ChatHeader />
-        <MessageList />
+        <div className="flex-1 overflow-hidden">
+          <MessageList />
+        </div>
         <MessageInput />
       </div>
       {showMemberList && <MemberList />}
 
-      {/* Dialogs */}
       <CreateServerDialog />
       <CreateChannelDialog />
       <SettingsOverlay />

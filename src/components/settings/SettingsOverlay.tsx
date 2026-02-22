@@ -46,14 +46,14 @@ function UserProfileView({ onClose }: { onClose: () => void }) {
       {/* Top bar icons */}
       <div className="sticky top-0 z-10 flex items-center justify-end gap-2 px-4 py-3">
         <button className="flex h-9 w-9 items-center justify-center rounded-full text-muted-foreground hover:text-foreground transition-colors">
-          <span className="text-lg">😊</span>
+          <span className="text-lg">⚡</span>
         </button>
         <button className="flex h-9 w-9 items-center justify-center rounded-full text-muted-foreground hover:text-foreground transition-colors">
-          <span className="text-lg">🏠</span>
+          <span className="text-lg animate-bounce">🛒</span>
         </button>
         <button className="flex items-center gap-1.5 rounded-full bg-accent px-3 py-1.5 text-sm font-medium text-foreground hover:bg-accent/80 transition-colors">
           <span className="text-sm">⭐</span>
-          Nitro
+          Prism
         </button>
         <button
           onClick={onClose}

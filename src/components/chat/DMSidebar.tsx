@@ -48,22 +48,15 @@ const mockDMs = [
 export function DMSidebar() {
   const { user } = useAuthStore();
   const { openSettings, sidebarCollapsed, toggleSidebar, setActiveDM, activeDM } = useUIStore();
-  const [scrolling, setScrolling] = useState(false);
-  const scrollTimer = useRef<ReturnType<typeof setTimeout>>(null);
+  const [scrolled, setScrolled] = useState(false);
   const handleScroll = useCallback((e: React.UIEvent<HTMLDivElement>) => {
-    if (e.currentTarget.scrollTop > 10) {
-      setScrolling(true);
-      if (scrollTimer.current) clearTimeout(scrollTimer.current);
-      scrollTimer.current = setTimeout(() => setScrolling(false), 20);
-    } else {
-      setScrolling(false);
-    }
+    setScrolled(e.currentTarget.scrollTop > 10);
   }, []);
 
   return (
     <div className="relative flex h-full min-w-0 flex-1 flex-col bg-server-bar overflow-y-auto" onScroll={handleScroll}>
       <div className="sticky top-0 z-10">
-        <div className={`transition-all duration-75 ${scrolling ? "backdrop-blur-md bg-white/[0.02]" : ""}`}>
+        <div className={`transition-all duration-75 ${scrolled ? "backdrop-blur-md bg-white/[0.02]" : ""}`}>
         <div className="flex items-center justify-between px-4 pt-12 pb-2">
           <div className="flex items-center gap-2">
             {sidebarCollapsed && (

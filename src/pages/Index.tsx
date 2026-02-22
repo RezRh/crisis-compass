@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { useAuthStore } from "@/stores/auth-store";
 import { useUIStore } from "@/stores/ui-store";
 import { DMSidebar } from "@/components/chat/DMSidebar";
@@ -70,31 +70,40 @@ const ChatApp = () => {
       {/* Mobile bottom tab bar — hidden when in chat */}
       {!activeDM && (
         <div className="absolute bottom-0 left-0 right-0 z-30 flex items-center justify-center gap-3 pb-3 pt-1 md:hidden px-4">
-          <div className="flex items-center gap-3 rounded-full border border-white/[0.06] bg-white/[0.04] backdrop-blur-md px-3 py-2 shadow-[0_2px_16px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.04),inset_0_-1px_4px_rgba(0,0,0,0.3)]">
+         <div className="relative flex items-center gap-3 rounded-full border border-white/[0.06] bg-white/[0.04] backdrop-blur-md px-3 py-2 shadow-[0_2px_16px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.04),inset_0_-1px_4px_rgba(0,0,0,0.3)]">
+            {/* Sliding liquid glass bubble */}
+            <div
+              className="pointer-events-none absolute z-0 h-10 w-10 transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)]"
+              style={{ left: !showNotifications ? 12 : 12 + 40 + 12 }}
+            >
+              <div className="h-full w-full rounded-full bg-white/[0.10] shadow-[0_0_20px_rgba(255,255,255,0.06),inset_0_1px_0_rgba(255,255,255,0.15),inset_0_-1px_0_rgba(255,255,255,0.05)] backdrop-blur-xl border border-white/[0.12]" />
+              <div className="absolute inset-0 rounded-full bg-gradient-to-br from-blue-500/[0.08] via-transparent to-purple-500/[0.06]" />
+            </div>
+
             <button
               onClick={() => setShowNotifications(false)}
-              className={`relative flex h-10 w-10 items-center justify-center rounded-full transition-all ${!showNotifications ? "bg-white/[0.08] shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]" : "hover:bg-white/[0.04]"}`}
+              className="relative z-10 flex h-10 w-10 items-center justify-center rounded-full transition-all"
             >
-              <Home className={`h-5 w-5 ${!showNotifications ? "text-foreground" : "text-muted-foreground"}`} />
+              <Home className={`h-5 w-5 transition-colors duration-300 ${!showNotifications ? "text-foreground" : "text-muted-foreground"}`} />
               {!showNotifications && (
                 <span className="absolute -top-1 -right-1 flex h-[16px] min-w-[16px] items-center justify-center rounded-full bg-discord-red px-1 text-[10px] font-bold text-white">223</span>
               )}
             </button>
             <button
               onClick={() => setShowNotifications(true)}
-              className={`relative flex h-10 w-10 items-center justify-center rounded-full transition-all ${showNotifications ? "bg-white/[0.08] shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]" : "hover:bg-white/[0.04]"}`}
+              className="relative z-10 flex h-10 w-10 items-center justify-center rounded-full transition-all"
             >
-              <Bell className={`h-5 w-5 ${showNotifications ? "text-foreground" : "text-muted-foreground"}`} />
+              <Bell className={`h-5 w-5 transition-colors duration-300 ${showNotifications ? "text-foreground" : "text-muted-foreground"}`} />
               {showNotifications && (
                 <span className="absolute -top-1 -right-1 flex h-[16px] min-w-[16px] items-center justify-center rounded-full bg-discord-red px-1 text-[10px] font-bold text-white">10</span>
               )}
             </button>
-            <button className="flex h-10 w-10 items-center justify-center rounded-full transition-all hover:bg-white/[0.04]">
+            <button className="relative z-10 flex h-10 w-10 items-center justify-center rounded-full transition-all hover:bg-white/[0.04]">
               <UserRoundPlus className="h-5 w-5 text-muted-foreground" />
             </button>
             <button
               onClick={() => openSettings("user")}
-              className="relative flex h-10 w-10 items-center justify-center rounded-full transition-all hover:bg-white/[0.04]"
+              className="relative z-10 flex h-10 w-10 items-center justify-center rounded-full transition-all hover:bg-white/[0.04]"
             >
               <Avatar className="h-6 w-6">
                 <AvatarFallback className="bg-primary text-primary-foreground text-[10px] font-bold">

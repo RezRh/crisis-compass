@@ -39,7 +39,7 @@ export function DMSidebar() {
   const { openSettings } = useUIStore();
 
   return (
-    <div className="relative flex h-full w-60 flex-1 md:flex-none flex-col bg-channel-bar">
+    <div className="relative flex h-full w-60 flex-1 md:flex-none flex-col bg-server-bar">
       {/* Title */}
       <div className="px-4 pt-4 pb-3">
         <h2 className="text-[20px] font-bold text-foreground">Messages</h2>
@@ -91,44 +91,6 @@ export function DMSidebar() {
             <span className="text-[12px] text-muted-foreground shrink-0 self-start mt-1">{dm.time}</span>
           </button>
         ))}
-      </div>
-
-      {/* Floating Add Friend FAB - mobile only */}
-      <div className="absolute bottom-20 right-4 md:hidden">
-        <button className="flex h-14 w-14 items-center justify-center rounded-full bg-primary shadow-lg shadow-primary/30 text-primary-foreground active:scale-95 transition-transform">
-          <UserRoundPlus className="h-6 w-6" />
-        </button>
-      </div>
-
-      {/* Mobile bottom tab bar */}
-      <div className="flex items-center justify-around border-t border-border bg-server-bar py-2 md:hidden">
-        <button className="flex flex-col items-center gap-0.5">
-          <div className="relative">
-            <Home className="h-6 w-6 text-foreground" />
-            <span className="absolute -top-2 -right-3 flex h-[18px] min-w-[18px] items-center justify-center rounded-full bg-discord-red px-1 text-[11px] font-bold text-white">
-              223
-            </span>
-          </div>
-          <span className="text-[10px] font-medium text-foreground mt-1">Home</span>
-        </button>
-        <button className="flex flex-col items-center gap-0.5">
-          <Bell className="h-6 w-6 text-muted-foreground" />
-          <span className="text-[10px] font-medium text-muted-foreground">Notifications</span>
-        </button>
-        <button
-          onClick={() => openSettings("user")}
-          className="flex flex-col items-center gap-0.5"
-        >
-          <div className="relative">
-            <Avatar className="h-6 w-6">
-              <AvatarFallback className="bg-primary text-primary-foreground text-[10px] font-bold">
-                {user?.username?.charAt(0).toUpperCase() || "?"}
-              </AvatarFallback>
-            </Avatar>
-            <span className="absolute -bottom-[1px] -right-[1px] h-[10px] w-[10px] rounded-full border-2 border-server-bar bg-discord-green" />
-          </div>
-          <span className="text-[10px] font-medium text-muted-foreground">You</span>
-        </button>
       </div>
 
       {/* Desktop user panel */}

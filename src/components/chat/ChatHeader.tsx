@@ -14,14 +14,16 @@ export function ChatHeader() {
   return (
     <header className="flex h-12 items-center justify-between bg-chat-bg px-4 shadow-[0_1px_0_rgba(0,0,0,0.2)]">
       <div className="flex items-center gap-2 min-w-0">
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <button onClick={toggleSidebar} className="p-[6px] text-muted-foreground transition-colors hover:text-foreground">
-              {sidebarCollapsed ? <PanelLeftOpen className="h-5 w-5" /> : <PanelLeftClose className="h-5 w-5" />}
-            </button>
-          </TooltipTrigger>
-          <TooltipContent>{sidebarCollapsed ? "Show Sidebar" : "Hide Sidebar"}</TooltipContent>
-        </Tooltip>
+        {sidebarCollapsed && (
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <button onClick={toggleSidebar} className="p-[6px] text-muted-foreground transition-colors hover:text-foreground">
+                <PanelLeftOpen className="h-5 w-5" />
+              </button>
+            </TooltipTrigger>
+            <TooltipContent>Show Sidebar</TooltipContent>
+          </Tooltip>
+        )}
         <Hash className="h-6 w-6 shrink-0 text-muted-foreground" />
         <h2 className="font-bold text-[15px] text-foreground truncate">{activeChannel?.name || "Select a channel"}</h2>
         {activeChannel && (

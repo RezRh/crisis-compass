@@ -1,6 +1,6 @@
 import { useAuthStore } from "@/stores/auth-store";
 import { useUIStore } from "@/stores/ui-store";
-import { Search, UserPlus, Mic, Headphones, Settings, Home, Bell, User, UserRoundPlus } from "lucide-react";
+import { Search, UserPlus, Mic, Headphones, Settings, Home, Bell, User, UserRoundPlus, PanelLeftClose, PanelLeftOpen } from "lucide-react";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 
@@ -36,13 +36,16 @@ const mockDMs = [
 
 export function DMSidebar() {
   const { user } = useAuthStore();
-  const { openSettings } = useUIStore();
+  const { openSettings, sidebarCollapsed, toggleSidebar } = useUIStore();
 
   return (
     <div className="relative flex h-full w-60 flex-1 md:flex-none flex-col bg-server-bar">
-      {/* Title */}
-      <div className="px-4 pt-12 pb-2">
+      {/* Title with toggle */}
+      <div className="flex items-center justify-between px-4 pt-12 pb-2">
         <h2 className="text-[20px] font-bold text-foreground">Messages</h2>
+        <button onClick={toggleSidebar} className="p-1 text-muted-foreground transition-colors hover:text-foreground">
+          <PanelLeftClose className="h-5 w-5" />
+        </button>
       </div>
 
       {/* Search + Add Friends row — liquid glass */}

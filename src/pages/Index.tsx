@@ -13,7 +13,7 @@ import { MemberList } from "@/components/chat/MemberList";
 import { CreateServerDialog, CreateChannelDialog } from "@/components/chat/Dialogs";
 import { SettingsOverlay } from "@/components/settings/SettingsOverlay";
 import { LoginPage } from "@/pages/LoginPage";
-import { Users, Home, Bell, UserRoundPlus } from "lucide-react";
+import { Users, Home, Bell, UserRoundPlus, PanelLeftOpen } from "lucide-react";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 
 const ChatApp = () => {
@@ -95,9 +95,15 @@ const ChatApp = () => {
 };
 
 function DMHeader() {
+  const { sidebarCollapsed, toggleSidebar } = useUIStore();
   return (
     <header className="flex h-12 items-center gap-4 bg-chat-bg px-4 shadow-[0_1px_0_rgba(0,0,0,0.2)]">
       <div className="flex items-center gap-2">
+        {sidebarCollapsed && (
+          <button onClick={toggleSidebar} className="p-[6px] text-muted-foreground transition-colors hover:text-foreground">
+            <PanelLeftOpen className="h-5 w-5" />
+          </button>
+        )}
         <Users className="h-6 w-6 text-muted-foreground" />
         <h2 className="font-bold text-[15px] text-foreground">Friends</h2>
       </div>

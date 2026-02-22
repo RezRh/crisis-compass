@@ -98,13 +98,18 @@ function UserProfileView({ onClose }: { onClose: () => void }) {
       <div className="flex-1 overflow-y-auto md:w-[60%]">
         {/* Top bar — pfp + action icons */}
         <div className="flex items-center justify-between px-5 py-4">
-          {/* Circular PFP */}
-          <Avatar className="h-14 w-14 ring-[2px] ring-primary ring-offset-2 ring-offset-background">
-            <AvatarImage src={serverIcon1} alt={user?.username} className="object-cover" />
-            <AvatarFallback className="bg-primary text-primary-foreground text-xl font-bold">
-              {user?.username?.charAt(0).toUpperCase()}
-            </AvatarFallback>
-          </Avatar>
+          {/* Circular PFP with Prism artifact halo */}
+          <div className="relative">
+            {/* Prism glow halo */}
+            <div className="absolute -inset-3 rounded-full bg-primary/20 blur-xl animate-pulse" />
+            <div className="absolute -inset-1.5 rounded-full bg-gradient-to-br from-primary/40 via-transparent to-[#ADFF2F]/30 animate-[spin_6s_linear_infinite]" />
+            <Avatar className="relative h-14 w-14 ring-[2px] ring-primary ring-offset-2 ring-offset-background">
+              <AvatarImage src={serverIcon1} alt={user?.username} className="object-cover" />
+              <AvatarFallback className="bg-primary text-primary-foreground text-xl font-bold">
+                {user?.username?.charAt(0).toUpperCase()}
+              </AvatarFallback>
+            </Avatar>
+          </div>
 
           {/* Action icons */}
           <div className="flex items-center gap-2">
@@ -138,9 +143,11 @@ function UserProfileView({ onClose }: { onClose: () => void }) {
             </div>
             <div className="flex items-center gap-3">
               <span className="text-sm text-muted-foreground">{user?.email?.split("@")[0] || "demouser001"}</span>
-              <div className="flex items-center gap-1.5">
-                <Smile className="h-4 w-4 text-muted-foreground" />
-                <Gem className="h-4 w-4 text-muted-foreground" />
+              {/* Artifacts — hexagon & diamond shapes */}
+              <div className="flex items-center gap-2">
+                <Artifact shape="hexagon" color="primary" label="P" />
+                <Artifact shape="diamond" color="lime" label="⚡" />
+                <Artifact shape="hexagon" color="muted" label="★" />
               </div>
             </div>
           </div>
@@ -185,6 +192,17 @@ function UserProfileView({ onClose }: { onClose: () => void }) {
                   ))}
                 </div>
                 <ChevronRight className="ml-1 h-4 w-4 text-muted-foreground" />
+              </div>
+            </div>
+
+            {/* Artifacts */}
+            <div className="rounded-xl bg-white/[0.05] border border-primary/20 backdrop-blur-sm p-4">
+              <p className="mb-3 text-sm font-medium text-muted-foreground">Artifacts</p>
+              <div className="flex items-center gap-3">
+                <Artifact shape="hexagon" color="primary" label="P" size="lg" />
+                <Artifact shape="diamond" color="lime" label="⚡" size="lg" />
+                <Artifact shape="hexagon" color="muted" label="★" size="lg" />
+                <Artifact shape="diamond" color="primary" label="♦" size="lg" />
               </div>
             </div>
 
@@ -283,5 +301,41 @@ function ServerSettingsView({ onClose }: { onClose: () => void }) {
         <span className="text-[11px] font-medium text-muted-foreground">ESC</span>
       </div>
     </>
+  );
+}
+
+/* ─── Artifact Badge (Hexagon / Diamond) ─── */
+function Artifact({
+  shape,
+  color,
+  label,
+  size = "sm",
+}: {
+  shape: "hexagon" | "diamond";
+  color: "primary" | "lime" | "muted";
+  label: string;
+  size?: "sm" | "lg";
+}) {
+  const dim = size === "lg" ? "h-10 w-10" : "h-6 w-6";
+  const textSize = size === "lg" ? "text-sm" : "text-[9px]";
+
+  const colorMap = {
+    primary: "bg-primary/20 border-primary/50 text-primary shadow-[0_0_8px_rgba(255,0,60,0.3)]",
+    lime: "bg-[#ADFF2F]/15 border-[#ADFF2F]/40 text-[#ADFF2F] shadow-[0_0_8px_rgba(173,255,47,0.3)]",
+    muted: "bg-white/[0.08] border-white/20 text-muted-foreground",
+  };
+
+  const clipPath =
+    shape === "hexagon"
+      ? "polygon(50% 0%, 93% 25%, 93% 75%, 50% 100%, 7% 75%, 7% 25%)"
+      : "polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)";
+
+  return (
+    <div
+      className={`${dim} flex items-center justify-center border ${colorMap[color]} ${textSize} font-bold`}
+      style={{ clipPath }}
+    >
+      {label}
+    </div>
   );
 }

@@ -71,15 +71,23 @@ const ChatApp = () => {
       {!activeDM && (
         <div className="absolute bottom-0 left-0 right-0 z-30 flex items-center justify-center gap-3 pb-3 pt-1 md:hidden px-4">
           <div className="flex items-center gap-3 rounded-full border border-white/[0.06] bg-white/[0.04] backdrop-blur-md px-3 py-2 shadow-[0_2px_16px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.04),inset_0_-1px_4px_rgba(0,0,0,0.3)]">
-            <button className="relative flex h-10 w-10 items-center justify-center rounded-full bg-white/[0.08] shadow-[inset_0_1px_0_rgba(255,255,255,0.06)] transition-all">
-              <Home className="h-5 w-5 text-foreground" />
-              <span className="absolute -top-1 -right-1 flex h-[16px] min-w-[16px] items-center justify-center rounded-full bg-discord-red px-1 text-[10px] font-bold text-white">223</span>
+            <button
+              onClick={() => setShowNotifications(false)}
+              className={`relative flex h-10 w-10 items-center justify-center rounded-full transition-all ${!showNotifications ? "bg-white/[0.08] shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]" : "hover:bg-white/[0.04]"}`}
+            >
+              <Home className={`h-5 w-5 ${!showNotifications ? "text-foreground" : "text-muted-foreground"}`} />
+              {!showNotifications && (
+                <span className="absolute -top-1 -right-1 flex h-[16px] min-w-[16px] items-center justify-center rounded-full bg-discord-red px-1 text-[10px] font-bold text-white">223</span>
+              )}
             </button>
             <button
               onClick={() => setShowNotifications(true)}
-              className="flex h-10 w-10 items-center justify-center rounded-full transition-all hover:bg-white/[0.04]"
+              className={`relative flex h-10 w-10 items-center justify-center rounded-full transition-all ${showNotifications ? "bg-white/[0.08] shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]" : "hover:bg-white/[0.04]"}`}
             >
-              <Bell className="h-5 w-5 text-muted-foreground" />
+              <Bell className={`h-5 w-5 ${showNotifications ? "text-foreground" : "text-muted-foreground"}`} />
+              {showNotifications && (
+                <span className="absolute -top-1 -right-1 flex h-[16px] min-w-[16px] items-center justify-center rounded-full bg-discord-red px-1 text-[10px] font-bold text-white">10</span>
+              )}
             </button>
             <button className="flex h-10 w-10 items-center justify-center rounded-full transition-all hover:bg-white/[0.04]">
               <UserRoundPlus className="h-5 w-5 text-muted-foreground" />

@@ -106,15 +106,15 @@ function UserProfileView({ onClose }: { onClose: () => void }) {
         </Button>
 
         {/* Orbs Balance */}
-        <div className="mb-3 flex items-center justify-between rounded-xl bg-accent/60 p-4">
+        <div className="mb-3 flex items-center justify-between rounded-xl bg-white/[0.05] border border-primary/20 backdrop-blur-sm p-4">
           <span className="text-sm font-medium text-muted-foreground">Fluxs Balance</span>
-          <span className="flex items-center gap-1.5 rounded-lg bg-accent px-3 py-1.5 text-sm font-semibold text-foreground">
+          <span className="flex items-center gap-1.5 rounded-lg bg-white/[0.05] border border-primary/20 px-3 py-1.5 text-sm font-semibold text-foreground">
             <Gem className="h-4 w-4" /> 2530
           </span>
         </div>
 
         {/* Member Since */}
-        <div className="mb-3 rounded-xl bg-accent/60 p-4">
+        <div className="mb-3 rounded-xl bg-white/[0.05] border border-primary/20 backdrop-blur-sm p-4">
           <p className="mb-1 text-sm font-medium text-muted-foreground">Member Since</p>
           <div className="flex items-center gap-2 text-sm text-foreground">
             <MessageSquare className="h-4 w-4 text-muted-foreground" />
@@ -123,7 +123,7 @@ function UserProfileView({ onClose }: { onClose: () => void }) {
         </div>
 
         {/* Connections */}
-        <div className="mb-3 rounded-xl bg-accent/60 p-4">
+        <div className="mb-3 rounded-xl bg-white/[0.05] border border-primary/20 backdrop-blur-sm p-4">
           <p className="mb-3 text-sm font-medium text-muted-foreground">Connections</p>
           <div className="space-y-0">
             {connections.map((conn, i) => (
@@ -136,14 +136,14 @@ function UserProfileView({ onClose }: { onClose: () => void }) {
                   </div>
                   {conn.link && <ExternalLink className="h-4 w-4 text-muted-foreground" />}
                 </div>
-                {i < connections.length - 1 && <div className="h-px bg-border" />}
+                {i < connections.length - 1 && <div className="h-px bg-primary/10" />}
               </div>
             ))}
           </div>
         </div>
 
         {/* Friends */}
-        <div className="mb-3 flex items-center justify-between rounded-xl bg-accent/60 p-4">
+        <div className="mb-3 flex items-center justify-between rounded-xl bg-white/[0.05] border border-primary/20 backdrop-blur-sm p-4">
           <span className="text-sm font-medium text-muted-foreground">Friends</span>
           <div className="flex items-center gap-1">
             <div className="flex -space-x-2">
@@ -152,7 +152,7 @@ function UserProfileView({ onClose }: { onClose: () => void }) {
                   key={i}
                   src={src}
                   alt="friend"
-                  className="h-7 w-7 rounded-full border-2 border-accent object-cover"
+                  className="h-7 w-7 rounded-full border-2 border-white/[0.1] object-cover"
                 />
               ))}
             </div>
@@ -161,7 +161,7 @@ function UserProfileView({ onClose }: { onClose: () => void }) {
         </div>
 
         {/* Note */}
-        <div className="rounded-xl bg-accent/60 p-4">
+        <div className="rounded-xl bg-white/[0.05] border border-primary/20 backdrop-blur-sm p-4">
           <span className="text-sm text-muted-foreground">Note (only visible to you)</span>
         </div>
       </div>

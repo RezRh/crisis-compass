@@ -7,7 +7,7 @@ import { ChatView } from "@/components/chat/ChatView";
 import { NotificationsView } from "@/components/chat/NotificationsView";
 import { SettingsOverlay } from "@/components/settings/SettingsOverlay";
 import { LoginPage } from "@/pages/LoginPage";
-import { Home, Bell, UserRoundPlus, Search, MessageSquare } from "lucide-react";
+import { Home, Bell, UserRoundPlus, Search, MessageSquare, MessageSquarePlus } from "lucide-react";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { useServerStore } from "@/stores/server-store";
 
@@ -230,7 +230,7 @@ function DockBar({
           )}
         </button>
         <button data-dock className="relative z-10 flex h-10 w-10 items-center justify-center rounded-full transition-all hover:bg-white/[0.04]">
-          <UserRoundPlus className="h-5 w-5 text-muted-foreground" />
+          <MessageSquarePlus className="h-5 w-5 text-muted-foreground" />
         </button>
         <button
           data-dock

@@ -1,5 +1,5 @@
 import { useState, useCallback } from "react";
-import { X, ChevronRight, UserPlus, Users, Search } from "lucide-react";
+import { ArrowLeft, ChevronRight, UserPlus, Users, Search } from "lucide-react";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { useUIStore } from "@/stores/ui-store";
 
@@ -91,7 +91,7 @@ export function NewMessageView({ onBack }: { onBack: () => void }) {
             onClick={onBack}
             className="flex h-8 w-8 items-center justify-center rounded-full text-muted-foreground transition-colors hover:text-foreground"
           >
-            <X className="h-5 w-5" />
+            <ArrowLeft className="h-5 w-5" />
           </button>
           <h2 className="text-[17px] font-bold text-foreground">New Message</h2>
           <div className="w-8" />

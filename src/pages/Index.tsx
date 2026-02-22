@@ -3,6 +3,7 @@ import { useAuthStore } from "@/stores/auth-store";
 import { useUIStore } from "@/stores/ui-store";
 import { DMSidebar } from "@/components/chat/DMSidebar";
 import { NewMessageView } from "@/components/chat/NewMessageView";
+import { AddFriendsView } from "@/components/chat/AddFriendsView";
 import { SearchView } from "@/components/chat/SearchView";
 import { ServerSidebar } from "@/components/chat/ServerSidebar";
 import { ChatView } from "@/components/chat/ChatView";
@@ -16,7 +17,7 @@ import { useServerStore } from "@/stores/server-store";
 const ChatApp = () => {
   const { isAuthenticated, user } = useAuthStore();
   const { loadMockData } = useServerStore();
-  const { openSettings, closeSettings, settingsView, sidebarCollapsed, activeDM, showNotifications, setShowNotifications, showNewMessage, setShowNewMessage, showSearch, setShowSearch } = useUIStore();
+  const { openSettings, closeSettings, settingsView, sidebarCollapsed, activeDM, showNotifications, setShowNotifications, showNewMessage, setShowNewMessage, showSearch, setShowSearch, showAddFriends, setShowAddFriends } = useUIStore();
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -32,7 +33,7 @@ const ChatApp = () => {
     <div className="dark relative flex h-screen w-full flex-col overflow-hidden bg-server-bar text-foreground">
       <div className="flex flex-1 min-h-0 min-w-0 overflow-hidden">
         {/* Mobile: ServerSidebar always mounted, visibility toggled */}
-        <div className={`md:hidden ${!sidebarCollapsed && !showNewMessage && !showNotifications && !showSearch && !activeDM ? "" : "hidden"}`}>
+        <div className={`md:hidden ${!sidebarCollapsed && !showNewMessage && !showNotifications && !showSearch && !showAddFriends && !activeDM ? "" : "hidden"}`}>
           <ServerSidebar />
         </div>
 
@@ -40,6 +41,10 @@ const ChatApp = () => {
         {showSearch ? (
           <div className="flex w-full md:hidden">
             <SearchView onBack={() => setShowSearch(false)} />
+          </div>
+        ) : showAddFriends ? (
+          <div className="flex w-full md:hidden">
+            <AddFriendsView onBack={() => setShowAddFriends(false)} />
           </div>
         ) : showNewMessage ? (
           <div className="flex w-full md:hidden">

@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Settings, X, Trash2, Pencil, ChevronDown, ChevronRight, ExternalLink, BadgeCheck, MessageSquare } from "lucide-react";
+import { Settings, X, Trash2, Pencil, ChevronDown, ChevronRight, ExternalLink, BadgeCheck, MessageSquare, Zap, ShoppingCart, Star, Plus, Trophy, Smile, Gem, Gamepad2, Target, Github, Dice5 } from "lucide-react";
 import { useState } from "react";
 import serverIcon1 from "@/assets/server-icon-1.jpg";
 import serverIcon2 from "@/assets/server-icon-2.jpg";
@@ -33,10 +33,10 @@ function UserProfileView({ onClose }: { onClose: () => void }) {
   const { user } = useAuthStore();
 
   const connections = [
-    { icon: "🎮", name: "UdiishasDog#3617", verified: true, platform: "Battle.net" },
-    { icon: "🎯", name: "RezinatorOp", verified: true, platform: "Epic Games" },
-    { icon: "⚙️", name: user?.username || "User", verified: true, platform: "GitHub", link: true },
-    { icon: "🎲", name: "MarxistOP", verified: true, platform: "Steam", link: true },
+    { icon: Gamepad2, name: "UdiishasDog#3617", verified: true, platform: "Battle.net" },
+    { icon: Target, name: "RezinatorOp", verified: true, platform: "Epic Games" },
+    { icon: Github, name: user?.username || "User", verified: true, platform: "GitHub", link: true },
+    { icon: Dice5, name: "MarxistOP", verified: true, platform: "Steam", link: true },
   ];
 
   const friendAvatars = [serverIcon1, serverIcon2, serverIcon3, serverIcon4, serverIcon1];
@@ -46,13 +46,13 @@ function UserProfileView({ onClose }: { onClose: () => void }) {
       {/* Top bar icons */}
       <div className="sticky top-0 z-10 flex items-center justify-end gap-2 px-4 py-3">
         <button className="flex h-9 w-9 items-center justify-center rounded-full text-muted-foreground hover:text-foreground transition-colors">
-          <span className="text-lg">⚡</span>
+          <Zap className="h-5 w-5" />
         </button>
         <button className="flex h-9 w-9 items-center justify-center rounded-full text-muted-foreground hover:text-foreground transition-colors">
-          <span className="text-lg animate-bounce">🛒</span>
+          <ShoppingCart className="h-5 w-5 animate-bounce" />
         </button>
         <button className="flex items-center gap-1.5 rounded-full bg-accent px-3 py-1.5 text-sm font-medium text-foreground hover:bg-accent/80 transition-colors">
-          <span className="text-sm">⭐</span>
+          <Star className="h-4 w-4" />
           Prism
         </button>
         <button
@@ -74,7 +74,7 @@ function UserProfileView({ onClose }: { onClose: () => void }) {
           </Avatar>
           {/* Status bubble */}
           <div className="absolute left-28 top-4 flex items-center gap-1.5 rounded-full bg-accent/80 px-3 py-1.5 text-xs text-muted-foreground">
-            <span className="text-sm">➕</span>
+            <Plus className="h-3.5 w-3.5" />
             Most satisfying game mechanic?
           </div>
         </div>
@@ -87,11 +87,11 @@ function UserProfileView({ onClose }: { onClose: () => void }) {
         <div className="mb-5 flex items-center gap-2">
           <span className="text-sm text-muted-foreground">{user?.email?.split("@")[0] || "demouser001"}</span>
           <span className="flex items-center gap-1 rounded bg-accent px-2 py-0.5 text-xs font-medium text-foreground">
-            🏆 McL
+            <Trophy className="h-3 w-3" /> McL
           </span>
           <div className="flex items-center gap-1">
-            <span className="text-sm">😊</span>
-            <span className="text-sm">💎</span>
+            <Smile className="h-4 w-4 text-muted-foreground" />
+            <Gem className="h-4 w-4 text-muted-foreground" />
           </div>
         </div>
 
@@ -105,7 +105,7 @@ function UserProfileView({ onClose }: { onClose: () => void }) {
         <div className="mb-3 flex items-center justify-between rounded-xl bg-accent/60 p-4">
           <span className="text-sm font-medium text-muted-foreground">Fluxs Balance</span>
           <span className="flex items-center gap-1.5 rounded-lg bg-accent px-3 py-1.5 text-sm font-semibold text-foreground">
-            💎 2530
+            <Gem className="h-4 w-4" /> 2530
           </span>
         </div>
 
@@ -126,7 +126,7 @@ function UserProfileView({ onClose }: { onClose: () => void }) {
               <div key={i}>
                 <div className="flex items-center justify-between py-3">
                   <div className="flex items-center gap-3">
-                    <span className="text-xl">{conn.icon}</span>
+                    <conn.icon className="h-5 w-5 text-muted-foreground" />
                     <span className="text-sm font-semibold text-foreground">{conn.name}</span>
                     {conn.verified && <BadgeCheck className="h-4 w-4 text-muted-foreground" />}
                   </div>

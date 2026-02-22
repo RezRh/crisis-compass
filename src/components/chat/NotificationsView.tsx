@@ -1,5 +1,6 @@
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { ArrowLeft, MoreHorizontal } from "lucide-react";
+import { MoreHorizontal, UserPlus, PanelLeftClose, PanelLeftOpen } from "lucide-react";
+import { useUIStore } from "@/stores/ui-store";
 
 interface Notification {
   id: string;
@@ -30,19 +31,30 @@ interface NotificationsViewProps {
 }
 
 export function NotificationsView({ onBack }: NotificationsViewProps) {
+  const { sidebarCollapsed, toggleSidebar } = useUIStore();
+
   return (
     <div className="flex h-full w-full flex-col bg-server-bar text-foreground">
       {/* Header */}
       <div className="flex items-center justify-between px-4 py-4 pt-12">
-        <div className="flex items-center gap-3">
-          <button onClick={onBack} className="p-1 text-muted-foreground hover:text-foreground transition-colors">
-            <ArrowLeft className="h-5 w-5" />
+        <div className="flex items-center gap-2">
+          <button
+            onClick={(e) => { e.stopPropagation(); toggleSidebar(); }}
+            className="flex h-8 w-8 items-center justify-center rounded-full border border-white/[0.06] bg-white/[0.04] text-muted-foreground shadow-[0_2px_10px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.04)] transition-colors hover:bg-white/[0.08] hover:text-foreground"
+          >
+            {sidebarCollapsed ? <PanelLeftOpen className="h-[18px] w-[18px]" /> : <PanelLeftClose className="h-[18px] w-[18px]" />}
           </button>
           <h1 className="text-xl font-bold text-white">Notifications</h1>
         </div>
-        <button className="flex h-9 w-9 items-center justify-center rounded-full bg-white/[0.08] text-muted-foreground hover:text-foreground transition-colors">
-          <MoreHorizontal className="h-5 w-5" />
-        </button>
+        <div className="flex items-center gap-2">
+          <button className="flex h-9 items-center gap-2 rounded-full border border-white/[0.06] bg-white/[0.04] px-3 text-[13px] font-medium text-muted-foreground shadow-[0_2px_10px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.04)] transition-colors hover:bg-white/[0.08] hover:text-foreground">
+            <UserPlus className="h-4 w-4 shrink-0" />
+            <span>Add Friends</span>
+          </button>
+          <button className="flex h-9 w-9 items-center justify-center rounded-full bg-white/[0.08] text-muted-foreground hover:text-foreground transition-colors">
+            <MoreHorizontal className="h-5 w-5" />
+          </button>
+        </div>
       </div>
 
       {/* Section label */}
@@ -51,7 +63,7 @@ export function NotificationsView({ onBack }: NotificationsViewProps) {
       </div>
 
       {/* Notifications list */}
-      <div className="flex-1 overflow-y-auto">
+      <div className="flex-1 overflow-y-auto pb-20">
         {mockNotifications.map((n) => (
           <div key={n.id} className="flex items-start gap-3 px-4 py-3 transition-colors hover:bg-white/[0.04] active:bg-white/[0.06]">
             <Avatar className="h-10 w-10 shrink-0">

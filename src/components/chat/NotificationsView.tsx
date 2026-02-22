@@ -59,12 +59,12 @@ export function NotificationsView({ onBack }: NotificationsViewProps) {
                 <p className="text-sm text-white">
                   <span className="font-bold">{n.username}</span>
                   {" replied to you in "}
-                  <span className="font-bold">{n.serverName} #{n.channelName}</span>:
+                  <span className="font-bold text-primary">{n.serverName} #{n.channelName}</span>:
                 </p>
                 <span className="shrink-0 text-xs text-muted-foreground mt-0.5">{n.timeAgo}</span>
               </div>
               <div className="mt-1 flex items-start gap-0">
-                <div className="w-[3px] shrink-0 self-stretch rounded-full bg-white/20" />
+                <div className="w-[3px] shrink-0 self-stretch rounded-full bg-primary/40" />
                 <p className="pl-2 text-sm text-muted-foreground leading-snug line-clamp-3">{n.message}</p>
               </div>
             </div>

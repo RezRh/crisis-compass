@@ -1,12 +1,12 @@
 import { useServerStore } from "@/stores/server-store";
 import { useUIStore } from "@/stores/ui-store";
-import { Hash, Users, Bell, Pin, Search, Inbox, HelpCircle } from "lucide-react";
+import { Hash, Users, Bell, Pin, Search, Inbox, HelpCircle, PanelLeftClose, PanelLeftOpen } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
 
 export function ChatHeader() {
   const { activeServerId, activeChannelId, channels } = useServerStore();
-  const { showMemberList, toggleMemberList } = useUIStore();
+  const { showMemberList, toggleMemberList, sidebarCollapsed, toggleSidebar } = useUIStore();
 
   const serverChannels = activeServerId ? channels[activeServerId] || [] : [];
   const activeChannel = serverChannels.find((c) => c.id === activeChannelId);
@@ -14,6 +14,14 @@ export function ChatHeader() {
   return (
     <header className="flex h-12 items-center justify-between bg-chat-bg px-4 shadow-[0_1px_0_rgba(0,0,0,0.2)]">
       <div className="flex items-center gap-2 min-w-0">
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <button onClick={toggleSidebar} className="p-[6px] text-muted-foreground transition-colors hover:text-foreground">
+              {sidebarCollapsed ? <PanelLeftOpen className="h-5 w-5" /> : <PanelLeftClose className="h-5 w-5" />}
+            </button>
+          </TooltipTrigger>
+          <TooltipContent>{sidebarCollapsed ? "Show Sidebar" : "Hide Sidebar"}</TooltipContent>
+        </Tooltip>
         <Hash className="h-6 w-6 shrink-0 text-muted-foreground" />
         <h2 className="font-bold text-[15px] text-foreground truncate">{activeChannel?.name || "Select a channel"}</h2>
         {activeChannel && (

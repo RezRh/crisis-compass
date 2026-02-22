@@ -21,7 +21,7 @@ const ChatApp = () => {
   const { user } = useAuthStore();
   const { loadMockData } = useServerStore();
   const { loadMockMessages } = useMessageStore();
-  const { showMemberList, mainView, openSettings } = useUIStore();
+  const { showMemberList, mainView, openSettings, sidebarCollapsed } = useUIStore();
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -40,8 +40,8 @@ const ChatApp = () => {
     <div className="dark relative flex h-screen w-full flex-col overflow-hidden bg-chat-bg text-foreground">
       {/* Main row */}
       <div className="flex flex-1 min-h-0">
-        <ServerSidebar />
-        {isDMs ? <DMSidebar /> : <ChannelSidebar />}
+        {!sidebarCollapsed && <ServerSidebar />}
+        {!sidebarCollapsed && (isDMs ? <DMSidebar /> : <ChannelSidebar />)}
         <div className={`flex flex-1 flex-col min-w-0 bg-chat-bg ${isDMs ? "hidden md:flex" : ""}`}>
           {isDMs ? <DMHeader /> : <ChatHeader />}
           <div className="flex-1 overflow-hidden">

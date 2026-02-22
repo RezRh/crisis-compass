@@ -76,7 +76,7 @@ export function DMSidebar() {
           {!sidebarCollapsed && (
             <button 
               onClick={(e) => { e.stopPropagation(); toggleSidebar(); }} 
-              className="flex h-8 w-8 items-center justify-center rounded-full border border-white/[0.06] bg-white/[0.04] backdrop-blur-2xl text-muted-foreground shadow-[0_2px_10px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.04)] transition-colors hover:bg-white/[0.08] hover:text-foreground"
+              className="flex h-8 w-8 items-center justify-center rounded-full border border-primary/30 bg-white/[0.04] backdrop-blur-2xl text-muted-foreground shadow-[0_2px_10px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.04),0_0_12px_rgba(255,0,60,0.1)] transition-colors hover:bg-white/[0.08] hover:text-foreground"
             >
               <PanelLeftClose className="h-[18px] w-[18px]" />
             </button>
@@ -85,7 +85,7 @@ export function DMSidebar() {
 
         {/* Add Friends — glass refraction */}
         <div className="relative flex items-center gap-2 px-3 pt-1 pb-4">
-          <button onClick={() => setShowAddFriends(true)} className="flex h-9 min-w-0 flex-1 items-center justify-center gap-2 rounded-full border border-white/[0.06] bg-white/[0.04] backdrop-blur-2xl text-[13px] font-medium text-muted-foreground shadow-[0_2px_10px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.04)] transition-colors hover:bg-white/[0.08] hover:text-foreground">
+          <button onClick={() => setShowAddFriends(true)} className={`flex h-9 min-w-0 flex-1 items-center justify-center gap-2 rounded-full border bg-white/[0.04] backdrop-blur-2xl text-[13px] font-medium text-muted-foreground shadow-[0_2px_10px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.04)] transition-colors hover:bg-white/[0.08] hover:text-foreground ${sidebarCollapsed ? "border-white/[0.06]" : "border-primary/30 shadow-[0_2px_10px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.04),0_0_12px_rgba(255,0,60,0.1)]"}`}>
             <UserPlus className="h-[16px] w-[16px] shrink-0" />
             <span className="truncate">Add Friends</span>
           </button>
@@ -126,7 +126,7 @@ export function DMSidebar() {
               <span className={`text-muted-foreground shrink-0 self-start mt-1 ${sidebarCollapsed ? "text-[12px]" : "text-[11px]"}`}>{dm.time}</span>
             </button>
             {i < mockDMs.length - 1 && (
-              <div className="mx-4 border-b border-white/[0.06]" />
+              <div className={`mx-4 border-b ${sidebarCollapsed ? "border-white/[0.06]" : "border-primary/20"}`} />
             )}
           </div>
         ))}

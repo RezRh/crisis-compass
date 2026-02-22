@@ -124,7 +124,7 @@ export function DMSidebar() {
               {user?.username?.charAt(0).toUpperCase() || "?"}
             </AvatarFallback>
           </Avatar>
-          <span className="absolute -bottom-0.5 -right-0.5 h-[14px] w-[14px] rounded-full border-[3px] border-server-bar bg-discord-green" />
+          <span className="absolute bottom-0 right-0 h-[14px] w-[14px] rounded-full border-[3px] border-server-bar bg-discord-green" />
         </div>
         <div className="flex-1 min-w-0">
           <p className="truncate text-[13px] font-semibold text-foreground leading-tight">{user?.username}</p>

@@ -9,6 +9,7 @@ import { Settings, X, Trash2, Pencil, ChevronDown, ChevronRight, ExternalLink, B
 import { useState } from "react";
 import Lottie from "lottie-react";
 import shopIconData from "@/assets/shop-icon.json";
+import prismIconData from "@/assets/prism-icon.json";
 import serverIcon1 from "@/assets/server-icon-1.jpg";
 import serverIcon2 from "@/assets/server-icon-2.jpg";
 import serverIcon3 from "@/assets/server-icon-3.jpg";
@@ -54,7 +55,7 @@ function UserProfileView({ onClose }: { onClose: () => void }) {
           <Lottie animationData={shopIconData} loop className="h-6 w-6 invert" />
         </button>
         <button className="flex items-center gap-1.5 rounded-full bg-accent px-3 py-1.5 text-sm font-medium text-foreground hover:bg-accent/80 transition-colors">
-          <Star className="h-4 w-4 text-foreground" />
+          <Lottie animationData={prismIconData} loop className="h-5 w-5 invert" />
           Prism
         </button>
         <button

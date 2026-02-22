@@ -5,7 +5,7 @@ import { DMSidebar } from "@/components/chat/DMSidebar";
 import { ServerSidebar } from "@/components/chat/ServerSidebar";
 import { SettingsOverlay } from "@/components/settings/SettingsOverlay";
 import { LoginPage } from "@/pages/LoginPage";
-import { Home, Bell, UserRoundPlus } from "lucide-react";
+import { Home, Bell, UserRoundPlus, Search } from "lucide-react";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { useServerStore } from "@/stores/server-store";
 
@@ -61,6 +61,10 @@ const ChatApp = () => {
             <span className="absolute bottom-0.5 right-0.5 h-[9px] w-[9px] rounded-full border-[1.5px] border-white/10 bg-discord-green" />
           </button>
         </div>
+        {/* Search circle */}
+        <button className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-white/[0.06] bg-white/[0.04] text-muted-foreground shadow-[0_2px_16px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.04)] backdrop-blur-md transition-colors hover:bg-white/[0.08] hover:text-foreground">
+          <Search className="h-5 w-5" />
+        </button>
       </div>
 
       <SettingsOverlay />

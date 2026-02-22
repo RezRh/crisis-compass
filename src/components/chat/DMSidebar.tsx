@@ -95,33 +95,33 @@ export function DMSidebar() {
           <div key={dm.id}>
             <button
               onClick={() => setActiveDM(dm.username)}
-              className={`flex w-full items-center gap-4 px-4 py-3 transition-colors hover:bg-accent/30 ${
+              className={`flex w-full items-center gap-3 px-4 transition-colors hover:bg-accent/30 ${
                 activeDM === dm.username ? "bg-accent/20" : ""
-              }`}
+              } ${sidebarCollapsed ? "py-3" : "py-2"}`}
             >
               {/* Avatar with status */}
               <div className="relative shrink-0">
                 <div
-                  className="flex h-12 w-12 items-center justify-center rounded-full"
+                  className={`flex items-center justify-center rounded-full transition-all duration-200 ${sidebarCollapsed ? "h-12 w-12" : "h-9 w-9"}`}
                   style={{ backgroundColor: getAvatarColor(dm.username) }}
                 >
-                  <span className="text-white text-base font-semibold">{dm.username.charAt(0)}</span>
+                  <span className={`text-white font-semibold ${sidebarCollapsed ? "text-base" : "text-sm"}`}>{dm.username.charAt(0)}</span>
                 </div>
-                <span className={`absolute -bottom-[1px] -right-[1px] h-[15px] w-[15px] rounded-full border-[3px] border-channel-bar ${statusColors[dm.status]}`} />
+                <span className={`absolute rounded-full border-channel-bar ${sidebarCollapsed ? "-bottom-[1px] -right-[1px] h-[15px] w-[15px] border-[3px]" : "-bottom-[1px] -right-[1px] h-[11px] w-[11px] border-2"} ${statusColors[dm.status]}`} />
               </div>
 
               {/* Name + last message */}
               <div className="flex-1 min-w-0 text-left">
-                <p className={`truncate text-[16px] leading-6 ${dm.bold ? "font-bold text-foreground" : "font-semibold text-foreground/90"}`}>
+                <p className={`truncate leading-5 ${sidebarCollapsed ? "text-[16px]" : "text-[14px]"} ${dm.bold ? "font-bold text-foreground" : "font-semibold text-foreground/90"}`}>
                   {dm.username}
                 </p>
                 <div className="flex items-center gap-1">
-                  <p className="truncate text-[13px] text-muted-foreground leading-4">{dm.lastMessage}</p>
+                  <p className={`truncate text-muted-foreground leading-4 ${sidebarCollapsed ? "text-[13px]" : "text-[12px]"}`}>{dm.lastMessage}</p>
                 </div>
               </div>
 
               {/* Time */}
-              <span className="text-[12px] text-muted-foreground shrink-0 self-start mt-1">{dm.time}</span>
+              <span className={`text-muted-foreground shrink-0 self-start mt-1 ${sidebarCollapsed ? "text-[12px]" : "text-[11px]"}`}>{dm.time}</span>
             </button>
             {i < mockDMs.length - 1 && (
               <div className="mx-4 border-b border-white/[0.06]" />

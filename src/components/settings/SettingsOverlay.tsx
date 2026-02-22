@@ -19,16 +19,19 @@ import serverIcon4 from "@/assets/server-icon-4.jpg";
 export function SettingsOverlay() {
   const { settingsView, closeSettings } = useUIStore();
 
-  if (!settingsView) return null;
-
   return (
-    <div className="fixed inset-0 z-50 flex bg-background">
-      {settingsView === "user" ? (
+    <>
+      {/* User profile — always mounted, toggled via visibility */}
+      <div className={`fixed inset-0 z-50 flex bg-background ${settingsView === "user" ? "" : "invisible pointer-events-none"}`}>
         <UserProfileView onClose={closeSettings} />
-      ) : (
-        <ServerSettingsView onClose={closeSettings} />
+      </div>
+      {/* Server settings — conditional */}
+      {settingsView === "server" && (
+        <div className="fixed inset-0 z-50 flex bg-background">
+          <ServerSettingsView onClose={closeSettings} />
+        </div>
       )}
-    </div>
+    </>
   );
 }
 

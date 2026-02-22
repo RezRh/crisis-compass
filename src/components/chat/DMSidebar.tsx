@@ -43,7 +43,7 @@ export function DMSidebar() {
       {/* Title with toggle */}
       <div className="flex items-center justify-between px-4 pt-12 pb-2">
         <h2 className="text-[20px] font-bold text-foreground">Messages</h2>
-        <button onClick={toggleSidebar} className="p-1 text-muted-foreground transition-colors hover:text-foreground">
+        <button onClick={toggleSidebar} className="hidden md:flex p-1 text-muted-foreground transition-colors hover:text-foreground">
           <PanelLeftClose className="h-5 w-5" />
         </button>
       </div>

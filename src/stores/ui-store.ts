@@ -7,6 +7,7 @@ interface UIState {
   mainView: MainView;
   showMemberList: boolean;
   sidebarCollapsed: boolean;
+  activeDM: string | null;
   settingsView: SettingsView;
   createServerOpen: boolean;
   createChannelOpen: boolean;
@@ -14,6 +15,7 @@ interface UIState {
   setMainView: (view: MainView) => void;
   toggleMemberList: () => void;
   toggleSidebar: () => void;
+  setActiveDM: (name: string | null) => void;
   openSettings: (view: SettingsView) => void;
   closeSettings: () => void;
   setCreateServerOpen: (open: boolean) => void;
@@ -24,6 +26,7 @@ export const useUIStore = create<UIState>((set) => ({
   mainView: "servers",
   showMemberList: false,
   sidebarCollapsed: false,
+  activeDM: null,
   settingsView: null,
   createServerOpen: false,
   createChannelOpen: false,
@@ -31,6 +34,7 @@ export const useUIStore = create<UIState>((set) => ({
   setMainView: (view) => set({ mainView: view }),
   toggleMemberList: () => set((s) => ({ showMemberList: !s.showMemberList })),
   toggleSidebar: () => set((s) => ({ sidebarCollapsed: !s.sidebarCollapsed })),
+  setActiveDM: (name) => set({ activeDM: name, sidebarCollapsed: !!name }),
   openSettings: (view) => set({ settingsView: view }),
   closeSettings: () => set({ settingsView: null }),
   setCreateServerOpen: (open) => set({ createServerOpen: open }),

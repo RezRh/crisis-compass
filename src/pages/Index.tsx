@@ -16,7 +16,7 @@ const ChatApp = () => {
   const { isAuthenticated, user } = useAuthStore();
   const { loadMockData } = useServerStore();
   const { loadMockMessages } = useMessageStore();
-  const { openSettings, sidebarCollapsed, toggleSidebar } = useUIStore();
+  const { openSettings, sidebarCollapsed, toggleSidebar, activeDM, setActiveDM } = useUIStore();
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -47,11 +47,11 @@ const ChatApp = () => {
         <div className={`flex flex-1 flex-col min-w-0 bg-chat-bg ${!sidebarCollapsed ? "hidden md:flex" : "flex"}`}>
           {/* Chat header with reopen button */}
           <header className="flex h-12 items-center gap-3 bg-chat-bg px-4 shadow-[0_1px_0_rgba(0,0,0,0.2)]">
-            <button onClick={toggleSidebar} className="p-[6px] text-muted-foreground transition-colors hover:text-foreground">
+            <button onClick={() => setActiveDM(null)} className="p-[6px] text-muted-foreground transition-colors hover:text-foreground">
               <PanelLeftOpen className="h-5 w-5" />
             </button>
             <MessageCircle className="h-5 w-5 text-muted-foreground" />
-            <h2 className="font-bold text-[15px] text-foreground">Batwoman</h2>
+            <h2 className="font-bold text-[15px] text-foreground">{activeDM || "Chat"}</h2>
           </header>
           <div className="flex-1 overflow-hidden">
             <MessageList />

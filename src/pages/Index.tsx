@@ -81,7 +81,7 @@ const ChatApp = () => {
         </div>
       </div>
 
-      {/* Mobile bottom tab bar — always visible */}
+      {/* Mobile bottom tab bar — hidden inside DM conversations */}
       <DockBar
         sidebarCollapsed={sidebarCollapsed}
         showNotifications={showNotifications}
@@ -127,6 +127,7 @@ function DockBar({
   settingsView: "user" | "server" | null;
   user: any;
 }) {
+  const { activeDM } = useUIStore();
   const barRef = useRef<HTMLDivElement>(null);
   const [bubbleX, setBubbleX] = useState<number | null>(null);
   const bubbleXRef = useRef<number | null>(null);
@@ -217,7 +218,7 @@ function DockBar({
   const sidebarVisible = !sidebarCollapsed && !settingsView && !showNotifications && !showNewMessage && !showSearch;
 
   return (
-    <div className={`fixed bottom-0 right-0 z-[60] flex items-center justify-center gap-3 pb-3 pt-1 md:hidden px-4 transition-[left] duration-300 ${sidebarVisible ? "left-[72px]" : "left-0"}`}>
+    <div className={`fixed bottom-0 right-0 z-[60] flex items-center justify-center gap-3 pb-3 pt-1 md:hidden px-4 transition-[left] duration-300 ${activeDM ? "hidden" : ""} ${sidebarVisible ? "left-[72px]" : "left-0"}`}>
       <div
         ref={barRef}
         onPointerDown={handlePointerDown}

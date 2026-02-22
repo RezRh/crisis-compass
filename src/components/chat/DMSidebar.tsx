@@ -39,7 +39,7 @@ export function DMSidebar() {
   const { openSettings, sidebarCollapsed, toggleSidebar } = useUIStore();
 
   return (
-    <div className="relative flex h-full w-60 flex-1 md:flex-none flex-col bg-server-bar">
+    <div className="relative flex h-full w-full md:w-60 flex-col bg-server-bar">
       {/* Title with toggle */}
       <div className="flex items-center justify-between px-4 pt-12 pb-2">
         <h2 className="text-[20px] font-bold text-foreground">Messages</h2>

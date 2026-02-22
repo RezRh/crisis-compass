@@ -64,7 +64,7 @@ export function DMSidebar() {
       </div>
 
       {/* Search + Add Friends row — liquid glass */}
-      <div className="flex items-center gap-2 px-3 pb-3">
+      <div className="flex items-center gap-2 px-3 pt-1 pb-4">
         <button className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-white/[0.06] bg-white/[0.04] text-muted-foreground shadow-[0_2px_10px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.04)] transition-colors hover:bg-white/[0.08] hover:text-foreground">
           <Search className="h-[18px] w-[18px]" />
         </button>

@@ -72,7 +72,7 @@ export function DMSidebar() {
       </div>
 
       {/* DM conversation list */}
-      <div className="flex-1 overflow-y-auto">
+      <div className="flex-1 overflow-y-auto pb-20">
         {mockDMs.map((dm, i) => (
           <div key={dm.id}>
             <button

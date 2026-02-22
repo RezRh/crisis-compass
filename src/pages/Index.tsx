@@ -30,6 +30,11 @@ const ChatApp = () => {
   return (
     <div className="dark relative flex h-screen w-full flex-col overflow-hidden bg-server-bar text-foreground">
       <div className="flex flex-1 min-h-0 min-w-0 overflow-hidden">
+        {/* Mobile: ServerSidebar always mounted, visibility toggled */}
+        <div className={`md:hidden ${!sidebarCollapsed && !showNewMessage && !showNotifications && !activeDM ? "" : "hidden"}`}>
+          <ServerSidebar />
+        </div>
+
         {/* Mobile: full-screen views */}
         {showNewMessage ? (
           <div className="flex w-full md:hidden">
@@ -44,8 +49,7 @@ const ChatApp = () => {
             <ChatView />
           </div>
         ) : (
-          <div className="flex w-full md:hidden">
-            {!sidebarCollapsed && <ServerSidebar />}
+          <div className="flex w-full md:hidden flex-1 min-w-0">
             <DMSidebar />
           </div>
         )}

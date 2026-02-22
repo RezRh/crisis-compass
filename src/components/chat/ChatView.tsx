@@ -173,9 +173,6 @@ export function ChatView() {
                     <MessageSquare className="h-[19px] w-[19px]" />
                   </button>
                   <button className="text-muted-foreground hover:text-foreground transition-colors">
-                    <Camera className="h-[19px] w-[19px]" />
-                  </button>
-                  <button className="text-muted-foreground hover:text-foreground transition-colors">
                     <Mic className="h-[19px] w-[19px]" />
                   </button>
                 </>

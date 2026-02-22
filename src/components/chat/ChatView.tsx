@@ -1,5 +1,6 @@
 import { useUIStore } from "@/stores/ui-store";
-import { ArrowLeft, Phone, Video, Plus, MessageSquare, Camera, Mic, Send } from "lucide-react";
+import { ArrowLeft, Phone, Video, Plus, MessageSquare, Mic, Send, Camera, Image, BarChart3, FileText, Gift } from "lucide-react";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { useState, useRef, useEffect } from "react";
 
 const DISCORD_COLORS = [
@@ -155,9 +156,30 @@ export function ChatView() {
       {/* Input */}
       <div className="px-3 py-3 pb-6">
         <div className="flex items-center gap-2">
-          <button className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/[0.08] bg-white/[0.06] text-muted-foreground transition-colors hover:bg-white/[0.12] hover:text-foreground">
-            <Plus className="h-5 w-5" />
-          </button>
+          <Popover>
+            <PopoverTrigger asChild>
+              <button className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/[0.08] bg-white/[0.06] text-muted-foreground transition-colors hover:bg-white/[0.12] hover:text-foreground">
+                <Plus className="h-5 w-5" />
+              </button>
+            </PopoverTrigger>
+            <PopoverContent side="top" align="start" className="w-48 p-1 bg-popover border border-white/[0.1] rounded-xl">
+              {[
+                { icon: Camera, label: "Camera" },
+                { icon: Image, label: "Photos" },
+                { icon: BarChart3, label: "Polls" },
+                { icon: FileText, label: "Files" },
+                { icon: Gift, label: "Gift" },
+              ].map(({ icon: Icon, label }) => (
+                <button
+                  key={label}
+                  className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm text-foreground transition-colors hover:bg-accent"
+                >
+                  <Icon className="h-5 w-5 text-muted-foreground" />
+                  {label}
+                </button>
+              ))}
+            </PopoverContent>
+          </Popover>
           <div className="flex flex-1 items-center rounded-full border border-white/[0.08] bg-white/[0.04] px-4 py-[9px]">
             <input
               value={message}

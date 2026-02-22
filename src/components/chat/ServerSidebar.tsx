@@ -27,8 +27,8 @@ export function ServerSidebar() {
               className={cn(
                 "flex h-12 w-12 items-center justify-center transition-all duration-200 active:translate-y-px border border-white/[0.06] shadow-[0_2px_10px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.04)]",
                 isHome
-                  ? "rounded-[16px] bg-primary text-primary-foreground"
-                  : "rounded-[24px] bg-white/[0.04] text-foreground hover:rounded-[16px] hover:bg-primary hover:text-primary-foreground"
+                  ? "rounded-[16px] bg-white/[0.12] text-foreground backdrop-blur-md shadow-[0_4px_16px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.1)]"
+                  : "rounded-[24px] bg-white/[0.04] text-foreground hover:rounded-[16px] hover:bg-white/[0.10] hover:backdrop-blur-md hover:shadow-[0_4px_16px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.1)]"
               )}
             >
               <MessageCircle className="h-6 w-6" />
@@ -63,8 +63,8 @@ export function ServerSidebar() {
                   className={cn(
                     "relative flex h-12 w-12 items-center justify-center transition-all duration-200 active:translate-y-px border border-white/[0.06] shadow-[0_2px_10px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.04)]",
                     isActive
-                      ? "rounded-[16px] bg-primary text-primary-foreground"
-                      : "rounded-[24px] bg-white/[0.04] text-muted-foreground hover:rounded-[16px] hover:bg-primary hover:text-primary-foreground"
+                      ? "rounded-[16px] bg-white/[0.12] text-foreground backdrop-blur-md shadow-[0_4px_16px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.1)]"
+                      : "rounded-[24px] bg-white/[0.04] text-muted-foreground hover:rounded-[16px] hover:bg-white/[0.10] hover:text-foreground hover:backdrop-blur-md hover:shadow-[0_4px_16px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.1)]"
                   )}
                 >
                   <span className="text-lg font-semibold">{server.name.charAt(0).toUpperCase()}</span>

@@ -1,6 +1,6 @@
 import { useServerStore } from "@/stores/server-store";
 import { useUIStore } from "@/stores/ui-store";
-import { Plus } from "lucide-react";
+import { Plus, MessageCircle } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
 
@@ -11,7 +11,7 @@ export function ServerSidebar() {
   const isHome = mainView === "dms";
 
   return (
-    <div className="flex h-full w-[72px] flex-col items-center gap-2 bg-server-bar py-3 overflow-y-auto">
+    <div className="flex h-full w-[72px] flex-col items-center gap-2 bg-server-bar pt-12 py-3 overflow-y-auto">
       {/* Home / DMs */}
       <Tooltip>
         <TooltipTrigger asChild>
@@ -31,7 +31,7 @@ export function ServerSidebar() {
                   : "rounded-[24px] bg-chat-bg text-foreground hover:rounded-[16px] hover:bg-primary hover:text-primary-foreground"
               )}
             >
-              <svg width="26" height="18" viewBox="0 0 28 20"><path fill="currentColor" d="M23.021 1.677A21.227 21.227 0 0017.658 0c-.252.462-.483.935-.687 1.418a19.931 19.931 0 00-5.943 0A13.163 13.163 0 0010.34 0a21.227 21.227 0 00-5.365 1.677C1.29 7.692.26 13.56.82 19.35A21.39 21.39 0 007.36 20a15.773 15.773 0 001.38-2.244 13.9 13.9 0 01-2.174-1.042c.182-.132.36-.27.532-.41a15.15 15.15 0 0012.804 0c.175.14.352.278.532.41a13.94 13.94 0 01-2.178 1.044A15.862 15.862 0 0019.636 20a21.37 21.37 0 006.543-4.65c.655-6.756-1.114-12.573-4.658-17.673z" /></svg>
+              <MessageCircle className="h-6 w-6" />
             </button>
           </div>
         </TooltipTrigger>

@@ -101,7 +101,6 @@ export function DMSidebar() {
                   {dm.username}
                 </p>
                 <div className="flex items-center gap-1">
-                  <span className={`absolute -ml-[2px] h-[6px] w-[6px] rounded-full shrink-0 ${statusColors[dm.status]}`} style={{ position: "relative", marginLeft: 0 }} />
                   <p className="truncate text-[13px] text-muted-foreground leading-4">{dm.lastMessage}</p>
                 </div>
               </div>

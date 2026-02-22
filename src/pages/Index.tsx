@@ -63,36 +63,24 @@ const ChatApp = () => {
           </div>
           {/* Liquid Glass Tab Bar */}
           <div className="flex justify-center bg-server-bar pb-3 pt-1 md:hidden">
-            <div className="flex items-center gap-1 rounded-full border border-white/[0.06] bg-white/[0.04] px-2 py-1.5 shadow-[0_2px_16px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.04),inset_0_-1px_4px_rgba(0,0,0,0.3)]">
-              {/* Home - active */}
-              <button className="relative flex items-center gap-2 rounded-full bg-white/[0.08] px-5 py-2.5 shadow-[inset_0_1px_0_rgba(255,255,255,0.06)] transition-all">
-                <div className="relative">
-                  <Home className="h-5 w-5 text-foreground" />
-                  <span className="absolute -top-2 -right-3 flex h-[16px] min-w-[16px] items-center justify-center rounded-full bg-discord-red px-1 text-[10px] font-bold text-white">
-                    223
-                  </span>
-                </div>
-                <span className="text-[13px] font-semibold text-foreground">Home</span>
+            <div className="flex items-center gap-3 rounded-full border border-white/[0.06] bg-white/[0.04] px-3 py-2 shadow-[0_2px_16px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.04),inset_0_-1px_4px_rgba(0,0,0,0.3)]">
+              <button className="relative flex h-10 w-10 items-center justify-center rounded-full bg-white/[0.08] shadow-[inset_0_1px_0_rgba(255,255,255,0.06)] transition-all">
+                <Home className="h-5 w-5 text-foreground" />
+                <span className="absolute -top-1 -right-1 flex h-[16px] min-w-[16px] items-center justify-center rounded-full bg-discord-red px-1 text-[10px] font-bold text-white">223</span>
               </button>
-              {/* Notifications */}
-              <button className="flex flex-col items-center rounded-full px-5 py-2.5 transition-all hover:bg-white/[0.04]">
+              <button className="flex h-10 w-10 items-center justify-center rounded-full transition-all hover:bg-white/[0.04]">
                 <Bell className="h-5 w-5 text-muted-foreground" />
-                <span className="text-[10px] font-medium text-muted-foreground mt-0.5">Notifications</span>
               </button>
-              {/* You */}
               <button
                 onClick={() => openSettings("user")}
-                className="flex flex-col items-center rounded-full px-5 py-2.5 transition-all hover:bg-white/[0.04]"
+                className="relative flex h-10 w-10 items-center justify-center rounded-full transition-all hover:bg-white/[0.04]"
               >
-                <div className="relative">
-                  <Avatar className="h-5 w-5">
-                    <AvatarFallback className="bg-primary text-primary-foreground text-[9px] font-bold">
-                      {user?.username?.charAt(0).toUpperCase() || "?"}
-                    </AvatarFallback>
-                  </Avatar>
-                  <span className="absolute -bottom-[1px] -right-[1px] h-[9px] w-[9px] rounded-full border-[1.5px] border-white/10 bg-discord-green" />
-                </div>
-                <span className="text-[10px] font-medium text-muted-foreground mt-0.5">You</span>
+                <Avatar className="h-6 w-6">
+                  <AvatarFallback className="bg-primary text-primary-foreground text-[10px] font-bold">
+                    {user?.username?.charAt(0).toUpperCase() || "?"}
+                  </AvatarFallback>
+                </Avatar>
+                <span className="absolute bottom-0.5 right-0.5 h-[9px] w-[9px] rounded-full border-[1.5px] border-white/10 bg-discord-green" />
               </button>
             </div>
           </div>

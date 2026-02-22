@@ -78,7 +78,7 @@ export function ServerSidebar() {
         {/* Scrollable server list */}
         <div
           onScroll={onScroll}
-          className="relative z-10 flex flex-1 flex-col items-center gap-[2px] overflow-y-auto py-0.5 px-[7px] pb-[7px] scrollbar-none min-h-0"
+          className="relative z-10 flex flex-1 flex-col items-center gap-[2px] overflow-y-auto py-0.5 pl-[8px] pr-[6px] pb-[7px] scrollbar-none min-h-0"
         >
           {servers.map((server) => {
             const isActive = mainView === "servers" && activeServerId === server.id;

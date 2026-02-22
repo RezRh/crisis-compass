@@ -10,6 +10,7 @@ import { useState } from "react";
 import Lottie from "lottie-react";
 import shopIconData from "@/assets/shop-icon.json";
 import prismIconData from "@/assets/prism-icon.json";
+import opsIconData from "@/assets/ops-icon.json";
 import serverIcon1 from "@/assets/server-icon-1.jpg";
 import serverIcon2 from "@/assets/server-icon-2.jpg";
 import serverIcon3 from "@/assets/server-icon-3.jpg";
@@ -49,7 +50,7 @@ function UserProfileView({ onClose }: { onClose: () => void }) {
       {/* Top bar icons */}
       <div className="flex items-center justify-end gap-2 px-4 py-3">
         <button className="flex h-9 w-9 items-center justify-center rounded-full transition-colors">
-          <Zap className="h-5 w-5 text-foreground" />
+          <Lottie animationData={opsIconData} loop className="h-6 w-6 invert" />
         </button>
         <button className="flex h-9 w-9 items-center justify-center rounded-full text-muted-foreground hover:text-foreground transition-colors">
           <Lottie animationData={shopIconData} loop className="h-6 w-6 invert" />

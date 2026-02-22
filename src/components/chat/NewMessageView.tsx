@@ -47,6 +47,11 @@ const mockFriends = [
 export function NewMessageView({ onBack }: { onBack: () => void }) {
   const { setActiveDM } = useUIStore();
   const [search, setSearch] = useState("");
+  const [scrolled, setScrolled] = useState(false);
+
+  const handleScroll = useCallback((e: React.UIEvent<HTMLDivElement>) => {
+    setScrolled(e.currentTarget.scrollTop > 10);
+  }, []);
 
   const filtered = mockFriends.filter(
     (f) =>
@@ -70,11 +75,12 @@ export function NewMessageView({ onBack }: { onBack: () => void }) {
   }, [setActiveDM, onBack]);
 
   return (
-    <div className="flex h-full w-full flex-col bg-server-bar">
+    <div className="relative flex h-full w-full flex-col bg-server-bar overflow-y-auto" onScroll={handleScroll}>
       {/* Header */}
       <div className="sticky top-0 z-10 pt-2">
+        {/* Blur overlay — refractive glass that intensifies on scroll */}
         <div
-          className="pointer-events-none absolute inset-0 backdrop-blur-md"
+          className={`pointer-events-none absolute inset-0 transition-all duration-75 backdrop-blur-sm ${scrolled ? "backdrop-blur-md" : ""}`}
           style={{
             maskImage: "linear-gradient(to bottom, black 60%, transparent 100%)",
             WebkitMaskImage: "linear-gradient(to bottom, black 60%, transparent 100%)",
@@ -108,7 +114,7 @@ export function NewMessageView({ onBack }: { onBack: () => void }) {
       </div>
 
       {/* Scrollable content */}
-      <div className="flex-1 overflow-y-auto pb-24">
+      <div className="pb-24">
         {/* New Group & Add a Friend */}
         <div className="mx-4 mb-4 rounded-2xl border border-white/[0.06] bg-white/[0.03] overflow-hidden">
           <button className="flex w-full items-center gap-3 px-4 py-3.5 transition-colors hover:bg-white/[0.04]">

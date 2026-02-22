@@ -160,15 +160,41 @@ function UserProfileView({ onClose }: { onClose: () => void }) {
 
           {/* Tiles grid — two columns on desktop */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3 pt-2">
-            {/* Fluxs Balance */}
-            <div className="flex items-center justify-between rounded-xl bg-white/[0.05] border border-primary/20 backdrop-blur-sm p-4">
-              <span className="text-sm font-medium text-muted-foreground">Fluxs Balance</span>
-              <span className="flex items-center gap-1.5 rounded-lg bg-white/[0.05] border border-primary/20 px-3 py-1.5 text-sm font-semibold text-foreground">
-                <Gem className="h-4 w-4" /> 2530
-              </span>
+            {/* Fluxs — Shard Count with pulse */}
+            <div className="rounded-xl bg-white/[0.05] border border-primary/20 backdrop-blur-sm p-4">
+              <p className="mb-2 text-sm font-medium text-muted-foreground">Fluxs</p>
+              <div className="flex items-center gap-3">
+                <span className="text-4xl font-black text-foreground animate-pulse">2,530</span>
+                <Gem className="h-6 w-6 text-primary" />
+              </div>
+              <p className="mt-2 text-xs text-muted-foreground">Next reward at 3,000</p>
+              {/* Glowing progress bar */}
+              <div className="mt-2 h-1.5 w-full rounded-full bg-white/[0.08] overflow-hidden">
+                <div
+                  className="h-full rounded-full bg-primary shadow-[0_0_10px_rgba(255,0,60,0.5)]"
+                  style={{ width: "84%" }}
+                />
+              </div>
             </div>
 
-            {/* Member Since */}
+            {/* Ops — Trial Progress */}
+            <div className="rounded-xl bg-white/[0.05] border border-primary/20 backdrop-blur-sm p-4">
+              <p className="mb-2 text-sm font-medium text-muted-foreground">Ops Level</p>
+              <div className="flex items-baseline gap-2">
+                <span className="text-4xl font-black text-foreground animate-pulse">Lv.12</span>
+                <span className="text-sm text-muted-foreground">/ 20</span>
+              </div>
+              <p className="mt-2 text-xs text-muted-foreground">7 / 10 missions complete</p>
+              {/* Glowing progress bar */}
+              <div className="mt-2 h-1.5 w-full rounded-full bg-white/[0.08] overflow-hidden">
+                <div
+                  className="h-full rounded-full bg-[#ADFF2F] shadow-[0_0_10px_rgba(173,255,47,0.5)]"
+                  style={{ width: "70%" }}
+                />
+              </div>
+            </div>
+
+            {/* Member Since — compact */}
             <div className="rounded-xl bg-white/[0.05] border border-primary/20 backdrop-blur-sm p-4">
               <p className="mb-1 text-sm font-medium text-muted-foreground">Member Since</p>
               <div className="flex items-center gap-2 text-sm text-foreground">

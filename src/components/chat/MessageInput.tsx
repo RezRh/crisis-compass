@@ -49,12 +49,12 @@ export function MessageInput() {
   if (!activeChannelId) return null;
 
   return (
-    <div className="px-4 pb-6 pt-0">
-      <div className="flex items-end gap-0 rounded-lg bg-chat-input ring-1 ring-border/50">
+    <div className="relative px-4 pb-6 pt-0 -mt-2">
+      <div className="flex items-end rounded-lg bg-chat-input">
         <Tooltip>
           <TooltipTrigger asChild>
-            <button className="flex h-11 w-11 shrink-0 items-center justify-center text-muted-foreground transition-colors hover:text-foreground">
-              <Plus className="h-5 w-5" />
+            <button className="flex h-[44px] w-[44px] shrink-0 items-center justify-center rounded-l-lg text-muted-foreground transition-colors hover:text-foreground">
+              <Plus className="h-6 w-6" />
             </button>
           </TooltipTrigger>
           <TooltipContent>Upload a File</TooltipContent>
@@ -67,28 +67,23 @@ export function MessageInput() {
           onInput={handleInput}
           placeholder={`Message #${activeChannel?.name || "channel"}`}
           rows={1}
-          className="max-h-[200px] flex-1 resize-none bg-transparent py-[10px] text-[15px] text-foreground placeholder:text-muted-foreground focus:outline-none"
+          className="max-h-[200px] flex-1 resize-none bg-transparent py-[11px] text-[15px] leading-[1.375rem] text-foreground placeholder:text-muted-foreground focus:outline-none"
         />
-        <div className="flex shrink-0 items-center gap-0.5 px-2 pb-[6px]">
+        <div className="flex shrink-0 items-center gap-[2px] px-2 py-[10px]">
           {[
             { icon: Gift, label: "Send a Gift" },
-            { icon: Sticker, label: "Stickers" },
-            { icon: Smile, label: "Emoji" },
+            { icon: Sticker, label: "Open Sticker Picker" },
+            { icon: Smile, label: "Open Emoji Picker" },
           ].map(({ icon: Icon, label }) => (
             <Tooltip key={label}>
               <TooltipTrigger asChild>
-                <button className="rounded p-1.5 text-muted-foreground transition-colors hover:text-foreground">
-                  <Icon className="h-5 w-5" />
+                <button className="p-[6px] text-muted-foreground transition-colors hover:text-foreground">
+                  <Icon className="h-[22px] w-[22px]" />
                 </button>
               </TooltipTrigger>
               <TooltipContent>{label}</TooltipContent>
             </Tooltip>
           ))}
-          {content.trim() && (
-            <button onClick={handleSend} className="ml-1 rounded-md bg-primary p-1.5 text-primary-foreground transition-colors hover:bg-primary/80">
-              <Send className="h-4 w-4" />
-            </button>
-          )}
         </div>
       </div>
     </div>

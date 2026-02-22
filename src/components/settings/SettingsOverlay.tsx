@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { X, Trash2, Pencil, ChevronDown, ChevronRight, ExternalLink, BadgeCheck, MessageSquare } from "lucide-react";
+import { Settings, X, Trash2, Pencil, ChevronDown, ChevronRight, ExternalLink, BadgeCheck, MessageSquare } from "lucide-react";
 import { useState } from "react";
 import serverIcon1 from "@/assets/server-icon-1.jpg";
 import serverIcon2 from "@/assets/server-icon-2.jpg";
@@ -57,9 +57,9 @@ function UserProfileView({ onClose }: { onClose: () => void }) {
         </button>
         <button
           onClick={onClose}
-          className="flex h-9 w-9 items-center justify-center rounded-full text-muted-foreground hover:text-foreground transition-colors"
+          className="group flex h-9 w-9 items-center justify-center rounded-full text-muted-foreground hover:text-foreground transition-colors"
         >
-          <X className="h-5 w-5" />
+          <Settings className="h-5 w-5 transition-transform duration-500 ease-out group-hover:rotate-180" />
         </button>
       </div>
 

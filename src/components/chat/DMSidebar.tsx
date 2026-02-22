@@ -80,24 +80,24 @@ export function DMSidebar() {
           <button
             key={dm.id}
             onClick={() => {}}
-            className={`flex w-full items-center gap-3 px-3 py-[10px] transition-colors hover:bg-accent/30 ${
+            className={`flex w-full items-center gap-4 px-4 py-3 transition-colors hover:bg-accent/30 ${
               i === 0 ? "bg-accent/20" : ""
             }`}
           >
             {/* Avatar with status */}
             <div className="relative shrink-0">
               <div
-                className="flex h-10 w-10 items-center justify-center rounded-full"
+                className="flex h-12 w-12 items-center justify-center rounded-full"
                 style={{ backgroundColor: getAvatarColor(dm.username) }}
               >
-                <span className="text-white text-sm font-semibold">{dm.username.charAt(0)}</span>
+                <span className="text-white text-base font-semibold">{dm.username.charAt(0)}</span>
               </div>
               <span className={`absolute -bottom-[1px] -right-[1px] h-[15px] w-[15px] rounded-full border-[3px] border-channel-bar ${statusColors[dm.status]}`} />
             </div>
 
             {/* Name + last message */}
             <div className="flex-1 min-w-0 text-left">
-              <p className={`truncate text-[15px] leading-5 ${dm.bold ? "font-bold text-foreground" : "font-semibold text-foreground/90"}`}>
+              <p className={`truncate text-[16px] leading-6 ${dm.bold ? "font-bold text-foreground" : "font-semibold text-foreground/90"}`}>
                 {dm.username}
               </p>
               <div className="flex items-center gap-1">

@@ -76,7 +76,7 @@ export function DMSidebar() {
         {mockDMs.map((dm, i) => (
           <div key={dm.id}>
             <button
-              onClick={() => {}}
+              onClick={() => setActiveDM(dm.username)}
               className={`flex w-full items-center gap-4 px-4 py-3 transition-colors hover:bg-accent/30 ${
                 i === 0 ? "bg-accent/20" : ""
               }`}

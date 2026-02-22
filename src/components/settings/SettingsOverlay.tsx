@@ -47,21 +47,21 @@ function UserProfileView({ onClose }: { onClose: () => void }) {
     <div className="flex-1 overflow-y-auto bg-background">
       {/* Top bar icons */}
       <div className="sticky top-0 z-10 flex items-center justify-end gap-2 px-4 py-3">
-        <button className="flex h-9 w-9 items-center justify-center rounded-full text-muted-foreground hover:text-foreground transition-colors">
-          <Zap className="h-5 w-5" />
+        <button className="flex h-9 w-9 items-center justify-center rounded-full transition-colors">
+          <Zap className="h-5 w-5 text-foreground" />
         </button>
         <button className="flex h-9 w-9 items-center justify-center rounded-full text-muted-foreground hover:text-foreground transition-colors">
           <Lottie animationData={shopIconData} loop className="h-6 w-6 invert" />
         </button>
         <button className="flex items-center gap-1.5 rounded-full bg-accent px-3 py-1.5 text-sm font-medium text-foreground hover:bg-accent/80 transition-colors">
-          <Star className="h-4 w-4" />
+          <Star className="h-4 w-4 text-foreground" />
           Prism
         </button>
         <button
           onClick={onClose}
-          className="flex h-9 w-9 items-center justify-center rounded-full text-muted-foreground hover:text-foreground transition-colors"
+          className="flex h-9 w-9 items-center justify-center rounded-full transition-colors"
         >
-          <Settings className="h-5 w-5 animate-[spin_3s_linear_infinite]" />
+          <Settings className="h-5 w-5 text-foreground animate-[spin_3s_linear_infinite]" />
         </button>
       </div>
 

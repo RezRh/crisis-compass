@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState, useCallback } from "react";
 import { useAuthStore } from "@/stores/auth-store";
 import { useUIStore } from "@/stores/ui-store";
 import { DMSidebar } from "@/components/chat/DMSidebar";
+import { NewMessageView } from "@/components/chat/NewMessageView";
 import { ServerSidebar } from "@/components/chat/ServerSidebar";
 import { ChatView } from "@/components/chat/ChatView";
 import { NotificationsView } from "@/components/chat/NotificationsView";
@@ -14,7 +15,7 @@ import { useServerStore } from "@/stores/server-store";
 const ChatApp = () => {
   const { isAuthenticated, user } = useAuthStore();
   const { loadMockData } = useServerStore();
-  const { openSettings, closeSettings, settingsView, sidebarCollapsed, activeDM, showNotifications, setShowNotifications } = useUIStore();
+  const { openSettings, closeSettings, settingsView, sidebarCollapsed, activeDM, showNotifications, setShowNotifications, showNewMessage, setShowNewMessage } = useUIStore();
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -30,7 +31,11 @@ const ChatApp = () => {
     <div className="dark relative flex h-screen w-full flex-col overflow-hidden bg-server-bar text-foreground">
       <div className="flex flex-1 min-h-0 min-w-0 overflow-hidden">
         {/* Mobile: full-screen views */}
-        {showNotifications ? (
+        {showNewMessage ? (
+          <div className="flex w-full md:hidden">
+            <NewMessageView onBack={() => setShowNewMessage(false)} />
+          </div>
+        ) : showNotifications ? (
           <div className="flex w-full md:hidden">
             <NotificationsView onBack={() => setShowNotifications(false)} />
           </div>
@@ -72,6 +77,8 @@ const ChatApp = () => {
         sidebarCollapsed={sidebarCollapsed}
         showNotifications={showNotifications}
         setShowNotifications={setShowNotifications}
+        showNewMessage={showNewMessage}
+        setShowNewMessage={setShowNewMessage}
         openSettings={openSettings}
         closeSettings={closeSettings}
         settingsView={settingsView}
@@ -88,6 +95,8 @@ function DockBar({
   sidebarCollapsed,
   showNotifications,
   setShowNotifications,
+  showNewMessage,
+  setShowNewMessage,
   openSettings,
   closeSettings,
   settingsView,
@@ -96,6 +105,8 @@ function DockBar({
   sidebarCollapsed: boolean;
   showNotifications: boolean;
   setShowNotifications: (v: boolean) => void;
+  showNewMessage: boolean;
+  setShowNewMessage: (v: boolean) => void;
   openSettings: (v: "user" | "server" | null) => void;
   closeSettings: () => void;
   settingsView: "user" | "server" | null;
@@ -108,7 +119,7 @@ function DockBar({
   const didDrag = useRef(false);
 
   // Determine which button is "active"
-  const activeIdx = settingsView === "user" ? 3 : showNotifications ? 1 : 0;
+  const activeIdx = settingsView === "user" ? 3 : showNewMessage ? 2 : showNotifications ? 1 : 0;
 
   const getActiveLeft = useCallback(() => {
     if (!barRef.current) return 12;
@@ -162,14 +173,14 @@ function DockBar({
       }
     });
 
-    if (closestIdx === 0) { closeSettings(); setShowNotifications(false); }
-    else if (closestIdx === 1) { closeSettings(); setShowNotifications(true); }
-    else if (closestIdx === 2) { closeSettings(); }
-    else if (closestIdx === 3) openSettings("user");
+    if (closestIdx === 0) { closeSettings(); setShowNotifications(false); setShowNewMessage(false); }
+    else if (closestIdx === 1) { closeSettings(); setShowNotifications(true); setShowNewMessage(false); }
+    else if (closestIdx === 2) { closeSettings(); setShowNotifications(false); setShowNewMessage(true); }
+    else if (closestIdx === 3) { openSettings("user"); setShowNewMessage(false); }
 
     bubbleXRef.current = null;
     setBubbleX(null);
-  }, [setShowNotifications, openSettings, closeSettings]);
+  }, [setShowNotifications, setShowNewMessage, openSettings, closeSettings]);
 
   const handlePointerUp = useCallback((e: React.PointerEvent) => {
     startPos.current = null;
@@ -188,7 +199,7 @@ function DockBar({
   const displayLeft = bubbleX ?? getActiveLeft();
 
   // Sidebar is only visible on home view (no settings, no notifications, no activeDM on mobile)
-  const sidebarVisible = !sidebarCollapsed && !settingsView && !showNotifications;
+  const sidebarVisible = !sidebarCollapsed && !settingsView && !showNotifications && !showNewMessage;
 
   return (
     <div className={`fixed bottom-0 right-0 z-[60] flex items-center justify-center gap-3 pb-3 pt-1 md:hidden px-4 transition-[left] duration-300 ${sidebarVisible ? "left-[72px]" : "left-0"}`}>
@@ -211,7 +222,7 @@ function DockBar({
 
         <button
           data-dock
-          onClick={() => { if (!didDrag.current) { closeSettings(); setShowNotifications(false); } }}
+          onClick={() => { if (!didDrag.current) { closeSettings(); setShowNotifications(false); setShowNewMessage(false); } }}
           className="relative z-10 flex h-10 w-10 items-center justify-center rounded-full transition-all"
         >
           <Home className={`h-5 w-5 transition-colors duration-300 ${activeIdx === 0 ? "text-foreground" : "text-muted-foreground"}`} />
@@ -221,7 +232,7 @@ function DockBar({
         </button>
         <button
           data-dock
-          onClick={() => { if (!didDrag.current) { closeSettings(); setShowNotifications(true); } }}
+          onClick={() => { if (!didDrag.current) { closeSettings(); setShowNotifications(true); setShowNewMessage(false); } }}
           className="relative z-10 flex h-10 w-10 items-center justify-center rounded-full transition-all"
         >
           <Bell className={`h-5 w-5 transition-colors duration-300 ${activeIdx === 1 ? "text-foreground" : "text-muted-foreground"}`} />
@@ -229,8 +240,12 @@ function DockBar({
             <span className="absolute -top-1 -right-1 flex h-[16px] min-w-[16px] items-center justify-center rounded-full bg-discord-red px-1 text-[10px] font-bold text-white">10</span>
           )}
         </button>
-        <button data-dock className="relative z-10 flex h-10 w-10 items-center justify-center rounded-full transition-all hover:bg-white/[0.04]">
-          <MessageSquarePlus className="h-5 w-5 text-muted-foreground" />
+        <button
+          data-dock
+          onClick={() => { if (!didDrag.current) { closeSettings(); setShowNotifications(false); setShowNewMessage(true); } }}
+          className="relative z-10 flex h-10 w-10 items-center justify-center rounded-full transition-all hover:bg-white/[0.04]"
+        >
+          <MessageSquarePlus className={`h-5 w-5 transition-colors duration-300 ${activeIdx === 2 ? "text-foreground" : "text-muted-foreground"}`} />
         </button>
         <button
           data-dock

@@ -183,12 +183,12 @@ export function ChatView() {
         <div ref={bottomRef} />
       </div>
 
-      {/* Input */}
-      <div className="px-3 py-3 pb-6">
+      {/* Input — sticky bottom, transparent bg, per-tile glass */}
+      <div className="sticky bottom-0 z-10 px-3 py-3 pb-6">
         <div className="flex items-center gap-2">
           <Drawer container={containerRef.current}>
             <DrawerTrigger asChild>
-              <button className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/[0.08] bg-white/[0.06] text-muted-foreground transition-colors hover:bg-white/[0.12] hover:text-foreground">
+              <button className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/[0.08] bg-white/[0.06] backdrop-blur-2xl text-muted-foreground transition-colors hover:bg-white/[0.12] hover:text-foreground">
                 <Plus className="h-5 w-5" />
               </button>
             </DrawerTrigger>
@@ -212,7 +212,7 @@ export function ChatView() {
               </div>
             </DrawerContent>
           </Drawer>
-          <div className="flex flex-1 items-center rounded-full border border-white/[0.08] bg-white/[0.04] px-4 py-[9px]">
+          <div className="flex flex-1 items-center rounded-full border border-white/[0.08] bg-white/[0.06] backdrop-blur-2xl px-4 py-[9px]">
             <input
               value={message}
               onChange={(e) => setMessage(e.target.value)}

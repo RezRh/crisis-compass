@@ -15,10 +15,10 @@ function getAvatarColor(name: string) {
 }
 
 const statusColors: Record<string, string> = {
-  online: "bg-discord-green",
-  idle: "bg-discord-yellow",
-  dnd: "bg-discord-red",
-  offline: "bg-discord-grey",
+  online: "ring-discord-green",
+  idle: "ring-discord-yellow",
+  dnd: "ring-discord-red",
+  offline: "ring-discord-grey",
 };
 
 const mockFriends = [
@@ -187,16 +187,13 @@ function FriendRow({
       onClick={() => onSelect(friend.username)}
       className="flex w-full items-center gap-3 px-4 py-3 transition-colors hover:bg-white/[0.04]"
     >
-      <div className="relative shrink-0">
+      <div className="shrink-0">
         <div
-          className="flex h-10 w-10 items-center justify-center rounded-full"
+          className={`flex h-10 w-10 items-center justify-center rounded-full ring-[1.5px] ring-offset-1 ring-offset-server-bar ${statusColors[friend.status] || "ring-discord-grey"}`}
           style={{ backgroundColor: getAvatarColor(friend.username) }}
         >
           <span className="text-white font-semibold text-sm">{friend.username.charAt(0)}</span>
         </div>
-        <span
-          className={`absolute -bottom-[1px] -right-[1px] h-[13px] w-[13px] rounded-full border-[2.5px] border-server-bar ${statusColors[friend.status] || "bg-discord-grey"}`}
-        />
       </div>
       <div className="flex-1 min-w-0 text-left">
         <div className="flex items-center gap-1.5">

@@ -17,10 +17,10 @@ function getAvatarColor(name: string) {
 }
 
 const statusColors = {
-  online: "bg-discord-green",
-  idle: "bg-discord-yellow",
-  dnd: "bg-discord-red",
-  offline: "bg-discord-grey",
+  online: "ring-discord-green",
+  idle: "ring-discord-yellow",
+  dnd: "ring-discord-red",
+  offline: "ring-discord-grey",
 };
 
 // More realistic mock DMs matching screenshot style
@@ -105,12 +105,11 @@ export function DMSidebar() {
               {/* Avatar with status */}
               <div className="relative shrink-0">
                 <div
-                  className={`flex items-center justify-center rounded-full transition-all duration-200 ${sidebarCollapsed ? "h-12 w-12" : "h-9 w-9"}`}
+                  className={`flex items-center justify-center rounded-full ring-[1.5px] ring-offset-1 ring-offset-server-bar transition-all duration-200 ${sidebarCollapsed ? "h-12 w-12" : "h-9 w-9"} ${statusColors[dm.status]}`}
                   style={{ backgroundColor: getAvatarColor(dm.username) }}
                 >
                   <span className={`text-white font-semibold ${sidebarCollapsed ? "text-base" : "text-sm"}`}>{dm.username.charAt(0)}</span>
                 </div>
-                <span className={`absolute rounded-full border-channel-bar ${sidebarCollapsed ? "-bottom-[1px] -right-[1px] h-[15px] w-[15px] border-[3px]" : "-bottom-[1px] -right-[1px] h-[11px] w-[11px] border-2"} ${statusColors[dm.status]}`} />
               </div>
 
               {/* Name + last message */}

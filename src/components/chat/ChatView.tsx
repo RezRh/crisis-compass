@@ -153,17 +153,17 @@ export function ChatView() {
                   <div className="flex-1 h-px bg-white/[0.08]" />
                 </div>
               )}
-              <div className={`group flex gap-4 px-1 py-[2px] transition-colors hover:bg-white/[0.04] ${!isGrouped ? "mt-[17px]" : ""}`}>
+              <div className={`group flex gap-3 px-1 py-[2px] transition-colors hover:bg-white/[0.04] ${!isGrouped ? "mt-3" : ""}`}>
                 {!isGrouped ? (
                   <div
-                    className="mt-[2px] h-10 w-10 shrink-0 rounded-full flex items-center justify-center"
+                    className="mt-[2px] h-8 w-8 shrink-0 rounded-full flex items-center justify-center"
                     style={{ backgroundColor: senderColor }}
                   >
-                    <span className="text-white text-sm font-semibold">{senderName.charAt(0).toUpperCase()}</span>
+                    <span className="text-white text-xs font-semibold">{senderName.charAt(0).toUpperCase()}</span>
                   </div>
                 ) : (
-                  <span className="w-10 shrink-0 flex items-center justify-center">
-                    <span className="text-[11px] text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity select-none">
+                  <span className="w-8 shrink-0 flex items-center justify-center">
+                    <span className="text-[10px] text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity select-none">
                       {msg.time}
                     </span>
                   </span>
@@ -171,11 +171,11 @@ export function ChatView() {
                 <div className="min-w-0 flex-1">
                   {!isGrouped && (
                     <div className="flex items-baseline gap-2">
-                      <span className="text-[15px] font-medium text-foreground hover:underline cursor-pointer leading-[22px]">{senderName}</span>
-                      <span className="text-xs text-muted-foreground select-none">{msg.time}</span>
+                      <span className="text-[13px] font-medium text-foreground hover:underline cursor-pointer leading-[20px]">{senderName}</span>
+                      <span className="text-[10px] text-muted-foreground select-none">{msg.time}</span>
                     </div>
                   )}
-                  <p className="text-[15px] text-foreground/[0.85] leading-[1.375rem] break-words">{msg.text}</p>
+                  <p className="text-[13px] text-foreground/[0.85] leading-[1.35rem] break-words">{msg.text}</p>
                 </div>
               </div>
             </div>

@@ -98,10 +98,11 @@ function DockBar({
   user: any;
 }) {
   const barRef = useRef<HTMLDivElement>(null);
-  const [bubbleX, setBubbleX] = useState<number | null>(null); // null = snap to active
+  const [bubbleX, setBubbleX] = useState<number | null>(null);
+  const bubbleXRef = useRef<number | null>(null);
   const isDragging = useRef(false);
+  const didDrag = useRef(false);
 
-  // Get active button center relative to bar
   const getActiveLeft = useCallback(() => {
     if (!barRef.current) return 12;
     const buttons = barRef.current.querySelectorAll<HTMLElement>("[data-dock]");
@@ -115,22 +116,22 @@ function DockBar({
 
   const handlePointerDown = useCallback((e: React.PointerEvent) => {
     isDragging.current = true;
-    (e.target as HTMLElement).setPointerCapture?.(e.pointerId);
+    didDrag.current = false;
+    (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
   }, []);
 
   const handlePointerMove = useCallback((e: React.PointerEvent) => {
     if (!isDragging.current || !barRef.current) return;
+    didDrag.current = true;
     const barRect = barRef.current.getBoundingClientRect();
-    const x = e.clientX - barRect.left - 20; // center the 40px bubble
+    const x = e.clientX - barRect.left - 20;
     const clamped = Math.max(4, Math.min(x, barRect.width - 44));
+    bubbleXRef.current = clamped;
     setBubbleX(clamped);
   }, []);
 
-  const handlePointerUp = useCallback(() => {
-    if (!isDragging.current || !barRef.current) return;
-    isDragging.current = false;
-
-    // Find closest button and snap
+  const snapToClosest = useCallback(() => {
+    if (!barRef.current || bubbleXRef.current === null) return;
     const buttons = barRef.current.querySelectorAll<HTMLElement>("[data-dock]");
     const barRect = barRef.current.getBoundingClientRect();
     let closestIdx = 0;
@@ -138,7 +139,7 @@ function DockBar({
     buttons.forEach((btn, i) => {
       const btnRect = btn.getBoundingClientRect();
       const center = btnRect.left - barRect.left + btnRect.width / 2;
-      const bubbleCenter = (bubbleX ?? 0) + 20;
+      const bubbleCenter = bubbleXRef.current! + 20;
       const dist = Math.abs(center - bubbleCenter);
       if (dist < closestDist) {
         closestDist = dist;
@@ -146,13 +147,26 @@ function DockBar({
       }
     });
 
-    // Trigger action based on closest
     if (closestIdx === 0) setShowNotifications(false);
     else if (closestIdx === 1) setShowNotifications(true);
     else if (closestIdx === 3) openSettings("user");
 
-    setBubbleX(null); // snap back
-  }, [bubbleX, setShowNotifications, openSettings]);
+    bubbleXRef.current = null;
+    setBubbleX(null);
+  }, [setShowNotifications, openSettings]);
+
+  const handlePointerUp = useCallback((e: React.PointerEvent) => {
+    if (!isDragging.current) return;
+    isDragging.current = false;
+    if (didDrag.current) {
+      e.preventDefault();
+      e.stopPropagation();
+      snapToClosest();
+    } else {
+      bubbleXRef.current = null;
+      setBubbleX(null);
+    }
+  }, [snapToClosest]);
 
   const displayLeft = bubbleX ?? getActiveLeft();
 
@@ -163,7 +177,7 @@ function DockBar({
         onPointerDown={handlePointerDown}
         onPointerMove={handlePointerMove}
         onPointerUp={handlePointerUp}
-        onPointerLeave={() => { isDragging.current = false; setBubbleX(null); }}
+        onPointerLeave={() => { isDragging.current = false; didDrag.current = false; bubbleXRef.current = null; setBubbleX(null); }}
         className="relative flex items-center gap-3 rounded-full border border-white/[0.06] bg-white/[0.04] backdrop-blur-md px-3 py-2 shadow-[0_2px_16px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.04),inset_0_-1px_4px_rgba(0,0,0,0.3)] touch-none"
       >
         {/* Glass bubble — follows finger, snaps on release */}
@@ -177,7 +191,7 @@ function DockBar({
 
         <button
           data-dock
-          onClick={() => setShowNotifications(false)}
+          onClick={() => { if (!didDrag.current) setShowNotifications(false); }}
           className="relative z-10 flex h-10 w-10 items-center justify-center rounded-full transition-all"
         >
           <Home className={`h-5 w-5 transition-colors duration-300 ${!showNotifications ? "text-foreground" : "text-muted-foreground"}`} />
@@ -187,7 +201,7 @@ function DockBar({
         </button>
         <button
           data-dock
-          onClick={() => setShowNotifications(true)}
+          onClick={() => { if (!didDrag.current) setShowNotifications(true); }}
           className="relative z-10 flex h-10 w-10 items-center justify-center rounded-full transition-all"
         >
           <Bell className={`h-5 w-5 transition-colors duration-300 ${showNotifications ? "text-foreground" : "text-muted-foreground"}`} />
@@ -200,7 +214,7 @@ function DockBar({
         </button>
         <button
           data-dock
-          onClick={() => openSettings("user")}
+          onClick={() => { if (!didDrag.current) openSettings("user"); }}
           className="relative z-10 flex h-10 w-10 items-center justify-center rounded-full transition-all hover:bg-white/[0.04]"
         >
           <Avatar className="h-6 w-6">

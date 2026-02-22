@@ -114,15 +114,24 @@ function DockBar({
     return btnRect.left - barRect.left + (btnRect.width - 40) / 2;
   }, [showNotifications]);
 
+  const startPos = useRef<{ x: number; y: number } | null>(null);
+
   const handlePointerDown = useCallback((e: React.PointerEvent) => {
-    isDragging.current = true;
+    startPos.current = { x: e.clientX, y: e.clientY };
     didDrag.current = false;
-    (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
   }, []);
 
   const handlePointerMove = useCallback((e: React.PointerEvent) => {
-    if (!isDragging.current || !barRef.current) return;
-    didDrag.current = true;
+    if (!startPos.current || !barRef.current) return;
+    // Only start dragging after 5px movement threshold
+    if (!isDragging.current) {
+      const dx = e.clientX - startPos.current.x;
+      const dy = e.clientY - startPos.current.y;
+      if (Math.abs(dx) < 5 && Math.abs(dy) < 5) return;
+      isDragging.current = true;
+      didDrag.current = true;
+      (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
+    }
     const barRect = barRef.current.getBoundingClientRect();
     const x = e.clientX - barRect.left - 20;
     const clamped = Math.max(4, Math.min(x, barRect.width - 44));
@@ -156,6 +165,7 @@ function DockBar({
   }, [setShowNotifications, openSettings]);
 
   const handlePointerUp = useCallback((e: React.PointerEvent) => {
+    startPos.current = null;
     if (!isDragging.current) return;
     isDragging.current = false;
     if (didDrag.current) {
@@ -177,7 +187,7 @@ function DockBar({
         onPointerDown={handlePointerDown}
         onPointerMove={handlePointerMove}
         onPointerUp={handlePointerUp}
-        onPointerLeave={() => { isDragging.current = false; didDrag.current = false; bubbleXRef.current = null; setBubbleX(null); }}
+        onPointerLeave={() => { isDragging.current = false; didDrag.current = false; startPos.current = null; bubbleXRef.current = null; setBubbleX(null); }}
         className="relative flex items-center gap-3 rounded-full border border-white/[0.06] bg-white/[0.04] backdrop-blur-md px-3 py-2 shadow-[0_2px_16px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.04),inset_0_-1px_4px_rgba(0,0,0,0.3)] touch-none"
       >
         {/* Glass bubble — follows finger, snaps on release */}

@@ -55,9 +55,13 @@ export function DMSidebar() {
 
   return (
     <div className="relative flex h-full min-w-0 flex-1 flex-col bg-server-bar overflow-y-auto" onScroll={handleScroll}>
-      <div className="sticky top-0 z-10">
-        <div className={`h-12 transition-all duration-75 backdrop-blur-sm ${scrolled ? "backdrop-blur-md bg-white/[0.02]" : "bg-white/[0.01]"}`} />
-        <div className="flex items-center justify-between px-4 pb-2">
+      <div className="sticky top-0 z-10 pt-12">
+        {/* Blur overlay — fades from top to middle of tiles */}
+        <div
+          className={`pointer-events-none absolute inset-0 transition-all duration-75 backdrop-blur-sm ${scrolled ? "backdrop-blur-md" : ""}`}
+          style={{ maskImage: "linear-gradient(to bottom, black 60%, transparent 100%)", WebkitMaskImage: "linear-gradient(to bottom, black 60%, transparent 100%)" }}
+        />
+        <div className="relative flex items-center justify-between px-4 pb-2">
           <div className="flex items-center gap-2">
             {sidebarCollapsed && (
               <button 
@@ -80,7 +84,7 @@ export function DMSidebar() {
         </div>
 
         {/* Add Friends — glass refraction */}
-        <div className="flex items-center gap-2 px-3 pt-1 pb-4">
+        <div className="relative flex items-center gap-2 px-3 pt-1 pb-4">
           <button className="flex h-9 min-w-0 flex-1 items-center justify-center gap-2 rounded-full border border-white/[0.06] bg-white/[0.04] backdrop-blur-2xl text-[13px] font-medium text-muted-foreground shadow-[0_2px_10px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.04)] transition-colors hover:bg-white/[0.08] hover:text-foreground">
             <UserPlus className="h-[16px] w-[16px] shrink-0" />
             <span className="truncate">Add Friends</span>

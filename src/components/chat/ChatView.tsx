@@ -102,10 +102,13 @@ export function ChatView() {
     <div ref={containerRef} className="relative flex h-full w-full flex-col bg-server-bar">
       <div className="flex flex-1 flex-col overflow-y-auto">
       {/* Header — sticky glass */}
-      <div className="sticky top-0 z-10">
-        <div className="h-12 backdrop-blur-sm bg-white/[0.01]" />
-        <div className="px-3 py-3">
-          <div className="flex items-center gap-3">
+      <div className="sticky top-0 z-10 pt-12 px-3 py-3">
+        {/* Blur overlay — fades from top to middle of tiles */}
+        <div
+          className="pointer-events-none absolute inset-0 backdrop-blur-sm"
+          style={{ maskImage: "linear-gradient(to bottom, black 60%, transparent 100%)", WebkitMaskImage: "linear-gradient(to bottom, black 60%, transparent 100%)" }}
+        />
+        <div className="relative flex items-center gap-3">
             <button
               onClick={() => setActiveDM(null)}
               className="flex md:hidden h-10 w-10 items-center justify-center rounded-full border border-white/[0.08] bg-white/[0.06] backdrop-blur-2xl text-muted-foreground transition-colors hover:bg-white/[0.12] hover:text-foreground"
@@ -134,7 +137,6 @@ export function ChatView() {
                 <Phone className="h-5 w-5" />
               </button>
             </div>
-          </div>
         </div>
       </div>
 

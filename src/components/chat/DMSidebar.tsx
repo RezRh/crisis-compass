@@ -77,38 +77,42 @@ export function DMSidebar() {
       {/* DM conversation list */}
       <div className="flex-1 overflow-y-auto">
         {mockDMs.map((dm, i) => (
-          <button
-            key={dm.id}
-            onClick={() => {}}
-            className={`flex w-full items-center gap-4 px-4 py-3 transition-colors hover:bg-accent/30 ${
-              i === 0 ? "bg-accent/20" : ""
-            }`}
-          >
-            {/* Avatar with status */}
-            <div className="relative shrink-0">
-              <div
-                className="flex h-12 w-12 items-center justify-center rounded-full"
-                style={{ backgroundColor: getAvatarColor(dm.username) }}
-              >
-                <span className="text-white text-base font-semibold">{dm.username.charAt(0)}</span>
+          <div key={dm.id}>
+            <button
+              onClick={() => {}}
+              className={`flex w-full items-center gap-4 px-4 py-3 transition-colors hover:bg-accent/30 ${
+                i === 0 ? "bg-accent/20" : ""
+              }`}
+            >
+              {/* Avatar with status */}
+              <div className="relative shrink-0">
+                <div
+                  className="flex h-12 w-12 items-center justify-center rounded-full"
+                  style={{ backgroundColor: getAvatarColor(dm.username) }}
+                >
+                  <span className="text-white text-base font-semibold">{dm.username.charAt(0)}</span>
+                </div>
+                <span className={`absolute -bottom-[1px] -right-[1px] h-[15px] w-[15px] rounded-full border-[3px] border-channel-bar ${statusColors[dm.status]}`} />
               </div>
-              <span className={`absolute -bottom-[1px] -right-[1px] h-[15px] w-[15px] rounded-full border-[3px] border-channel-bar ${statusColors[dm.status]}`} />
-            </div>
 
-            {/* Name + last message */}
-            <div className="flex-1 min-w-0 text-left">
-              <p className={`truncate text-[16px] leading-6 ${dm.bold ? "font-bold text-foreground" : "font-semibold text-foreground/90"}`}>
-                {dm.username}
-              </p>
-              <div className="flex items-center gap-1">
-                <span className={`absolute -ml-[2px] h-[6px] w-[6px] rounded-full shrink-0 ${statusColors[dm.status]}`} style={{ position: "relative", marginLeft: 0 }} />
-                <p className="truncate text-[13px] text-muted-foreground leading-4">{dm.lastMessage}</p>
+              {/* Name + last message */}
+              <div className="flex-1 min-w-0 text-left">
+                <p className={`truncate text-[16px] leading-6 ${dm.bold ? "font-bold text-foreground" : "font-semibold text-foreground/90"}`}>
+                  {dm.username}
+                </p>
+                <div className="flex items-center gap-1">
+                  <span className={`absolute -ml-[2px] h-[6px] w-[6px] rounded-full shrink-0 ${statusColors[dm.status]}`} style={{ position: "relative", marginLeft: 0 }} />
+                  <p className="truncate text-[13px] text-muted-foreground leading-4">{dm.lastMessage}</p>
+                </div>
               </div>
-            </div>
 
-            {/* Time */}
-            <span className="text-[12px] text-muted-foreground shrink-0 self-start mt-1">{dm.time}</span>
-          </button>
+              {/* Time */}
+              <span className="text-[12px] text-muted-foreground shrink-0 self-start mt-1">{dm.time}</span>
+            </button>
+            {i < mockDMs.length - 1 && (
+              <div className="mx-4 border-b border-white/[0.06]" />
+            )}
+          </div>
         ))}
       </div>
 

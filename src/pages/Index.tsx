@@ -6,7 +6,7 @@ import { ServerSidebar } from "@/components/chat/ServerSidebar";
 import { ChatView } from "@/components/chat/ChatView";
 import { SettingsOverlay } from "@/components/settings/SettingsOverlay";
 import { LoginPage } from "@/pages/LoginPage";
-import { Home, Bell, UserRoundPlus, Search } from "lucide-react";
+import { Home, Bell, UserRoundPlus, Search, MessageSquare } from "lucide-react";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { useServerStore } from "@/stores/server-store";
 
@@ -28,20 +28,38 @@ const ChatApp = () => {
   return (
     <div className="dark relative flex h-screen w-full flex-col overflow-hidden bg-server-bar text-foreground">
       <div className="flex flex-1 min-h-0 min-w-0 overflow-hidden">
+        {/* Mobile: full-screen chat when DM is active */}
         {activeDM ? (
-          /* Full-screen chat view */
-          <ChatView />
+          <div className="flex w-full md:hidden">
+            <ChatView />
+          </div>
         ) : (
-          <>
-            {/* Server icon bar — hidden when collapsed */}
+          <div className="flex w-full md:hidden">
             {!sidebarCollapsed && <ServerSidebar />}
-
-            {/* DM Sidebar */}
-            <div className="flex min-w-0 flex-1">
-              <DMSidebar />
-            </div>
-          </>
+            <DMSidebar />
+          </div>
         )}
+
+        {/* Desktop: split view — sidebar + chat side by side */}
+        <div className="hidden md:flex md:flex-1 md:min-w-0">
+          {!sidebarCollapsed && <ServerSidebar />}
+          <div className="w-80 shrink-0 border-r border-white/[0.06]">
+            <DMSidebar />
+          </div>
+          <div className="flex-1 min-w-0">
+            {activeDM ? (
+              <ChatView />
+            ) : (
+              <div className="flex h-full items-center justify-center text-muted-foreground">
+                <div className="text-center space-y-2">
+                  <MessageSquare className="h-12 w-12 mx-auto opacity-30" />
+                  <p className="text-lg font-medium">Select a conversation</p>
+                  <p className="text-sm">Choose a DM from the sidebar to start chatting</p>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
       </div>
 
       {/* Mobile bottom tab bar — hidden when in chat */}

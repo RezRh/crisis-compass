@@ -75,7 +75,7 @@ export function ChatView() {
       <div className="flex items-center gap-3 px-3 py-3 pt-12">
         <button
           onClick={() => setActiveDM(null)}
-          className="flex h-10 w-10 items-center justify-center rounded-full border border-white/[0.08] bg-white/[0.06] text-muted-foreground transition-colors hover:bg-white/[0.12] hover:text-foreground"
+          className="flex md:hidden h-10 w-10 items-center justify-center rounded-full border border-white/[0.08] bg-white/[0.06] text-muted-foreground transition-colors hover:bg-white/[0.12] hover:text-foreground"
         >
           <ArrowLeft className="h-5 w-5" />
         </button>

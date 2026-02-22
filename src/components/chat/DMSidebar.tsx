@@ -36,10 +36,10 @@ const mockDMs = [
 
 export function DMSidebar() {
   const { user } = useAuthStore();
-  const { openSettings, sidebarCollapsed, toggleSidebar, setActiveDM } = useUIStore();
+  const { openSettings, sidebarCollapsed, toggleSidebar, setActiveDM, activeDM } = useUIStore();
 
   return (
-    <div className="relative flex h-full min-w-0 flex-1 md:w-60 md:flex-none flex-col bg-server-bar overflow-hidden">
+    <div className="relative flex h-full min-w-0 flex-1 flex-col bg-server-bar overflow-hidden">
       {/* Title with toggle */}
       <div className="flex items-center justify-between px-4 pt-12 pb-2">
         <div className="flex items-center gap-2">
@@ -78,7 +78,7 @@ export function DMSidebar() {
             <button
               onClick={() => setActiveDM(dm.username)}
               className={`flex w-full items-center gap-4 px-4 py-3 transition-colors hover:bg-accent/30 ${
-                i === 0 ? "bg-accent/20" : ""
+                activeDM === dm.username ? "bg-accent/20" : ""
               }`}
             >
               {/* Avatar with status */}

@@ -3,6 +3,7 @@ import { useAuthStore } from "@/stores/auth-store";
 import { useUIStore } from "@/stores/ui-store";
 import { DMSidebar } from "@/components/chat/DMSidebar";
 import { NewMessageView } from "@/components/chat/NewMessageView";
+import { SearchView } from "@/components/chat/SearchView";
 import { ServerSidebar } from "@/components/chat/ServerSidebar";
 import { ChatView } from "@/components/chat/ChatView";
 import { NotificationsView } from "@/components/chat/NotificationsView";
@@ -15,7 +16,7 @@ import { useServerStore } from "@/stores/server-store";
 const ChatApp = () => {
   const { isAuthenticated, user } = useAuthStore();
   const { loadMockData } = useServerStore();
-  const { openSettings, closeSettings, settingsView, sidebarCollapsed, activeDM, showNotifications, setShowNotifications, showNewMessage, setShowNewMessage } = useUIStore();
+  const { openSettings, closeSettings, settingsView, sidebarCollapsed, activeDM, showNotifications, setShowNotifications, showNewMessage, setShowNewMessage, showSearch, setShowSearch } = useUIStore();
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -31,12 +32,16 @@ const ChatApp = () => {
     <div className="dark relative flex h-screen w-full flex-col overflow-hidden bg-server-bar text-foreground">
       <div className="flex flex-1 min-h-0 min-w-0 overflow-hidden">
         {/* Mobile: ServerSidebar always mounted, visibility toggled */}
-        <div className={`md:hidden ${!sidebarCollapsed && !showNewMessage && !showNotifications && !activeDM ? "" : "hidden"}`}>
+        <div className={`md:hidden ${!sidebarCollapsed && !showNewMessage && !showNotifications && !showSearch && !activeDM ? "" : "hidden"}`}>
           <ServerSidebar />
         </div>
 
         {/* Mobile: full-screen views */}
-        {showNewMessage ? (
+        {showSearch ? (
+          <div className="flex w-full md:hidden">
+            <SearchView onBack={() => setShowSearch(false)} />
+          </div>
+        ) : showNewMessage ? (
           <div className="flex w-full md:hidden">
             <NewMessageView onBack={() => setShowNewMessage(false)} />
           </div>
@@ -83,6 +88,8 @@ const ChatApp = () => {
         setShowNotifications={setShowNotifications}
         showNewMessage={showNewMessage}
         setShowNewMessage={setShowNewMessage}
+        showSearch={showSearch}
+        setShowSearch={setShowSearch}
         openSettings={openSettings}
         closeSettings={closeSettings}
         settingsView={settingsView}
@@ -101,6 +108,8 @@ function DockBar({
   setShowNotifications,
   showNewMessage,
   setShowNewMessage,
+  showSearch,
+  setShowSearch,
   openSettings,
   closeSettings,
   settingsView,
@@ -111,6 +120,8 @@ function DockBar({
   setShowNotifications: (v: boolean) => void;
   showNewMessage: boolean;
   setShowNewMessage: (v: boolean) => void;
+  showSearch: boolean;
+  setShowSearch: (v: boolean) => void;
   openSettings: (v: "user" | "server" | null) => void;
   closeSettings: () => void;
   settingsView: "user" | "server" | null;
@@ -177,14 +188,14 @@ function DockBar({
       }
     });
 
-    if (closestIdx === 0) { closeSettings(); setShowNotifications(false); setShowNewMessage(false); }
-    else if (closestIdx === 1) { closeSettings(); setShowNotifications(true); setShowNewMessage(false); }
-    else if (closestIdx === 2) { closeSettings(); setShowNotifications(false); setShowNewMessage(true); }
-    else if (closestIdx === 3) { openSettings("user"); setShowNewMessage(false); }
+    if (closestIdx === 0) { closeSettings(); setShowNotifications(false); setShowNewMessage(false); setShowSearch(false); }
+    else if (closestIdx === 1) { closeSettings(); setShowNotifications(true); setShowNewMessage(false); setShowSearch(false); }
+    else if (closestIdx === 2) { closeSettings(); setShowNotifications(false); setShowNewMessage(true); setShowSearch(false); }
+    else if (closestIdx === 3) { openSettings("user"); setShowNewMessage(false); setShowSearch(false); }
 
     bubbleXRef.current = null;
     setBubbleX(null);
-  }, [setShowNotifications, setShowNewMessage, openSettings, closeSettings]);
+  }, [setShowNotifications, setShowNewMessage, setShowSearch, openSettings, closeSettings]);
 
   const handlePointerUp = useCallback((e: React.PointerEvent) => {
     startPos.current = null;
@@ -203,7 +214,7 @@ function DockBar({
   const displayLeft = bubbleX ?? getActiveLeft();
 
   // Sidebar is only visible on home view (no settings, no notifications, no activeDM on mobile)
-  const sidebarVisible = !sidebarCollapsed && !settingsView && !showNotifications && !showNewMessage;
+  const sidebarVisible = !sidebarCollapsed && !settingsView && !showNotifications && !showNewMessage && !showSearch;
 
   return (
     <div className={`fixed bottom-0 right-0 z-[60] flex items-center justify-center gap-3 pb-3 pt-1 md:hidden px-4 transition-[left] duration-300 ${sidebarVisible ? "left-[72px]" : "left-0"}`}>
@@ -226,7 +237,7 @@ function DockBar({
 
         <button
           data-dock
-          onClick={() => { if (!didDrag.current) { closeSettings(); setShowNotifications(false); setShowNewMessage(false); } }}
+          onClick={() => { if (!didDrag.current) { closeSettings(); setShowNotifications(false); setShowNewMessage(false); setShowSearch(false); } }}
           className="relative z-10 flex h-10 w-10 items-center justify-center rounded-full transition-all"
         >
           <Home className={`h-5 w-5 transition-colors duration-300 ${activeIdx === 0 ? "text-foreground" : "text-muted-foreground"}`} />
@@ -236,7 +247,7 @@ function DockBar({
         </button>
         <button
           data-dock
-          onClick={() => { if (!didDrag.current) { closeSettings(); setShowNotifications(true); setShowNewMessage(false); } }}
+          onClick={() => { if (!didDrag.current) { closeSettings(); setShowNotifications(true); setShowNewMessage(false); setShowSearch(false); } }}
           className="relative z-10 flex h-10 w-10 items-center justify-center rounded-full transition-all"
         >
           <Bell className={`h-5 w-5 transition-colors duration-300 ${activeIdx === 1 ? "text-foreground" : "text-muted-foreground"}`} />
@@ -246,14 +257,14 @@ function DockBar({
         </button>
         <button
           data-dock
-          onClick={() => { if (!didDrag.current) { closeSettings(); setShowNotifications(false); setShowNewMessage(true); } }}
+          onClick={() => { if (!didDrag.current) { closeSettings(); setShowNotifications(false); setShowNewMessage(true); setShowSearch(false); } }}
           className="relative z-10 flex h-10 w-10 items-center justify-center rounded-full transition-all hover:bg-white/[0.04]"
         >
           <MessageSquarePlus className={`h-5 w-5 transition-colors duration-300 ${activeIdx === 2 ? "text-foreground" : "text-muted-foreground"}`} />
         </button>
         <button
           data-dock
-          onClick={() => { if (!didDrag.current) openSettings("user"); }}
+          onClick={() => { if (!didDrag.current) { openSettings("user"); setShowNewMessage(false); setShowSearch(false); } }}
           className="relative z-10 flex h-10 w-10 items-center justify-center rounded-full transition-all hover:bg-white/[0.04]"
         >
           <Avatar className="h-6 w-6 ring-2 ring-discord-green ring-offset-1 ring-offset-server-bar">
@@ -263,7 +274,10 @@ function DockBar({
           </Avatar>
         </button>
       </div>
-      <button className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-white/[0.06] bg-white/[0.04] text-muted-foreground shadow-[0_2px_16px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.04)] backdrop-blur-md transition-colors hover:bg-white/[0.08] hover:text-foreground">
+      <button
+        onClick={() => { closeSettings(); setShowNotifications(false); setShowNewMessage(false); setShowSearch(true); }}
+        className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-white/[0.06] bg-white/[0.04] text-muted-foreground shadow-[0_2px_16px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.04)] backdrop-blur-md transition-colors hover:bg-white/[0.08] hover:text-foreground"
+      >
         <Search className="h-5 w-5" />
       </button>
     </div>

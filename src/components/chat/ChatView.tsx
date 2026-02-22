@@ -104,35 +104,46 @@ export function ChatView() {
       </div>
 
       {/* Messages */}
-      <div className="flex-1 overflow-y-auto px-3 py-3 space-y-1">
+      <div className="flex-1 overflow-y-auto px-3 py-3">
         {messages.map((msg, i) => {
-          const isMe = msg.sender === "me";
+          const senderName = msg.sender === "me" ? "You" : activeDM;
+          const senderColor = getAvatarColor(senderName);
+          const prev = i > 0 ? messages[i - 1] : null;
+          const isGrouped = prev && prev.sender === msg.sender && !msg.date;
           const showDateSeparator = msg.date;
 
           return (
             <div key={msg.id}>
               {showDateSeparator && (
-                <div className="flex justify-center py-3">
-                  <span className="rounded-full bg-white/[0.08] px-4 py-1 text-[11px] font-medium text-muted-foreground">
-                    {msg.date}
-                  </span>
+                <div className="flex items-center gap-3 py-4">
+                  <div className="flex-1 h-px bg-white/[0.08]" />
+                  <span className="text-[11px] font-medium text-muted-foreground">{msg.date}</span>
+                  <div className="flex-1 h-px bg-white/[0.08]" />
                 </div>
               )}
-              <div className={`flex ${isMe ? "justify-end" : "justify-start"} mb-[3px]`}>
-                <div
-                  className={`relative max-w-[80%] px-3 py-[7px] ${
-                    isMe
-                      ? "rounded-xl rounded-br-[4px] bg-[hsl(45_40%_42%/0.7)]"
-                      : "rounded-xl rounded-bl-[4px] bg-white/[0.08]"
-                  }`}
-                >
-                  <p className="text-[14.5px] leading-[20px] text-foreground break-words">{msg.text}</p>
-                  <div className={`flex items-center gap-1 mt-[2px] ${isMe ? "justify-end" : "justify-end"}`}>
-                    <span className="text-[10.5px] text-white/50">{msg.time}</span>
-                    {isMe && (
-                      <span className="text-[11px] text-blue-400">✓✓</span>
-                    )}
+              <div className={`group flex gap-4 px-1 py-[2px] transition-colors hover:bg-white/[0.04] ${!isGrouped ? "mt-[17px]" : ""}`}>
+                {!isGrouped ? (
+                  <div
+                    className="mt-[2px] h-10 w-10 shrink-0 rounded-full flex items-center justify-center"
+                    style={{ backgroundColor: senderColor }}
+                  >
+                    <span className="text-white text-sm font-semibold">{senderName.charAt(0).toUpperCase()}</span>
                   </div>
+                ) : (
+                  <span className="w-10 shrink-0 flex items-center justify-center">
+                    <span className="text-[11px] text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity select-none">
+                      {msg.time}
+                    </span>
+                  </span>
+                )}
+                <div className="min-w-0 flex-1">
+                  {!isGrouped && (
+                    <div className="flex items-baseline gap-2">
+                      <span className="text-[15px] font-medium text-foreground hover:underline cursor-pointer leading-[22px]">{senderName}</span>
+                      <span className="text-xs text-muted-foreground select-none">{msg.time}</span>
+                    </div>
+                  )}
+                  <p className="text-[15px] text-foreground/[0.85] leading-[1.375rem] break-words">{msg.text}</p>
                 </div>
               </div>
             </div>

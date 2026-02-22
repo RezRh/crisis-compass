@@ -118,13 +118,13 @@ export function DMSidebar() {
 
       {/* Desktop user panel */}
       <div className="hidden md:flex items-center gap-2 bg-server-bar px-2 py-[6px]">
-        <div className="relative flex-shrink-0">
+        <div className="relative flex-shrink-0 h-8 w-8">
           <Avatar className="h-8 w-8">
             <AvatarFallback className="bg-primary text-primary-foreground text-xs font-bold">
               {user?.username?.charAt(0).toUpperCase() || "?"}
             </AvatarFallback>
           </Avatar>
-          <span className="absolute bottom-0 right-0 h-[14px] w-[14px] rounded-full border-[3px] border-server-bar bg-discord-green" />
+          <span className="absolute -bottom-[2px] -right-[2px] h-[14px] w-[14px] rounded-full border-[3px] border-server-bar bg-discord-green" />
         </div>
         <div className="flex-1 min-w-0">
           <p className="truncate text-[13px] font-semibold text-foreground leading-tight">{user?.username}</p>

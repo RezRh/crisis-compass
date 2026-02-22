@@ -46,7 +46,7 @@ function UserProfileView({ onClose }: { onClose: () => void }) {
   return (
     <div className="flex-1 overflow-y-auto bg-background">
       {/* Top bar icons */}
-      <div className="sticky top-0 z-10 flex items-center justify-end gap-2 px-4 py-3">
+      <div className="flex items-center justify-end gap-2 px-4 py-3">
         <button className="flex h-9 w-9 items-center justify-center rounded-full transition-colors">
           <Zap className="h-5 w-5 text-foreground" />
         </button>
@@ -65,7 +65,7 @@ function UserProfileView({ onClose }: { onClose: () => void }) {
         </button>
       </div>
 
-      <div className="mx-auto max-w-md px-4 pb-8">
+      <div className="mx-auto max-w-md px-4 pb-28">
         {/* Avatar section */}
         <div className="relative mb-3">
           <Avatar className="h-24 w-24 ring-[3px] ring-discord-green ring-offset-[3px] ring-offset-background">

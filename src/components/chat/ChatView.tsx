@@ -110,7 +110,7 @@ export function ChatView() {
           >
             <ArrowLeft className="h-5 w-5" />
           </button>
-          <div className="flex flex-1 items-center min-w-0">
+          <div className="flex flex-1 items-center min-w-0 md:justify-start justify-center">
             <div className="flex items-center gap-2 rounded-full bg-white/[0.08] border border-white/[0.06] backdrop-blur-2xl px-4 py-1.5">
               <div
                 className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full"
@@ -118,7 +118,7 @@ export function ChatView() {
               >
                 <span className="text-white text-xs font-semibold">{activeDM.charAt(0)}</span>
               </div>
-              <div className="min-w-0">
+              <div className="md:text-left text-center min-w-0">
                 <p className="text-[14px] font-semibold text-foreground truncate leading-tight">{activeDM}</p>
                 <p className="text-[11px] text-muted-foreground leading-tight">last seen recently</p>
               </div>

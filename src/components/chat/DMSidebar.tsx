@@ -41,7 +41,7 @@ export function DMSidebar() {
   return (
     <div className="relative flex h-full w-60 flex-1 md:flex-none flex-col bg-server-bar">
       {/* Title */}
-      <div className="px-4 pt-[env(safe-area-inset-top,44px)] pb-2">
+      <div className="px-4 pt-12 pb-2">
         <h2 className="text-[20px] font-bold text-foreground">Messages</h2>
       </div>
 

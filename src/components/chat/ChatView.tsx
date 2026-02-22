@@ -102,35 +102,38 @@ export function ChatView() {
     <div ref={containerRef} className="relative flex h-full w-full flex-col bg-server-bar">
       <div className="flex flex-1 flex-col overflow-y-auto">
       {/* Header — sticky glass */}
-      <div className="sticky top-0 z-10 px-3 py-3 pt-12 backdrop-blur-sm bg-white/[0.01]">
-        <div className="flex items-center gap-3">
-          <button
-            onClick={() => setActiveDM(null)}
-            className="flex md:hidden h-10 w-10 items-center justify-center rounded-full border border-white/[0.08] bg-white/[0.06] backdrop-blur-2xl text-muted-foreground transition-colors hover:bg-white/[0.12] hover:text-foreground"
-          >
-            <ArrowLeft className="h-5 w-5" />
-          </button>
-          <div className="flex flex-1 items-center min-w-0 md:justify-start justify-center">
-            <div className="flex items-center gap-2 rounded-full bg-white/[0.08] border border-white/[0.06] backdrop-blur-2xl px-4 py-1.5">
-              <div
-                className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full"
-                style={{ backgroundColor: avatarColor }}
-              >
-                <span className="text-white text-xs font-semibold">{activeDM.charAt(0)}</span>
-              </div>
-              <div className="md:text-left text-center min-w-0">
-                <p className="text-[14px] font-semibold text-foreground truncate leading-tight">{activeDM}</p>
-                <p className="text-[11px] text-muted-foreground leading-tight">last seen recently</p>
+      <div className="sticky top-0 z-10">
+        <div className="h-12 backdrop-blur-sm bg-white/[0.01]" />
+        <div className="px-3 py-3">
+          <div className="flex items-center gap-3">
+            <button
+              onClick={() => setActiveDM(null)}
+              className="flex md:hidden h-10 w-10 items-center justify-center rounded-full border border-white/[0.08] bg-white/[0.06] backdrop-blur-2xl text-muted-foreground transition-colors hover:bg-white/[0.12] hover:text-foreground"
+            >
+              <ArrowLeft className="h-5 w-5" />
+            </button>
+            <div className="flex flex-1 items-center min-w-0 md:justify-start justify-center">
+              <div className="flex items-center gap-2 rounded-full bg-white/[0.08] border border-white/[0.06] backdrop-blur-2xl px-4 py-1.5">
+                <div
+                  className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full"
+                  style={{ backgroundColor: avatarColor }}
+                >
+                  <span className="text-white text-xs font-semibold">{activeDM.charAt(0)}</span>
+                </div>
+                <div className="md:text-left text-center min-w-0">
+                  <p className="text-[14px] font-semibold text-foreground truncate leading-tight">{activeDM}</p>
+                  <p className="text-[11px] text-muted-foreground leading-tight">last seen recently</p>
+                </div>
               </div>
             </div>
-          </div>
-          <div className="flex items-center gap-1">
-            <button className="flex h-10 w-10 items-center justify-center rounded-full border border-white/[0.08] bg-white/[0.06] backdrop-blur-2xl text-muted-foreground transition-colors hover:bg-white/[0.12] hover:text-foreground">
-              <Video className="h-5 w-5" />
-            </button>
-            <button className="flex h-10 w-10 items-center justify-center rounded-full border border-white/[0.08] bg-white/[0.06] backdrop-blur-2xl text-muted-foreground transition-colors hover:bg-white/[0.12] hover:text-foreground">
-              <Phone className="h-5 w-5" />
-            </button>
+            <div className="flex items-center gap-1">
+              <button className="flex h-10 w-10 items-center justify-center rounded-full border border-white/[0.08] bg-white/[0.06] backdrop-blur-2xl text-muted-foreground transition-colors hover:bg-white/[0.12] hover:text-foreground">
+                <Video className="h-5 w-5" />
+              </button>
+              <button className="flex h-10 w-10 items-center justify-center rounded-full border border-white/[0.08] bg-white/[0.06] backdrop-blur-2xl text-muted-foreground transition-colors hover:bg-white/[0.12] hover:text-foreground">
+                <Phone className="h-5 w-5" />
+              </button>
+            </div>
           </div>
         </div>
       </div>

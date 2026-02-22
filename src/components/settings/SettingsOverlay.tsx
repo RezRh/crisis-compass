@@ -5,8 +5,8 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Settings, X, Trash2, Pencil, ChevronDown, ChevronRight, ExternalLink, BadgeCheck, MessageSquare, Zap, ShoppingCart, Star, Plus, Trophy, Smile, Gem, Gamepad2, Target, Github, Dice5 } from "lucide-react";
-import { useState } from "react";
+import { Settings, X, Trash2, Pencil, ChevronDown, ChevronRight, ExternalLink, BadgeCheck, MessageSquare, Zap, ShoppingCart, Star, Plus, Trophy, Smile, Gem, Gamepad2, Target, Github, Dice5, Camera, ImagePlus } from "lucide-react";
+import { useState, useRef } from "react";
 import Lottie from "lottie-react";
 import shopIconData from "@/assets/shop-icon.json";
 import prismIconData from "@/assets/prism-icon.json";
@@ -36,6 +36,9 @@ export function SettingsOverlay() {
 function UserProfileView({ onClose }: { onClose: () => void }) {
   const { user } = useAuthStore();
 
+  const [bannerUrl, setBannerUrl] = useState<string | null>(null);
+  const bannerInputRef = useRef<HTMLInputElement>(null);
+
   const connections = [
     { icon: Gamepad2, name: "UdiishasDog#3617", verified: true, platform: "Battle.net" },
     { icon: Target, name: "RezinatorOp", verified: true, platform: "Epic Games" },
@@ -45,20 +48,44 @@ function UserProfileView({ onClose }: { onClose: () => void }) {
 
   const friendAvatars = [serverIcon1, serverIcon2, serverIcon3, serverIcon4, serverIcon1];
 
+  const handleBannerUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const url = URL.createObjectURL(file);
+      setBannerUrl(url);
+    }
+  };
+
   return (
     <div className="flex-1 flex flex-col md:flex-row h-full bg-background overflow-hidden">
-      {/* LEFT — Avatar hero panel (40%) */}
-      <div className="relative md:w-[40%] w-full h-[280px] md:h-full shrink-0 flex items-end md:items-center justify-center overflow-hidden">
-        {/* Full-bleed avatar image */}
+      {/* LEFT — Banner panel (40%) — uploadable */}
+      <div className="relative md:w-[40%] w-full h-[280px] md:h-full shrink-0 flex items-end md:items-center justify-center overflow-hidden group">
+        {/* Full-bleed banner image */}
         <img
-          src={serverIcon1}
-          alt={user?.username}
+          src={bannerUrl || serverIcon1}
+          alt="Profile banner"
           className="absolute inset-0 h-full w-full object-cover"
         />
         {/* Neon lime shadow overlay */}
         <div className="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-background via-background/80 to-transparent" />
         <div className="absolute inset-0 shadow-[inset_0_0_120px_rgba(173,255,47,0.15)]" />
         <div className="absolute bottom-0 left-0 right-0 md:bottom-auto md:left-auto md:right-0 md:top-0 md:w-32 h-32 md:h-full bg-gradient-to-t md:bg-gradient-to-r from-background to-transparent" />
+
+        {/* Upload banner button */}
+        <input
+          ref={bannerInputRef}
+          type="file"
+          accept="image/*,.gif"
+          onChange={handleBannerUpload}
+          className="hidden"
+        />
+        <button
+          onClick={() => bannerInputRef.current?.click()}
+          className="absolute top-4 left-4 z-20 flex items-center gap-2 rounded-full bg-black/60 border border-white/[0.1] px-3 py-2 text-xs font-medium text-foreground opacity-0 group-hover:opacity-100 transition-opacity backdrop-blur-sm"
+        >
+          <ImagePlus className="h-4 w-4" />
+          Change Banner
+        </button>
 
         {/* Username overlay on mobile */}
         <div className="relative z-10 p-6 md:hidden w-full">
@@ -69,8 +96,18 @@ function UserProfileView({ onClose }: { onClose: () => void }) {
 
       {/* RIGHT — Command center tiles (60%) */}
       <div className="flex-1 overflow-y-auto md:w-[60%]">
-        {/* Top bar icons */}
-        <div className="flex items-center justify-end gap-2 px-5 py-4">
+        {/* Top bar — pfp + action icons */}
+        <div className="flex items-center justify-between px-5 py-4">
+          {/* Circular PFP */}
+          <Avatar className="h-14 w-14 ring-[2px] ring-primary ring-offset-2 ring-offset-background">
+            <AvatarImage src={serverIcon1} alt={user?.username} className="object-cover" />
+            <AvatarFallback className="bg-primary text-primary-foreground text-xl font-bold">
+              {user?.username?.charAt(0).toUpperCase()}
+            </AvatarFallback>
+          </Avatar>
+
+          {/* Action icons */}
+          <div className="flex items-center gap-2">
           <button className="flex h-9 w-9 items-center justify-center rounded-full transition-colors">
             <Lottie animationData={opsIconData} loop className="h-6 w-6 invert" />
           </button>
@@ -87,6 +124,7 @@ function UserProfileView({ onClose }: { onClose: () => void }) {
           >
             <Settings className="h-5 w-5 text-foreground animate-[spin_3s_linear_infinite]" />
           </button>
+          </div>
         </div>
 
         <div className="px-5 pb-28 space-y-3">

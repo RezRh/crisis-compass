@@ -54,7 +54,7 @@ export function DMSidebar() {
     if (e.currentTarget.scrollTop > 10) {
       setScrolling(true);
       if (scrollTimer.current) clearTimeout(scrollTimer.current);
-      scrollTimer.current = setTimeout(() => setScrolling(false), 150);
+      scrollTimer.current = setTimeout(() => setScrolling(false), 20);
     } else {
       setScrolling(false);
     }
@@ -62,7 +62,8 @@ export function DMSidebar() {
 
   return (
     <div className="relative flex h-full min-w-0 flex-1 flex-col bg-server-bar overflow-y-auto" onScroll={handleScroll}>
-      <div className={`sticky top-0 z-10 transition-all duration-150 ${scrolling ? "backdrop-blur-md bg-white/[0.02]" : ""}`}>
+      <div className="sticky top-0 z-10">
+        <div className={`transition-all duration-75 ${scrolling ? "backdrop-blur-md bg-white/[0.02]" : ""}`}>
         <div className="flex items-center justify-between px-4 pt-12 pb-2">
           <div className="flex items-center gap-2">
             {sidebarCollapsed && (
@@ -83,6 +84,7 @@ export function DMSidebar() {
               <PanelLeftClose className="h-[18px] w-[18px]" />
             </button>
           )}
+        </div>
         </div>
 
         {/* Add Friends — glass refraction */}

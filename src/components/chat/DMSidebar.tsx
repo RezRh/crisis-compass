@@ -126,7 +126,7 @@ export function DMSidebar() {
               <span className={`text-muted-foreground shrink-0 self-start mt-1 ${sidebarCollapsed ? "text-[12px]" : "text-[11px]"}`}>{dm.time}</span>
             </button>
             {i < mockDMs.length - 1 && (
-              <div className={`mx-4 border-b ${sidebarCollapsed ? "border-white/[0.06]" : "border-primary/20"}`} />
+              <div className="mx-4 border-b border-white/[0.06]" />
             )}
           </div>
         ))}

@@ -86,7 +86,9 @@ const ChatApp = () => {
                 </div>
               )}
             </div>
-            {activeDM && <DMProfileSidebar username={activeDM} visible={showDMProfile} />}
+            <div className="hidden lg:block">
+              {activeDM && <DMProfileSidebar username={activeDM} visible={showDMProfile} />}
+            </div>
           </div>
         </div>
       </div>
@@ -228,7 +230,7 @@ function DockBar({
   const sidebarVisible = !sidebarCollapsed && !settingsView && !showNotifications && !showNewMessage && !showSearch;
 
   return (
-    <div className={`fixed bottom-0 right-0 z-[60] flex items-center justify-center gap-3 pb-3 pt-1 md:hidden px-4 transition-[left] duration-300 ${activeDM ? "hidden" : ""} ${sidebarVisible ? "left-[72px]" : "left-0"}`}>
+    <div className={`fixed bottom-0 right-0 z-[60] flex items-center justify-center gap-3 pb-3 pt-1 lg:hidden px-4 transition-[left] duration-300 ${activeDM ? "hidden" : ""} ${sidebarVisible ? "left-[72px]" : "left-0"}`}>
       <div
         ref={barRef}
         onPointerDown={handlePointerDown}

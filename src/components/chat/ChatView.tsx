@@ -142,7 +142,7 @@ export function ChatView() {
               </div>
               <button
                 onClick={toggleDMProfile}
-                className={`hidden md:flex h-10 w-10 items-center justify-center rounded-full border backdrop-blur-2xl transition-colors ${
+                className={`hidden lg:flex h-10 w-10 items-center justify-center rounded-full border backdrop-blur-2xl transition-colors ${
                   showDMProfile
                     ? "border-primary/30 bg-primary/10 text-foreground"
                     : "border-white/[0.08] bg-white/[0.06] text-muted-foreground hover:bg-white/[0.12] hover:text-foreground"

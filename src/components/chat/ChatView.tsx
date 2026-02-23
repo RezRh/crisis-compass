@@ -1,5 +1,5 @@
 import { useUIStore } from "@/stores/ui-store";
-import { ArrowLeft, Phone, Video, Plus, MessageSquare, Mic, Send, Camera, Image, BarChart3, FileText, Gift } from "lucide-react";
+import { ArrowLeft, Phone, Video, Plus, MessageSquare, Mic, Send, Camera, Image, BarChart3, FileText, Gift, User } from "lucide-react";
 import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 import { useState, useRef, useEffect } from "react";
 
@@ -69,7 +69,7 @@ const defaultMessages = [
 ];
 
 export function ChatView() {
-  const { activeDM, setActiveDM } = useUIStore();
+  const { activeDM, setActiveDM, showDMProfile, toggleDMProfile } = useUIStore();
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState<{ id: string; text: string; sender: "me" | "them"; time: string; date?: string }[]>([]);
   const bottomRef = useRef<HTMLDivElement>(null);
@@ -135,6 +135,16 @@ export function ChatView() {
               </button>
               <button className="flex h-10 w-10 items-center justify-center rounded-full border border-white/[0.08] bg-white/[0.06] backdrop-blur-2xl text-muted-foreground transition-colors hover:bg-white/[0.12] hover:text-foreground">
                 <Phone className="h-5 w-5" />
+              </button>
+              <button
+                onClick={toggleDMProfile}
+                className={`hidden md:flex h-10 w-10 items-center justify-center rounded-full border backdrop-blur-2xl transition-colors ${
+                  showDMProfile
+                    ? "border-primary/30 bg-primary/10 text-foreground"
+                    : "border-white/[0.08] bg-white/[0.06] text-muted-foreground hover:bg-white/[0.12] hover:text-foreground"
+                }`}
+              >
+                <User className="h-5 w-5" />
               </button>
             </div>
         </div>

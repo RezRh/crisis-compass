@@ -15,6 +15,7 @@ interface UIState {
   showNewMessage: boolean;
   showSearch: boolean;
   showAddFriends: boolean;
+  showDMProfile: boolean;
 
   setMainView: (view: MainView) => void;
   toggleMemberList: () => void;
@@ -28,6 +29,7 @@ interface UIState {
   setShowNewMessage: (show: boolean) => void;
   setShowSearch: (show: boolean) => void;
   setShowAddFriends: (show: boolean) => void;
+  toggleDMProfile: () => void;
 }
 
 export const useUIStore = create<UIState>((set) => ({
@@ -42,11 +44,12 @@ export const useUIStore = create<UIState>((set) => ({
   showNewMessage: false,
   showSearch: false,
   showAddFriends: false,
+  showDMProfile: false,
 
   setMainView: (view) => set({ mainView: view }),
   toggleMemberList: () => set((s) => ({ showMemberList: !s.showMemberList })),
   toggleSidebar: () => set((s) => ({ sidebarCollapsed: !s.sidebarCollapsed })),
-  setActiveDM: (name) => set({ activeDM: name }),
+  setActiveDM: (name) => set({ activeDM: name, showDMProfile: false }),
   setShowNotifications: (show) => set({ showNotifications: show }),
   openSettings: (view) => set({ settingsView: view }),
   closeSettings: () => set({ settingsView: null }),
@@ -55,4 +58,5 @@ export const useUIStore = create<UIState>((set) => ({
   setShowNewMessage: (show) => set({ showNewMessage: show }),
   setShowSearch: (show) => set({ showSearch: show }),
   setShowAddFriends: (show) => set({ showAddFriends: show }),
+  toggleDMProfile: () => set((s) => ({ showDMProfile: !s.showDMProfile })),
 }));

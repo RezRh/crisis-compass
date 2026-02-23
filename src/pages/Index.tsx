@@ -9,6 +9,7 @@ import { ServerSidebar } from "@/components/chat/ServerSidebar";
 import { ChatView } from "@/components/chat/ChatView";
 import { NotificationsView } from "@/components/chat/NotificationsView";
 import { SettingsOverlay } from "@/components/settings/SettingsOverlay";
+import { DMProfileSidebar } from "@/components/chat/DMProfileSidebar";
 import { LoginPage } from "@/pages/LoginPage";
 import { Home, Bell, UserRoundPlus, Search, MessageSquare, MessageSquarePlus } from "lucide-react";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
@@ -18,7 +19,7 @@ import { useServerStore } from "@/stores/server-store";
 const ChatApp = () => {
   const { isAuthenticated, user } = useAuthStore();
   const { loadMockData } = useServerStore();
-  const { openSettings, closeSettings, settingsView, sidebarCollapsed, activeDM, showNotifications, setShowNotifications, showNewMessage, setShowNewMessage, showSearch, setShowSearch, showAddFriends, setShowAddFriends } = useUIStore();
+  const { openSettings, closeSettings, settingsView, sidebarCollapsed, activeDM, showNotifications, setShowNotifications, showNewMessage, setShowNewMessage, showSearch, setShowSearch, showAddFriends, setShowAddFriends, showDMProfile } = useUIStore();
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -71,18 +72,21 @@ const ChatApp = () => {
           <div className="w-80 shrink-0 border-r border-white/[0.06]">
             <DMSidebar />
           </div>
-          <div className="flex-1 min-w-0">
-            {activeDM ? (
-              <ChatView />
-            ) : (
-              <div className="flex h-full items-center justify-center text-muted-foreground">
-                <div className="text-center space-y-2">
-                  <MessageSquare className="h-12 w-12 mx-auto opacity-30" />
-                  <p className="text-lg font-medium">Select a conversation</p>
-                  <p className="text-sm">Choose a DM from the sidebar to start chatting</p>
+          <div className="flex-1 min-w-0 flex">
+            <div className="flex-1 min-w-0">
+              {activeDM ? (
+                <ChatView />
+              ) : (
+                <div className="flex h-full items-center justify-center text-muted-foreground">
+                  <div className="text-center space-y-2">
+                    <MessageSquare className="h-12 w-12 mx-auto opacity-30" />
+                    <p className="text-lg font-medium">Select a conversation</p>
+                    <p className="text-sm">Choose a DM from the sidebar to start chatting</p>
+                  </div>
                 </div>
-              </div>
-            )}
+              )}
+            </div>
+            {activeDM && <DMProfileSidebar username={activeDM} visible={showDMProfile} />}
           </div>
         </div>
       </div>

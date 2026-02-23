@@ -230,7 +230,7 @@ function DockBar({
   const sidebarVisible = !sidebarCollapsed && !settingsView && !showNotifications && !showNewMessage && !showSearch;
 
   return (
-    <div className={`fixed bottom-0 right-0 z-[60] flex items-center justify-center gap-3 pb-3 pt-1 lg:hidden px-4 transition-[left] duration-300 ${activeDM ? "hidden" : ""} ${sidebarVisible ? "left-[72px]" : "left-0"}`}>
+    <div className={`fixed bottom-0 z-[60] flex items-center justify-center gap-3 pb-3 pt-1 lg:hidden px-4 transition-[left,right] duration-300 ${activeDM ? "hidden md:flex md:left-0 md:right-auto md:w-80" : ""} ${!activeDM && sidebarVisible ? "left-[72px] right-0" : !activeDM ? "left-0 right-0" : ""}`}>
       <div
         ref={barRef}
         onPointerDown={handlePointerDown}

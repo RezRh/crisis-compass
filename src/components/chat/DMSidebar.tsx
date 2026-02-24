@@ -54,84 +54,126 @@ export function DMSidebar() {
   }, []);
 
   return (
-    <div className="relative flex h-full min-w-0 flex-1 flex-col bg-server-bar overflow-y-auto" onScroll={handleScroll}>
-      <div className="sticky top-0 z-10 pt-12">
-        {/* Blur overlay — fades from top to middle of tiles */}
-        <div
-          className={`pointer-events-none absolute inset-0 transition-all duration-75 backdrop-blur-sm ${scrolled ? "backdrop-blur-md" : ""}`}
-          style={{ maskImage: "linear-gradient(to bottom, black 60%, transparent 100%)", WebkitMaskImage: "linear-gradient(to bottom, black 60%, transparent 100%)" }}
-        />
-        <div className="relative flex items-center justify-between px-4 pb-2">
-          <div className="flex items-center gap-2">
-            {sidebarCollapsed && (
+    <div className="relative flex h-full min-w-0 flex-1 flex-col bg-server-bar">
+      <div className="flex-1 min-h-0 overflow-y-auto" onScroll={handleScroll}>
+        <div className="sticky top-0 z-10 pt-12">
+          {/* Blur overlay — fades from top to middle of tiles */}
+          <div
+            className={`pointer-events-none absolute inset-0 transition-all duration-75 backdrop-blur-sm ${scrolled ? "backdrop-blur-md" : ""}`}
+            style={{ maskImage: "linear-gradient(to bottom, black 60%, transparent 100%)", WebkitMaskImage: "linear-gradient(to bottom, black 60%, transparent 100%)" }}
+          />
+          <div className="relative flex items-center justify-between px-4 pb-2">
+            <div className="flex items-center gap-2">
+              {sidebarCollapsed && (
+                <button 
+                  onClick={(e) => { e.stopPropagation(); toggleSidebar(); }} 
+                  className="flex h-8 w-8 items-center justify-center rounded-full border border-white/[0.06] bg-white/[0.04] backdrop-blur-2xl text-muted-foreground shadow-[0_2px_10px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.04)] transition-colors hover:bg-white/[0.08] hover:text-foreground"
+                >
+                  <PanelLeftOpen className="h-[18px] w-[18px]" />
+                </button>
+              )}
+              <h2 className="text-[20px] font-bold text-foreground">Messages</h2>
+            </div>
+            {!sidebarCollapsed && (
               <button 
                 onClick={(e) => { e.stopPropagation(); toggleSidebar(); }} 
-                className="flex h-8 w-8 items-center justify-center rounded-full border border-white/[0.06] bg-white/[0.04] backdrop-blur-2xl text-muted-foreground shadow-[0_2px_10px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.04)] transition-colors hover:bg-white/[0.08] hover:text-foreground"
+                className="flex h-8 w-8 items-center justify-center rounded-full border border-primary/30 bg-white/[0.04] backdrop-blur-2xl text-muted-foreground shadow-[0_2px_10px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.04),0_0_12px_rgba(255,0,60,0.1)] transition-colors hover:bg-white/[0.08] hover:text-foreground"
               >
-                <PanelLeftOpen className="h-[18px] w-[18px]" />
+                <PanelLeftClose className="h-[18px] w-[18px]" />
               </button>
             )}
-            <h2 className="text-[20px] font-bold text-foreground">Messages</h2>
           </div>
-          {!sidebarCollapsed && (
-            <button 
-              onClick={(e) => { e.stopPropagation(); toggleSidebar(); }} 
-              className="flex h-8 w-8 items-center justify-center rounded-full border border-primary/30 bg-white/[0.04] backdrop-blur-2xl text-muted-foreground shadow-[0_2px_10px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.04),0_0_12px_rgba(255,0,60,0.1)] transition-colors hover:bg-white/[0.08] hover:text-foreground"
-            >
-              <PanelLeftClose className="h-[18px] w-[18px]" />
+
+          {/* Add Friends — glass refraction */}
+          <div className="relative flex items-center gap-2 px-3 pt-1 pb-4">
+            <button onClick={() => setShowAddFriends(true)} className={`flex h-9 min-w-0 flex-1 items-center justify-center gap-2 rounded-full border bg-white/[0.04] backdrop-blur-2xl text-[13px] font-medium text-muted-foreground shadow-[0_2px_10px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.04)] transition-colors hover:bg-white/[0.08] hover:text-foreground ${sidebarCollapsed ? "border-white/[0.06]" : "border-primary/30 shadow-[0_2px_10px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.04),0_0_12px_rgba(255,0,60,0.1)]"}`}>
+              <UserPlus className="h-[16px] w-[16px] shrink-0" />
+              <span className="truncate">Add Friends</span>
             </button>
-          )}
+          </div>
         </div>
 
-        {/* Add Friends — glass refraction */}
-        <div className="relative flex items-center gap-2 px-3 pt-1 pb-4">
-          <button onClick={() => setShowAddFriends(true)} className={`flex h-9 min-w-0 flex-1 items-center justify-center gap-2 rounded-full border bg-white/[0.04] backdrop-blur-2xl text-[13px] font-medium text-muted-foreground shadow-[0_2px_10px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.04)] transition-colors hover:bg-white/[0.08] hover:text-foreground ${sidebarCollapsed ? "border-white/[0.06]" : "border-primary/30 shadow-[0_2px_10px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.04),0_0_12px_rgba(255,0,60,0.1)]"}`}>
-            <UserPlus className="h-[16px] w-[16px] shrink-0" />
-            <span className="truncate">Add Friends</span>
-          </button>
+        {/* DM conversation list */}
+        <div className="pb-20 lg:pb-4">
+          {mockDMs.map((dm, i) => (
+            <div key={dm.id}>
+              <button
+                onClick={() => setActiveDM(dm.username)}
+                className={`flex w-full items-center gap-3 px-4 transition-colors hover:bg-accent/30 ${
+                  activeDM === dm.username ? "bg-accent/20" : ""
+                } ${sidebarCollapsed ? "py-3" : "py-2"}`}
+              >
+                {/* Avatar with status */}
+                <div className="relative shrink-0">
+                  <div
+                    className={`flex items-center justify-center rounded-full ring-[1.5px] ring-offset-1 ring-offset-server-bar transition-all duration-200 ${sidebarCollapsed ? "h-12 w-12" : "h-9 w-9"} ${statusColors[dm.status]}`}
+                    style={{ backgroundColor: getAvatarColor(dm.username) }}
+                  >
+                    <span className={`text-white font-semibold ${sidebarCollapsed ? "text-base" : "text-sm"}`}>{dm.username.charAt(0)}</span>
+                  </div>
+                </div>
+
+                {/* Name + last message */}
+                <div className="flex-1 min-w-0 text-left">
+                  <p className={`truncate leading-5 ${sidebarCollapsed ? "text-[16px]" : "text-[14px]"} ${dm.bold ? "font-bold text-foreground" : "font-semibold text-foreground/90"}`}>
+                    {dm.username}
+                  </p>
+                  <div className="flex items-center gap-1">
+                    <p className={`truncate text-muted-foreground leading-4 ${sidebarCollapsed ? "text-[13px]" : "text-[12px]"}`}>{dm.lastMessage}</p>
+                  </div>
+                </div>
+
+                {/* Time */}
+                <span className={`text-muted-foreground shrink-0 self-start mt-1 ${sidebarCollapsed ? "text-[12px]" : "text-[11px]"}`}>{dm.time}</span>
+              </button>
+              {i < mockDMs.length - 1 && (
+                <div className="mx-4 border-b border-white/[0.06]" />
+              )}
+            </div>
+          ))}
         </div>
       </div>
 
-      {/* DM conversation list */}
-      <div className="pb-20">
-        {mockDMs.map((dm, i) => (
-          <div key={dm.id}>
-            <button
-              onClick={() => setActiveDM(dm.username)}
-              className={`flex w-full items-center gap-3 px-4 transition-colors hover:bg-accent/30 ${
-                activeDM === dm.username ? "bg-accent/20" : ""
-              } ${sidebarCollapsed ? "py-3" : "py-2"}`}
-            >
-              {/* Avatar with status */}
-              <div className="relative shrink-0">
-                <div
-                  className={`flex items-center justify-center rounded-full ring-[1.5px] ring-offset-1 ring-offset-server-bar transition-all duration-200 ${sidebarCollapsed ? "h-12 w-12" : "h-9 w-9"} ${statusColors[dm.status]}`}
-                  style={{ backgroundColor: getAvatarColor(dm.username) }}
-                >
-                  <span className={`text-white font-semibold ${sidebarCollapsed ? "text-base" : "text-sm"}`}>{dm.username.charAt(0)}</span>
-                </div>
-              </div>
-
-              {/* Name + last message */}
-              <div className="flex-1 min-w-0 text-left">
-                <p className={`truncate leading-5 ${sidebarCollapsed ? "text-[16px]" : "text-[14px]"} ${dm.bold ? "font-bold text-foreground" : "font-semibold text-foreground/90"}`}>
-                  {dm.username}
-                </p>
-                <div className="flex items-center gap-1">
-                  <p className={`truncate text-muted-foreground leading-4 ${sidebarCollapsed ? "text-[13px]" : "text-[12px]"}`}>{dm.lastMessage}</p>
-                </div>
-              </div>
-
-              {/* Time */}
-              <span className={`text-muted-foreground shrink-0 self-start mt-1 ${sidebarCollapsed ? "text-[12px]" : "text-[11px]"}`}>{dm.time}</span>
-            </button>
-            {i < mockDMs.length - 1 && (
-              <div className="mx-4 border-b border-white/[0.06]" />
-            )}
+      {/* Desktop user panel — mic, headphones, settings */}
+      <div className="hidden lg:flex items-center gap-2 px-3 py-2 border-t border-white/[0.06] bg-server-bar shrink-0">
+        <div className="flex items-center gap-2 flex-1 min-w-0 rounded-md px-1 py-1 hover:bg-white/[0.04] cursor-pointer transition-colors" onClick={() => openSettings("user")}>
+          <Avatar className="h-8 w-8 ring-2 ring-discord-green ring-offset-1 ring-offset-server-bar shrink-0">
+            <AvatarFallback style={{ backgroundColor: getAvatarColor(user?.username || "U") }} className="text-white text-xs font-bold">
+              {user?.username?.charAt(0).toUpperCase() || "?"}
+            </AvatarFallback>
+          </Avatar>
+          <div className="min-w-0">
+            <p className="text-[13px] font-semibold text-foreground truncate leading-4">{user?.username || "User"}</p>
+            <p className="text-[11px] text-discord-green leading-3">online</p>
           </div>
-        ))}
+        </div>
+        <div className="flex items-center gap-0.5 shrink-0">
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <button className="flex h-8 w-8 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-white/[0.08] hover:text-foreground">
+                <Mic className="h-[18px] w-[18px]" />
+              </button>
+            </TooltipTrigger>
+            <TooltipContent>Mute</TooltipContent>
+          </Tooltip>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <button className="flex h-8 w-8 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-white/[0.08] hover:text-foreground">
+                <Headphones className="h-[18px] w-[18px]" />
+              </button>
+            </TooltipTrigger>
+            <TooltipContent>Deafen</TooltipContent>
+          </Tooltip>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <button onClick={() => openSettings("user")} className="flex h-8 w-8 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-white/[0.08] hover:text-foreground">
+                <Settings className="h-[18px] w-[18px]" />
+              </button>
+            </TooltipTrigger>
+            <TooltipContent>User Settings</TooltipContent>
+          </Tooltip>
+        </div>
       </div>
-
     </div>
   );
 }

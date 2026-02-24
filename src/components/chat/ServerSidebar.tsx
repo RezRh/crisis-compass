@@ -16,8 +16,8 @@ function getServerIcon(id: string) {
   return ALL_ICONS[num % ALL_ICONS.length];
 }
 
-const BTN_SM = 40;
-const BTN_LG = 48;
+const BTN_SM = 44;
+const BTN_LG = 52;
 
 export function ServerSidebar() {
   const { servers, activeServerId, setActiveServer } = useServerStore();
@@ -54,7 +54,7 @@ export function ServerSidebar() {
         </div>
 
         {/* Scrollable server list */}
-        <div className="flex flex-1 flex-col items-center gap-[2px] overflow-y-auto py-0.5 pl-[8px] pr-[6px] pb-[7px] scrollbar-none min-h-0">
+        <div className="flex flex-1 flex-col items-center gap-[6px] overflow-y-auto py-0.5 pl-[8px] pr-[6px] pb-[7px] scrollbar-none min-h-0">
           {servers.map((server) => {
             const isActive = mainView === "servers" && activeServerId === server.id;
             const notifCount = server.id === "s2" ? 21 : server.id === "s3" ? 3 : 0;
@@ -72,8 +72,8 @@ export function ServerSidebar() {
                       className={cn(
                         "relative flex items-center justify-center overflow-hidden transition-all duration-200 active:translate-y-px",
                         isActive
-                          ? "text-foreground bg-white/[0.08] rounded-[12px]"
-                          : "text-muted-foreground hover:bg-white/[0.06] hover:text-foreground rounded-full hover:rounded-[12px]"
+                          ? "text-foreground bg-white rounded-[14px] shadow-[0_0_16px_rgba(255,255,255,0.15)]"
+                          : "text-muted-foreground hover:bg-white/[0.06] hover:text-foreground rounded-full hover:rounded-[14px]"
                       )}
                       style={{ width: BTN_SIZE, height: BTN_SIZE }}
                     >

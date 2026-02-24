@@ -135,43 +135,45 @@ export function DMSidebar() {
       </div>
 
       {/* Desktop user panel — mic, headphones, settings */}
-      <div className="hidden lg:flex items-center gap-2 px-3 py-2 border-t border-white/[0.06] bg-server-bar shrink-0">
-        <div className="flex items-center gap-2 flex-1 min-w-0 rounded-md px-1 py-1 hover:bg-white/[0.04] cursor-pointer transition-colors" onClick={() => openSettings("user")}>
-          <Avatar className="h-8 w-8 ring-2 ring-discord-green ring-offset-1 ring-offset-server-bar shrink-0">
-            <AvatarFallback style={{ backgroundColor: getAvatarColor(user?.username || "U") }} className="text-white text-xs font-bold">
-              {user?.username?.charAt(0).toUpperCase() || "?"}
-            </AvatarFallback>
-          </Avatar>
-          <div className="min-w-0">
-            <p className="text-[13px] font-semibold text-foreground truncate leading-4">{user?.username || "User"}</p>
-            <p className="text-[11px] text-discord-green leading-3">online</p>
+      <div className="hidden lg:flex items-center px-3 py-3 shrink-0">
+        <div className="flex items-center w-full gap-2 rounded-full border border-white/[0.06] bg-white/[0.04] backdrop-blur-md px-3 py-2 shadow-[0_2px_16px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.04),inset_0_-1px_4px_rgba(0,0,0,0.3)]">
+          <div className="flex items-center gap-2 flex-1 min-w-0 cursor-pointer transition-colors" onClick={() => openSettings("user")}>
+            <Avatar className="h-8 w-8 ring-2 ring-discord-green ring-offset-1 ring-offset-server-bar shrink-0">
+              <AvatarFallback style={{ backgroundColor: getAvatarColor(user?.username || "U") }} className="text-white text-xs font-bold">
+                {user?.username?.charAt(0).toUpperCase() || "?"}
+              </AvatarFallback>
+            </Avatar>
+            <div className="min-w-0">
+              <p className="text-[13px] font-semibold text-foreground truncate leading-4">{user?.username || "User"}</p>
+              <p className="text-[11px] text-discord-green leading-3">online</p>
+            </div>
           </div>
-        </div>
-        <div className="flex items-center gap-0.5 shrink-0">
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <button className="flex h-8 w-8 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-white/[0.08] hover:text-foreground">
-                <Mic className="h-[18px] w-[18px]" />
-              </button>
-            </TooltipTrigger>
-            <TooltipContent>Mute</TooltipContent>
-          </Tooltip>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <button className="flex h-8 w-8 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-white/[0.08] hover:text-foreground">
-                <Headphones className="h-[18px] w-[18px]" />
-              </button>
-            </TooltipTrigger>
-            <TooltipContent>Deafen</TooltipContent>
-          </Tooltip>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <button onClick={() => openSettings("user")} className="flex h-8 w-8 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-white/[0.08] hover:text-foreground">
-                <Settings className="h-[18px] w-[18px]" />
-              </button>
-            </TooltipTrigger>
-            <TooltipContent>User Settings</TooltipContent>
-          </Tooltip>
+          <div className="flex items-center gap-0.5 shrink-0">
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <button className="flex h-8 w-8 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-white/[0.08] hover:text-foreground">
+                  <Mic className="h-[18px] w-[18px]" />
+                </button>
+              </TooltipTrigger>
+              <TooltipContent>Mute</TooltipContent>
+            </Tooltip>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <button className="flex h-8 w-8 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-white/[0.08] hover:text-foreground">
+                  <Headphones className="h-[18px] w-[18px]" />
+                </button>
+              </TooltipTrigger>
+              <TooltipContent>Deafen</TooltipContent>
+            </Tooltip>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <button onClick={() => openSettings("user")} className="flex h-8 w-8 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-white/[0.08] hover:text-foreground">
+                  <Settings className="h-[18px] w-[18px]" />
+                </button>
+              </TooltipTrigger>
+              <TooltipContent>User Settings</TooltipContent>
+            </Tooltip>
+          </div>
         </div>
       </div>
     </div>
